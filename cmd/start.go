@@ -47,6 +47,7 @@ func StartCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) error {
+			fmt.Println(c)
 			p := fmt.Sprintf("http://localhost:%v", port)
 			a := []string{"config", "set", "proxy", p}
 			e := execCommand{cmd: "npm", args: a}
