@@ -1,4 +1,4 @@
-# Project Title
+# Proxy Configuration Tool
 
 This application is to help manage proxy configuration for multiple sets of tools, and configure a CNTLM proxy within a corporate network.
 
