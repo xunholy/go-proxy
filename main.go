@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/anz-go-proxy/cmd"
+	"github.com/go-proxy/cmd"
 	"github.com/urfave/cli"
 )
 
@@ -25,11 +25,6 @@ func executeCommand(e execCommand) {
 }
 
 func main() {
-	var (
-		port      int
-		password  string
-		setConfig bool
-	)
 
 	app := cli.NewApp()
 	app.Name = "proxy"
