@@ -58,5 +58,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Wish to aknowledge the following groups of people for their inspiration, and guidance with this project:
 
-* **Prateek** - [Innablr](https://innablr.com.au/)
-* **Jasper Breklemans** - [Cognizant](https://www.cognizant.com/)
+* **Prateek Nayak** - [Innablr](https://innablr.com.au/)
+* **Jasper Brekelmans** - [Cognizant](https://www.cognizant.com/)
