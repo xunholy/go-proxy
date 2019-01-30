@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/anz-go-proxy/cmd"
 	"github.com/urfave/cli"
 )
 
