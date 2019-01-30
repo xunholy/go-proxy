@@ -1,28 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"os/exec"
 
-	"github.com/go-proxy/cmd"
 	"github.com/urfave/cli"
+	"github.com/xUnholy/go-proxy/cmd"
 )
-
-type execCommand struct {
-	cmd  string
-	args []string
-}
-
-func executeCommand(e execCommand) {
-	cmd := e.cmd
-	args := e.args
-	if err := exec.Command(cmd, args...).Run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
 
 func main() {
 
