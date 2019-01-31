@@ -20,9 +20,8 @@ func StopCommand() cli.Command {
 				Destination: &setConfig,
 			},
 		},
-		Action: func(c *cli.Context) error {
+		Action: func(c *cli.Context) {
 			fmt.Println("All Command Executed: ", c.Args().First())
-			return nil
 		},
 	}
 
