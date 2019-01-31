@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=master)](https://coveralls.io/github/xUnholy/go-proxy?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=develop)](https://coveralls.io/github/xUnholy/go-proxy?branch=develop)
 # Proxy Configuration Tool
 
 This application is to help manage proxy configuration for multiple sets of tools, and configure a CNTLM proxy within a corporate network.
