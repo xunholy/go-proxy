@@ -17,35 +17,20 @@ func SetCommand() cli.Command {
 				Name:        "npm",
 				Usage:       "set npm proxy config",
 				Description: "additional description?",
+				Flags: []cli.Flag{
+					cli.IntFlag{
+						Name:        "port, p",
+						Value:       3128,
+						Usage:       "set custom CNTLM `PORT`",
+						Destination: &port,
+					},
+				},
 				Action: func(c *cli.Context) {
-					fmt.Println(c)
-
 					p := fmt.Sprintf("http://localhost:%v", port)
 					a := []string{"config", "set", "proxy", p}
 					e := execCommand{cmd: "npm", args: a}
 					executeCommand(e)
-					fmt.Println("Proxy config set for NPM")
-				},
-			},
-			{
-				Name:  "gradle",
-				Usage: "set gradle proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
-				},
-			},
-			{
-				Name:  "git",
-				Usage: "set git proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
-				},
-			},
-			{
-				Name:  "bash",
-				Usage: "set bash profile proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
+					fmt.Println("Set npm config successfully")
 				},
 			},
 		},
@@ -58,7 +43,9 @@ func SetCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) {
-			fmt.Println("All Command Executed: ", c.Args().First())
+			if password != "" {
+				// process password update here
+			}
 		},
 	}
 }

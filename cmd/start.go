@@ -40,12 +40,8 @@ func StartCommand() cli.Command {
 			if port != 3128 {
 				UpdateCNTLMFile(port)
 			}
-			fmt.Println(c)
-			p := fmt.Sprintf("http://localhost:%v", port)
-			a := []string{"config", "set", "proxy", p}
-			e := execCommand{cmd: "npm", args: a}
-			executeCommand(e)
-			fmt.Println("CNTLM Proxy Started On", p)
+			proxy := fmt.Sprintf("http://localhost:%v", port)
+			fmt.Println("CNTLM Proxy Started On", proxy)
 		},
 	}
 }

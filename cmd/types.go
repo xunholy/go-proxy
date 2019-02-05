@@ -2,6 +2,7 @@ package cmd
 
 var (
 	port        int
+	proxy       string
 	setAll      bool   = false
 	password    string = ""
 	cntlmFile   string = "/usr/local/etc/cntlm.conf"
