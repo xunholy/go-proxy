@@ -2,8 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/urfave/cli"
 )
@@ -11,20 +9,6 @@ import (
 var (
 	password string
 )
-
-type execCommand struct {
-	cmd  string
-	args []string
-}
-
-func executeCommand(e execCommand) {
-	cmd := e.cmd
-	args := e.args
-	if err := exec.Command(cmd, args...).Run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
 
 func SetCommand() cli.Command {
 	return cli.Command{
