@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 
 	"github.com/urfave/cli"
 )
@@ -9,6 +11,20 @@ import (
 var (
 	password string
 )
+
+type execCommand struct {
+	cmd  string
+	args []string
+}
+
+func executeCommand(e execCommand) {
+	cmd := e.cmd
+	args := e.args
+	if err := exec.Command(cmd, args...).Run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
 
 func SetCommand() cli.Command {
 	return cli.Command{
@@ -22,7 +38,13 @@ func SetCommand() cli.Command {
 				Usage:       "set npm proxy config",
 				Description: "additional description?",
 				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
+					fmt.Println(c)
+
+					p := fmt.Sprintf("http://localhost:%v", port)
+					a := []string{"config", "set", "proxy", p}
+					e := execCommand{cmd: "npm", args: a}
+					executeCommand(e)
+					fmt.Println("Proxy config set for NPM")
 				},
 			},
 			{
