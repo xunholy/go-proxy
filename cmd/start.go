@@ -8,16 +8,6 @@ import (
 	"github.com/urfave/cli"
 )
 
-var (
-	port      int
-	setConfig bool
-)
-
-type execCommand struct {
-	cmd  string
-	args []string
-}
-
 func executeCommand(e execCommand) {
 	cmd := e.cmd
 	args := e.args
@@ -43,10 +33,13 @@ func StartCommand() cli.Command {
 			cli.BoolFlag{
 				Name:        "all, a",
 				Usage:       "set all CNTLM config",
-				Destination: &setConfig,
+				Destination: &setAll,
 			},
 		},
 		Action: func(c *cli.Context) {
+			if port != 3128 {
+				UpdateCNTLMFile(port)
+			}
 			fmt.Println(c)
 			p := fmt.Sprintf("http://localhost:%v", port)
 			a := []string{"config", "set", "proxy", p}

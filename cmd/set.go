@@ -6,10 +6,6 @@ import (
 	"github.com/urfave/cli"
 )
 
-var (
-	password string
-)
-
 func SetCommand() cli.Command {
 	return cli.Command{
 		Name:        "set",

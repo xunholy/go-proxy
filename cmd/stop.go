@@ -17,7 +17,7 @@ func StopCommand() cli.Command {
 			cli.BoolFlag{
 				Name:        "all, a",
 				Usage:       "unset all CNTLM config",
-				Destination: &setConfig,
+				Destination: &setAll,
 			},
 		},
 		Action: func(c *cli.Context) {
