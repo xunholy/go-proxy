@@ -21,33 +21,35 @@ func SetCommand() cli.Command {
 				Name:        "npm",
 				Usage:       "set npm proxy config",
 				Description: "additional description?",
-				Action: func(c *cli.Context) error {
-					fmt.Println("new task template: ", c.Args().First())
-					return nil
+				Action: func(c *cli.Context) {
+					fmt.Println(c)
+
+					p := fmt.Sprintf("http://localhost:%v", port)
+					a := []string{"config", "set", "proxy", p}
+					e := execCommand{cmd: "npm", args: a}
+					executeCommand(e)
+					fmt.Println("Proxy config set for NPM")
 				},
 			},
 			{
 				Name:  "gradle",
 				Usage: "set gradle proxy config",
-				Action: func(c *cli.Context) error {
+				Action: func(c *cli.Context) {
 					fmt.Println("new task template: ", c.Args().First())
-					return nil
 				},
 			},
 			{
 				Name:  "git",
 				Usage: "set git proxy config",
-				Action: func(c *cli.Context) error {
+				Action: func(c *cli.Context) {
 					fmt.Println("new task template: ", c.Args().First())
-					return nil
 				},
 			},
 			{
 				Name:  "bash",
 				Usage: "set bash profile proxy config",
-				Action: func(c *cli.Context) error {
+				Action: func(c *cli.Context) {
 					fmt.Println("new task template: ", c.Args().First())
-					return nil
 				},
 			},
 		},
@@ -59,9 +61,8 @@ func SetCommand() cli.Command {
 				Destination: &password,
 			},
 		},
-		Action: func(c *cli.Context) error {
+		Action: func(c *cli.Context) {
 			fmt.Println("All Command Executed: ", c.Args().First())
-			return nil
 		},
 	}
 }

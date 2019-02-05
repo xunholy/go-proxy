@@ -46,13 +46,13 @@ func StartCommand() cli.Command {
 				Destination: &setConfig,
 			},
 		},
-		Action: func(c *cli.Context) error {
+		Action: func(c *cli.Context) {
+			fmt.Println(c)
 			p := fmt.Sprintf("http://localhost:%v", port)
 			a := []string{"config", "set", "proxy", p}
 			e := execCommand{cmd: "npm", args: a}
 			executeCommand(e)
 			fmt.Println("CNTLM Proxy Started On", p)
-			return nil
 		},
 	}
 }
