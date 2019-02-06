@@ -2,30 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/urfave/cli"
 )
-
-var (
-	port      int
-	setConfig bool
-)
-
-type execCommand struct {
-	cmd  string
-	args []string
-}
-
-func executeCommand(e execCommand) {
-	cmd := e.cmd
-	args := e.args
-	if err := exec.Command(cmd, args...).Run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
 
 func StartCommand() cli.Command {
 	return cli.Command{
@@ -43,16 +22,13 @@ func StartCommand() cli.Command {
 			cli.BoolFlag{
 				Name:        "all, a",
 				Usage:       "set all CNTLM config",
-				Destination: &setConfig,
+				Destination: &setAll,
 			},
 		},
-		Action: func(c *cli.Context) {
-			fmt.Println(c)
-			p := fmt.Sprintf("http://localhost:%v", port)
-			a := []string{"config", "set", "proxy", p}
-			e := execCommand{cmd: "npm", args: a}
-			executeCommand(e)
-			fmt.Println("CNTLM Proxy Started On", p)
+		Action: func() {
+			UpdatePort(port)
+			proxy := fmt.Sprintf("http://localhost:%v", port)
+			fmt.Println("CNTLM Proxy Started On", proxy)
 		},
 	}
 }

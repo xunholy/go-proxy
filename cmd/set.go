@@ -6,10 +6,6 @@ import (
 	"github.com/urfave/cli"
 )
 
-var (
-	password string
-)
-
 func SetCommand() cli.Command {
 	return cli.Command{
 		Name:        "set",
@@ -21,48 +17,38 @@ func SetCommand() cli.Command {
 				Name:        "npm",
 				Usage:       "set npm proxy config",
 				Description: "additional description?",
-				Action: func(c *cli.Context) {
-					fmt.Println(c)
-
+				Flags: []cli.Flag{
+					cli.IntFlag{
+						Name:        "port, p",
+						Value:       3128,
+						Usage:       "set custom CNTLM `PORT`",
+						Destination: &port,
+					},
+				},
+				Action: func() {
 					p := fmt.Sprintf("http://localhost:%v", port)
 					a := []string{"config", "set", "proxy", p}
 					e := execCommand{cmd: "npm", args: a}
 					executeCommand(e)
-					fmt.Println("Proxy config set for NPM")
+					fmt.Println("Set npm config successfully")
 				},
 			},
 			{
-				Name:  "gradle",
-				Usage: "set gradle proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
-				},
-			},
-			{
-				Name:  "git",
-				Usage: "set git proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
-				},
-			},
-			{
-				Name:  "bash",
-				Usage: "set bash profile proxy config",
-				Action: func(c *cli.Context) {
-					fmt.Println("new task template: ", c.Args().First())
+				Name:        "password",
+				Usage:       "proxy set password",
+				Description: "additional description?",
+				Action: func() {
+					fmt.Printf("Enter Password: ")
+					a := []string{"-H"}
+					e := execCommand{cmd: "cntlm", args: a}
+					o := executeCommand(e)
+					UpdatePassword(o)
+					fmt.Println("Set cntlm config successfully")
 				},
 			},
 		},
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:        "password, p",
-				Usage:       "set CNTLM `PASSWORD` config",
-				Value:       "",
-				Destination: &password,
-			},
-		},
-		Action: func(c *cli.Context) {
-			fmt.Println("All Command Executed: ", c.Args().First())
+		Action: func() {
+			fmt.Println("Set command invoked")
 		},
 	}
 }

@@ -25,6 +25,7 @@ func main() {
 		cmd.StartCommand(),
 		cmd.StopCommand(),
 		cmd.SetCommand(),
+		cmd.UnsetCommand(),
 	}
 
 	err := app.Run(os.Args)
