@@ -7,11 +7,9 @@ import (
 )
 
 var (
-	port        int
-	setAll      bool
-	password    string
-	cntlmFile   = "/usr/local/etc/cntlm.conf"
-	bashProfile = "~/.bash_profile"
+	port      int
+	setAll    bool
+	cntlmFile = "/usr/local/etc/cntlm.conf"
 )
 
 type execCommand struct {
