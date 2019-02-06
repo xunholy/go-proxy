@@ -17,7 +17,7 @@ func UnsetCommand() cli.Command {
 				Name:        "npm",
 				Usage:       "unset npm proxy config",
 				Description: "additional description?",
-				Action: func(c *cli.Context) {
+				Action: func() {
 					a := []string{"config", "delete", "proxy"}
 					e := execCommand{cmd: "npm", args: a}
 					executeCommand(e)

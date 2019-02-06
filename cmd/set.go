@@ -25,7 +25,7 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func(c *cli.Context) {
+				Action: func() {
 					p := fmt.Sprintf("http://localhost:%v", port)
 					a := []string{"config", "set", "proxy", p}
 					e := execCommand{cmd: "npm", args: a}
@@ -37,7 +37,7 @@ func SetCommand() cli.Command {
 				Name:        "password",
 				Usage:       "proxy set password",
 				Description: "additional description?",
-				Action: func(c *cli.Context) {
+				Action: func() {
 					fmt.Printf("Enter Password: ")
 					a := []string{"-H"}
 					e := execCommand{cmd: "cntlm", args: a}
@@ -47,7 +47,7 @@ func SetCommand() cli.Command {
 				},
 			},
 		},
-		Action: func(c *cli.Context) {
+		Action: func() {
 			fmt.Println("Set command invoked")
 		},
 	}

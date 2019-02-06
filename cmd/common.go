@@ -4,15 +4,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
-	"syscall"
-
-	"github.com/golang/crypto/ssh/terminal"
 )
 
 var (
 	port        int
-	proxy       string
 	setAll      bool
 	password    string
 	cntlmFile   = "/usr/local/etc/cntlm.conf"
@@ -34,14 +29,4 @@ func executeCommand(e execCommand) (output string) {
 	}
 	output = string(out)
 	return output
-}
-
-func credentials() string {
-	fmt.Print("Enter Password: ")
-	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
-	if err == nil {
-		fmt.Println("\nPassword typed: " + string(bytePassword))
-	}
-	password := string(bytePassword)
-	return strings.TrimSpace(password)
 }

@@ -25,7 +25,7 @@ func StartCommand() cli.Command {
 				Destination: &setAll,
 			},
 		},
-		Action: func(c *cli.Context) {
+		Action: func() {
 			UpdatePort(port)
 			proxy := fmt.Sprintf("http://localhost:%v", port)
 			fmt.Println("CNTLM Proxy Started On", proxy)

@@ -43,11 +43,9 @@ func UpdatePassword(hashes string) {
 		if len(v) > 0 && x >= 1 {
 			for i, line := range lines {
 				if strings.Contains(line, v[0]) {
-					l := fmt.Sprintf(hash)
-					lines[i] = l
+					lines[i] = hash
 				}
 			}
-			// fmt.Println(x, hash)
 		}
 	}
 
