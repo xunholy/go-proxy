@@ -2,20 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 
 	"github.com/urfave/cli"
 )
-
-func executeCommand(e execCommand) {
-	cmd := e.cmd
-	args := e.args
-	if err := exec.Command(cmd, args...).Run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-}
 
 func StartCommand() cli.Command {
 	return cli.Command{
@@ -37,9 +26,7 @@ func StartCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) {
-			if port != 3128 {
-				UpdateCNTLMFile(port)
-			}
+			UpdatePort(port)
 			proxy := fmt.Sprintf("http://localhost:%v", port)
 			fmt.Println("CNTLM Proxy Started On", proxy)
 		},

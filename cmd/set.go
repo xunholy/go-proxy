@@ -33,19 +33,22 @@ func SetCommand() cli.Command {
 					fmt.Println("Set npm config successfully")
 				},
 			},
-		},
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:        "password, p",
-				Usage:       "set CNTLM `PASSWORD` config",
-				Value:       "",
-				Destination: &password,
+			{
+				Name:        "password",
+				Usage:       "proxy set password",
+				Description: "additional description?",
+				Action: func(c *cli.Context) {
+					fmt.Printf("Enter Password: ")
+					a := []string{"-H"}
+					e := execCommand{cmd: "cntlm", args: a}
+					o := executeCommand(e)
+					UpdatePassword(o)
+					fmt.Println("Set cntlm config successfully")
+				},
 			},
 		},
 		Action: func(c *cli.Context) {
-			if password != "" {
-				// process password update here
-			}
+			fmt.Println("Set command invoked")
 		},
 	}
 }
