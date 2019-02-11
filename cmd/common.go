@@ -26,5 +26,5 @@ func executeCommand(e execCommand) (output string) {
 		os.Exit(1)
 	}
 	output = string(out)
-	return output
+	return
 }
