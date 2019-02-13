@@ -6,8 +6,6 @@ import (
 	"os/exec"
 )
 
-var ()
-
 type NewCommand struct {
 	Cmd  string
 	Args []string
