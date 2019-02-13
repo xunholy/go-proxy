@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
+	"github.com/xUnholy/go-proxy/file"
 )
 
 func StartCommand() cli.Command {
@@ -25,10 +26,13 @@ func StartCommand() cli.Command {
 				Destination: &setAll,
 			},
 		},
-		Action: func() {
+		Action: func(c *cli.Context) {
+			if file.Contains(c.FlagNames(), "all") {
+				println("true")
+			}
+
 			UpdatePort(port)
-			proxy := fmt.Sprintf("http://localhost:%v", port)
-			fmt.Println("CNTLM Proxy Started On", proxy)
+			fmt.Printf("CNTLM Proxy Started On http://localhost:%v\n", port)
 		},
 	}
 }

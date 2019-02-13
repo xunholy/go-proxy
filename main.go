@@ -16,8 +16,7 @@ func main() {
 	app.Usage = "executing and configuring cntlm"
 	app.Authors = []cli.Author{
 		{
-			Name:  "Michael Fornaro",
-			Email: "Michael.Fornaro@anz.com",
+			Name: "Michael Fornaro",
 		},
 	}
 

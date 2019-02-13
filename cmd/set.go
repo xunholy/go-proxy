@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
+	"github.com/xUnholy/go-proxy/execute"
 )
 
 func SetCommand() cli.Command {
@@ -25,11 +26,32 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func() {
-					p := fmt.Sprintf("http://localhost:%v", port)
-					a := []string{"config", "set", "proxy", p}
-					e := execCommand{cmd: "npm", args: a}
-					executeCommand(e)
+				Action: func(c *cli.Context) {
+					p := SetProxyPort(port)
+					cmds := []execCommand{}
+					cmds = append(cmds, execCommand{cmd: "npm", args: []string{"config", "set", "proxy", p}})
+					execute.Commands(cmds)
+					fmt.Println("Set npm config successfully")
+				},
+			},
+			{
+				Name:        "git",
+				Usage:       "set git proxy config",
+				Description: "additional description?",
+				Flags: []cli.Flag{
+					cli.IntFlag{
+						Name:        "port, p",
+						Value:       3128,
+						Usage:       "set custom CNTLM `PORT`",
+						Destination: &port,
+					},
+				},
+				Action: func(c *cli.Context) {
+					p := SetProxyPort(port)
+					cmds := []execCommand{}
+					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "http.proxy", p}})
+					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "https.proxy", p}})
+					execute.Commands(cmds)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -37,18 +59,22 @@ func SetCommand() cli.Command {
 				Name:        "password",
 				Usage:       "proxy set password",
 				Description: "additional description?",
-				Action: func() {
+				Action: func(c *cli.Context) {
 					fmt.Printf("Enter Password: ")
-					a := []string{"-H"}
-					e := execCommand{cmd: "cntlm", args: a}
-					o := executeCommand(e)
+					e := execCommand{cmd: "cntlm", args: []string{"-H"}}
+					o := execute.Command(e)
 					UpdatePassword(o)
 					fmt.Println("Set cntlm config successfully")
 				},
 			},
 		},
-		Action: func() {
+		Action: func(c *cli.Context) {
 			fmt.Println("Set command invoked")
 		},
 	}
+}
+
+func SetProxyPort(port int) (p string) {
+	p = fmt.Sprintf("http://localhost:%v", port)
+	return
 }

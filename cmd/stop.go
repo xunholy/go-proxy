@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/urfave/cli"
+	"github.com/xUnholy/go-proxy/file"
 )
 
 func StopCommand() cli.Command {
@@ -21,7 +20,9 @@ func StopCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) {
-			fmt.Println("All Command Executed: ", c.Args().First())
+			if file.Contains(c.FlagNames(), "all") {
+				println("true")
+			}
 		},
 	}
 
