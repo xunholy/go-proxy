@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/execute"
+	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
 func UnsetCommand() cli.Command {
@@ -19,8 +19,8 @@ func UnsetCommand() cli.Command {
 				Usage:       "unset npm proxy config",
 				Description: "additional description?",
 				Action: func(c *cli.Context) {
-					cmds := []execCommand{}
-					cmds = append(cmds, execCommand{cmd: "npm", args: []string{"config", "delete", "proxy"}})
+					cmds := []execute.NewCommand{}
+					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "delete", "proxy"}})
 					execute.Commands(cmds)
 					fmt.Println("Unset npm config successfully")
 				},
@@ -30,9 +30,9 @@ func UnsetCommand() cli.Command {
 				Usage:       "unset git proxy config",
 				Description: "additional description?",
 				Action: func(c *cli.Context) {
-					cmds := []execCommand{}
-					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "--unset", "http.proxy"}})
-					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "--unset", "https.proxy"}})
+					cmds := []execute.NewCommand{}
+					cmds = append(cmds, execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}})
+					cmds = append(cmds, execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}})
 					execute.Commands(cmds)
 					fmt.Println("Unset git config successfully")
 				},

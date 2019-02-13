@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/execute"
+	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
 func SetCommand() cli.Command {
@@ -28,8 +28,8 @@ func SetCommand() cli.Command {
 				},
 				Action: func(c *cli.Context) {
 					p := SetProxyPort(port)
-					cmds := []execCommand{}
-					cmds = append(cmds, execCommand{cmd: "npm", args: []string{"config", "set", "proxy", p}})
+					cmds := []execute.NewCommand{}
+					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
 					execute.Commands(cmds)
 					fmt.Println("Set npm config successfully")
 				},
@@ -48,9 +48,9 @@ func SetCommand() cli.Command {
 				},
 				Action: func(c *cli.Context) {
 					p := SetProxyPort(port)
-					cmds := []execCommand{}
-					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "http.proxy", p}})
-					cmds = append(cmds, execCommand{cmd: "git", args: []string{"config", "--global", "https.proxy", p}})
+					cmds := []execute.NewCommand{}
+					cmds = append(cmds, execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}})
+					cmds = append(cmds, execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}})
 					execute.Commands(cmds)
 					fmt.Println("Set npm config successfully")
 				},
@@ -61,7 +61,7 @@ func SetCommand() cli.Command {
 				Description: "additional description?",
 				Action: func(c *cli.Context) {
 					fmt.Printf("Enter Password: ")
-					e := execCommand{cmd: "cntlm", args: []string{"-H"}}
+					e := execute.NewCommand{Cmd: "cntlm", Args: []string{"-H"}}
 					o := execute.Command(e)
 					UpdatePassword(o)
 					fmt.Println("Set cntlm config successfully")

@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/file"
+	"github.com/xUnholy/go-proxy/pkg/file"
 )
 
 func StopCommand() cli.Command {
