@@ -1,6 +1,6 @@
+[![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
 [![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=develop)](https://travis-ci.com/xUnholy/go-proxy)
 [![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=develop)](https://coveralls.io/github/xUnholy/go-proxy?branch=develop)
-[![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
 
 # Proxy Configuration Tool
 
