@@ -18,10 +18,6 @@ The following tools are currently supported:
 * [Getting Started](#Getting-Started)
 * [Prerequisites](#Prerequisites)
 * [Commands](#Commands)
-   * [Start](#Start)
-   * [Stop](#Stop)
-   * [Set](#Set)
-   * [Unset](#Unset)
 * [Running Tests](#Running-Tests)
 * [Package](#Package) 
 * [Built With](#Built-With)
@@ -42,16 +38,13 @@ What things you need to install.
 * [Golang](https://golang.org/dl/)
 
 ## Commands
+
 The following is a list of all available commands:
 
-```
-COMMANDS:
-     start,   proxy start
-     stop,    proxy stop
-     set,     proxy set
-     unset,   proxy unset
-     help, h  Shows a list of commands or help for one command
-```
+* [Start](#Start)
+* [Stop](#Stop)
+* [Set](#Set)
+* [Unset](#Unset)
 
 ### Start
 
