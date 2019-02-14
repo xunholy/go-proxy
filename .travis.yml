@@ -34,6 +34,6 @@ before_script:
 script:
   - golangci-lint run       # run a bunch of code checkers/linters in parallel
   - go tool vet .           # run go tool vet to find errors not caught by the compilers
-  - go build .              # run go build to compile binary file
+  - go build -o proxy .              # run go build to compile binary file
   - go test -v -race ./...  # run all the tests with the race detector enabled
   - $GOPATH/bin/goveralls -service=travis-ci

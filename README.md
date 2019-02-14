@@ -2,35 +2,136 @@
 [![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=develop)](https://travis-ci.com/xUnholy/go-proxy)
 [![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=develop)](https://coveralls.io/github/xUnholy/go-proxy?branch=develop)
 
-# Proxy Configuration Tool
+# CNTLM Proxy Configuration Tool
 
-This application is to help manage proxy configuration for multiple sets of tools, and configure a CNTLM proxy within a corporate network.
+This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
 
-## Getting Started
+The following tools are currently supported:
 
-WIP
+* Git
+* NPM
 
 ### Prerequisites
 
 What things you need to install.
 
-* [GIT](https://git-scm.com/downloads)
 * [Golang](https://golang.org/dl/)
 
-## Running the tests
+## Getting Started
+
+The below guide will explain the CLI commands and flags with their functionality. More detail and give examples on how they can be used.
+
+### Commands
+The following is a list of all available commands:
+
+```
+COMMANDS:
+     start,   proxy start
+     stop,    proxy stop
+     set,     proxy set
+     unset,   proxy unset
+     help, h  Shows a list of commands or help for one command
+```
+
+#### Start
+
+Usage example:
+
+```
+proxy start [command options] [arguments...]
+```
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+   --all, -a             set all CNTLM config
+```
+
+#### Stop
+
+Usage example:
+
+```
+proxy stop [command options] [arguments...]
+```
+
+```
+OPTIONS:
+   --all, -a  unset all CNTLM config
+```
+
+#### Set
+
+Usage example:
+
+```
+proxy set command [command options] [arguments...]
+```
+
+Subcommand options:
+
+```
+COMMANDS:
+     npm       set npm proxy config
+     git       set git proxy config
+     password  proxy set password
+```
+
+All subcommands have the following options:
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+```
+
+To be able to set the CNTLM authentication password the *password* subcommand can be used. EG:
+
+```
+proxy set password
+```
+
+Once the password is entered and then encrypted, it will be stored in **cntlm.conf**.
+
+
+#### Unset
+
+Usage example:
+
+```
+proxy unset command [command options] [arguments...]
+```
+
+Subcommand options:
+
+```
+COMMANDS:
+     npm  unset npm proxy config
+     git  unset git proxy config
+```
+
+All subcommands have the following options:
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+```
+
+## Running Tests
 
 Use the following steps to execute the test suite:
 
-```bash
-WIP
+```go
+go test -v  ./...
 ```
 
-## Deployment
+*Note: The test suite will require you to have the supported tools installed and available locally.*
 
-To be able to package and deploy this tool, use the below command:
+## Package
 
-```bash
-go build main.go
+To be able to package this tool, use the below command:
+
+```go
+go build -o proxy .
 ```
 
 ## Built With
