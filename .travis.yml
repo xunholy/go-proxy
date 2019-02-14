@@ -15,7 +15,7 @@ git:
 
 # Skip the install step. Don't `go get` dependencies. Only build with the code
 # in vendor/
-install: true
+install: false
 
 # Don't email me the results of the test runs.
 notifications:
