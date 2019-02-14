@@ -18,7 +18,11 @@ COPY ./ /app
  
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w -extldflags "-static"' -o proxy .
  
-FROM scratch
+FROM alpine
+
+RUN apk update --no-cache && apk add cntlm && \
+    mkdir -p /usr/local/etc && \
+    cp /etc/cntlm.conf /usr/local/etc/cntlm.conf
  
 WORKDIR /app
  

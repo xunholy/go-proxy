@@ -147,6 +147,20 @@ To be able to package this tool, use the below command:
 go build -o proxy .
 ```
 
+Alternatively you can build the tool using Docker & running the container.
+
+```bash
+docker build -t cntlm-proxy:latest .
+```
+
+Executing the proxy tool within a running docker container:
+
+```
+docker run --network=host -ti <image-name> [command options] [arguments...] 
+```
+
+*Note: Running inside the container functionality is still a WIP.*
+
 ## Built With
 
 * [GOlang](https://golang.org/dl/) - Programming Language
