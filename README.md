@@ -4,24 +4,44 @@
 
 # CNTLM Proxy Configuration Tool
 
-This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
+This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. 
+
+This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
 
 The following tools are currently supported:
+* git
+* npm
 
-* Git
-* NPM
+## Contents
+------
 
-### Prerequisites
+* [Getting Started](#Getting-Started)
+* [Prerequisites](#Prerequisites)
+* [Commands](#Commands)
+   * [Start](#Start)
+   * [Stop](#Stop)
+   * [Set](#Set)
+   * [Unset](#Unset)
+* [Running Tests](#Running-Tests)
+* [Package](#Package) 
+* [Built With](#Built-With)
+* [Contributing](#Contributing)
+* [Versioning](#Versioning)
+* [Authors](#Authors)
+* [License](#License)
+* [Acknowledgments](#Acknowledgments)
+   
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing.
+
+## Prerequisites
 
 What things you need to install.
 
 * [Golang](https://golang.org/dl/)
 
-## Getting Started
-
-The below guide will explain the CLI commands and flags with their functionality. More detail and give examples on how they can be used.
-
-### Commands
+## Commands
 The following is a list of all available commands:
 
 ```
@@ -33,7 +53,7 @@ COMMANDS:
      help, h  Shows a list of commands or help for one command
 ```
 
-#### Start
+### Start
 
 Usage example:
 
@@ -47,7 +67,7 @@ OPTIONS:
    --all, -a             set all CNTLM config
 ```
 
-#### Stop
+### Stop
 
 Usage example:
 
@@ -60,7 +80,7 @@ OPTIONS:
    --all, -a  unset all CNTLM config
 ```
 
-#### Set
+### Set
 
 Usage example:
 
@@ -93,7 +113,7 @@ proxy set password
 Once the password is entered and then encrypted, it will be stored in **cntlm.conf**.
 
 
-#### Unset
+### Unset
 
 Usage example:
 
@@ -136,10 +156,10 @@ go build -o proxy .
 
 ## Built With
 
-* [Golang](https://golang.org/dl/) - Programming Language
+* [GOlang](https://golang.org/dl/) - Programming Language
 * [urfave/cli](https://github.com/urfave/cli) - The CLI framework
 * [Travis](https://maven.apache.org/) - Conitnuous Integration Tool
-* [VS Code](https://code.visualstudio.com/) - IDE
+* [VSCode](https://code.visualstudio.com/) - IDE
 
 ## Contributing
 
