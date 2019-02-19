@@ -22,7 +22,7 @@ func StopCommand() cli.Command {
 				Destination: &setAll,
 			},
 		},
-		Action: func(c *cli.Context) {
+		Action: func(_ *cli.Context) {
 			cmds := execute.NewCommand{Cmd: "pkill", Args: []string{"cntlm"}}
 			_, err := execute.Command(cmds)
 			if err != nil {
