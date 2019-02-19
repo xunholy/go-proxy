@@ -50,5 +50,4 @@ run:
 service:
   golangci-lint-version: 1.15.x # use fixed version to not introduce new linters unexpectedly
   prepare:
-    - GO111MODULE=on
-    - go mod download
+    - GO111MODULE=on go mod download
