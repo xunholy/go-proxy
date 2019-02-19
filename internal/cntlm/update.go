@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-type CNTLMKeyPairValues struct {
+type KeyPairValues struct {
 	Key   string
 	Value string
 	Line  int
@@ -24,20 +24,20 @@ func UpdateFile(file, match string) {
 	matches := strings.Split(match, "\n")
 	lines := strings.Split(string(content), "\n")
 
-	keyPairValues := ParseFileIntoKeyPairValues(lines)
+	keyPairValues := parseFileIntoKeyPairValues(lines)
 
 	for i := 0; i <= len(matches)-1; i++ {
 		matchFields := strings.Fields(matches[i])
 		for _, i := range keyPairValues {
 			if strings.Contains(i.Key, matchFields[0]) {
-				UpdateValue(lines, i, file, matchFields)
+				updateValue(lines, i, file, matchFields)
 			}
 		}
 	}
 }
 
-func ParseFileIntoKeyPairValues(lines []string) []CNTLMKeyPairValues {
-	keyPairValues := []CNTLMKeyPairValues{}
+func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
+	keyPairValues := []KeyPairValues{}
 	for i, l := range lines {
 		if strings.HasPrefix(l, "#") {
 			continue
@@ -49,12 +49,12 @@ func ParseFileIntoKeyPairValues(lines []string) []CNTLMKeyPairValues {
 		if len(fields) > 2 {
 			continue
 		}
-		keyPairValues = append(keyPairValues, CNTLMKeyPairValues{Key: fields[0], Value: fields[1], Line: i})
+		keyPairValues = append(keyPairValues, KeyPairValues{Key: fields[0], Value: fields[1], Line: i})
 	}
 	return keyPairValues
 }
 
-func UpdateValue(lines []string, keyPairValue CNTLMKeyPairValues, file string, matchFields []string) {
+func updateValue(lines []string, keyPairValue KeyPairValues, file string, matchFields []string) {
 	line := fmt.Sprintf("%v\t%v", matchFields[0], matchFields[1])
 	lines[keyPairValue.Line] = line
 	output := strings.Join(lines, "\n")
