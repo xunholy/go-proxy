@@ -11,26 +11,31 @@ type NewCommand struct {
 	Args []string
 }
 
-func Command(e NewCommand) (output string) {
+type CommandsOutput struct {
+	Cmd    string
+	Output string
+}
+
+func Command(e NewCommand) (string, error) {
 	cmd := exec.Command(e.Cmd, e.Args...)
 	cmd.Stdin = os.Stdin
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		return "", err
 	}
-	output = string(out)
-	return
+	return string(out), nil
 }
 
-func Commands(cmds []NewCommand) {
+func Commands(cmds []NewCommand) ([]CommandsOutput, error) {
+	output := []CommandsOutput{}
 	for i := 0; i < len(cmds); i++ {
-		cmd := exec.Command(cmds[i].Cmd, cmds[i].Args...)
-		cmd.Stdin = os.Stdin
-		err := cmd.Run()
+		cmd := NewCommand{Cmd: cmds[i].Cmd, Args: cmds[i].Args}
+		out, err := Command(cmd)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			os.Exit(1)
+			return output, err
 		}
+		output = append(output, CommandsOutput{Cmd: cmds[i].Cmd, Output: out})
 	}
+	return output, nil
 }

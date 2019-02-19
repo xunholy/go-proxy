@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/pkg/file"
+	"github.com/xUnholy/go-proxy/pkg/strings"
 )
 
 func StopCommand() cli.Command {
@@ -20,7 +20,7 @@ func StopCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) {
-			if file.Contains(c.FlagNames(), "all") {
+			if strings.Contains(c.FlagNames(), "all") {
 				println("true")
 			}
 		},

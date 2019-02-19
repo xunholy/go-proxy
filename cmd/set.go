@@ -26,11 +26,15 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func() {
+				Action: func(_ *cli.Context) {
 					p := SetProxyPort(port)
 					cmds := []execute.NewCommand{}
 					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
-					execute.Commands(cmds)
+					output, err := execute.Commands(cmds)
+					if err != nil {
+
+					}
+					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -46,13 +50,17 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func() {
+				Action: func(_ *cli.Context) {
 					p := SetProxyPort(port)
 					cmds := []execute.NewCommand{}
 					http := execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
 					https := execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
 					cmds = append(cmds, http, https)
-					execute.Commands(cmds)
+					output, err := execute.Commands(cmds)
+					if err != nil {
+
+					}
+					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -60,16 +68,19 @@ func SetCommand() cli.Command {
 				Name:        "password",
 				Usage:       "proxy set password",
 				Description: "additional description?",
-				Action: func() {
+				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Password: ")
 					e := execute.NewCommand{Cmd: "cntlm", Args: []string{"-H"}}
-					o := execute.Command(e)
-					UpdatePassword(o)
+					output, err := execute.Command(e)
+					if err != nil {
+
+					}
+					UpdatePassword(output)
 					fmt.Println("Set cntlm config successfully")
 				},
 			},
 		},
-		Action: func() {
+		Action: func(_ *cli.Context) {
 			fmt.Println("Set command invoked")
 		},
 	}
