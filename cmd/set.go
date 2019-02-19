@@ -66,6 +66,20 @@ func SetCommand() cli.Command {
 				},
 			},
 			{
+				Name:        "username",
+				Usage:       "proxy set username",
+				Description: "additional description?",
+				Action: func(_ *cli.Context) {
+					fmt.Printf("Enter Username: ")
+					output, err := Prompt()
+					if err != nil {
+						log.Fatal(err)
+					}
+					UpdateFile("Username", output)
+					fmt.Println("Set CNTLM username successfully")
+				},
+			},
+			{
 				Name:        "password",
 				Usage:       "proxy set password",
 				Description: "additional description?",
@@ -77,7 +91,21 @@ func SetCommand() cli.Command {
 						log.Fatal(err)
 					}
 					UpdatePassword(output)
-					fmt.Println("Set cntlm config successfully")
+					fmt.Println("Set CNTLM password successfully")
+				},
+			},
+			{
+				Name:        "domain",
+				Usage:       "proxy set domain",
+				Description: "additional description?",
+				Action: func(_ *cli.Context) {
+					fmt.Printf("Enter Proxy Domain: ")
+					output, err := Prompt()
+					if err != nil {
+						log.Fatal(err)
+					}
+					UpdateFile("Domain", output)
+					fmt.Println("Set CNTLM domain successfully")
 				},
 			},
 		},

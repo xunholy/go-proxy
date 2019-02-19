@@ -7,17 +7,18 @@ import (
 	"strings"
 )
 
-func UpdatePort(p int) {
+func UpdateFile(match string, value string) {
 	input, err := ioutil.ReadFile(cntlmFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
+	v := strings.TrimSpace(value)
 
 	lines := strings.Split(string(input), "\n")
 
 	for i, line := range lines {
-		if strings.Contains(line, "Listen") {
-			l := fmt.Sprintf("Listen %v", p)
+		if strings.Contains(line, match) {
+			l := fmt.Sprintf("%v\t%v", match, v)
 			lines[i] = l
 		}
 	}

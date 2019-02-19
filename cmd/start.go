@@ -28,7 +28,8 @@ func StartCommand() cli.Command {
 			},
 		},
 		Action: func(_ *cli.Context) {
-			UpdatePort(port)
+			p := fmt.Sprintf("%v", port)
+			UpdateFile("Listen", p)
 			cmds := execute.NewCommand{Cmd: "cntlm", Args: []string{"-g"}}
 			_, err := execute.Command(cmds)
 			if err != nil {
