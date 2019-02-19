@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
@@ -28,12 +29,12 @@ func StartCommand() cli.Command {
 		},
 		Action: func(_ *cli.Context) {
 			UpdatePort(port)
-			cmds := execute.NewCommand{Cmd: "cntlm", Args: []string{"-f"}}
-			output, err := execute.Command(cmds)
+			cmds := execute.NewCommand{Cmd: "cntlm", Args: []string{"-g"}}
+			_, err := execute.Command(cmds)
 			if err != nil {
-
+				fmt.Println("CNTLM Proxy couldn't be started.")
+				log.Fatal(err)
 			}
-			fmt.Println(output)
 			fmt.Printf("CNTLM Proxy Started On http://localhost:%v\n", port)
 		},
 	}

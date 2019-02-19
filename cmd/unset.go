@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
@@ -23,7 +24,7 @@ func UnsetCommand() cli.Command {
 					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "delete", "proxy"}})
 					output, err := execute.Commands(cmds)
 					if err != nil {
-
+						log.Fatal(err)
 					}
 					fmt.Println(output)
 					fmt.Println("Unset npm config successfully")
@@ -40,7 +41,7 @@ func UnsetCommand() cli.Command {
 					cmds = append(cmds, http, https)
 					output, err := execute.Commands(cmds)
 					if err != nil {
-
+						log.Fatal(err)
 					}
 					fmt.Println(output)
 					fmt.Println("Unset git config successfully")

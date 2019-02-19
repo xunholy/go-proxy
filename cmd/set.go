@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
@@ -32,7 +33,7 @@ func SetCommand() cli.Command {
 					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
 					output, err := execute.Commands(cmds)
 					if err != nil {
-
+						log.Fatal(err)
 					}
 					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
@@ -58,7 +59,7 @@ func SetCommand() cli.Command {
 					cmds = append(cmds, http, https)
 					output, err := execute.Commands(cmds)
 					if err != nil {
-
+						log.Fatal(err)
 					}
 					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
@@ -73,7 +74,7 @@ func SetCommand() cli.Command {
 					e := execute.NewCommand{Cmd: "cntlm", Args: []string{"-H"}}
 					output, err := execute.Command(e)
 					if err != nil {
-
+						log.Fatal(err)
 					}
 					UpdatePassword(output)
 					fmt.Println("Set cntlm config successfully")

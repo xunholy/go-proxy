@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/pkg/strings"
+	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
 func StopCommand() cli.Command {
@@ -20,9 +23,13 @@ func StopCommand() cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) {
-			if strings.Contains(c.FlagNames(), "all") {
-				println("true")
+			cmds := execute.NewCommand{Cmd: "pkill", Args: []string{"cntlm"}}
+			_, err := execute.Command(cmds)
+			if err != nil {
+				fmt.Println("Couldn't kill CNTLM process")
+				log.Fatal(err)
 			}
+			fmt.Println("CNTLM proxy stopped")
 		},
 	}
 
