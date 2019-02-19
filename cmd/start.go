@@ -33,7 +33,7 @@ func StartCommand() cli.Command {
 			cmds := execute.NewCommand{Cmd: "cntlm", Args: []string{"-g"}}
 			_, err := execute.Command(cmds)
 			if err != nil {
-				fmt.Println("CNTLM Proxy couldn't be started.")
+				fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
 				log.Fatal(err)
 			}
 			fmt.Printf("CNTLM Proxy Started On http://localhost:%v\n", port)

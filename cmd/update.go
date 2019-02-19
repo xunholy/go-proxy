@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func UpdateFile(match string, value string) {
+func UpdateFile(match, value string) {
 	input, err := ioutil.ReadFile(cntlmFile)
 	if err != nil {
 		log.Fatalln(err)

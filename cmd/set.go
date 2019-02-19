@@ -6,6 +6,7 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
+	"github.com/xUnholy/go-proxy/pkg/prompt"
 )
 
 func SetCommand() cli.Command {
@@ -71,7 +72,7 @@ func SetCommand() cli.Command {
 				Description: "additional description?",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Username: ")
-					output, err := Prompt()
+					output, err := prompt.GetInput()
 					if err != nil {
 						log.Fatal(err)
 					}
@@ -100,7 +101,7 @@ func SetCommand() cli.Command {
 				Description: "additional description?",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Proxy Domain: ")
-					output, err := Prompt()
+					output, err := prompt.GetInput()
 					if err != nil {
 						log.Fatal(err)
 					}
