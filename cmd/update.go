@@ -13,7 +13,7 @@ func UpdateFile(file, match, value string) {
 		log.Fatalln(err)
 	}
 	v := strings.TrimSpace(value)
-
+	ParseContentIntoStruct(input)
 	lines := strings.Split(string(input), "\n")
 
 	for i, line := range lines {
