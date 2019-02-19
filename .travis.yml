@@ -22,6 +22,7 @@ before_script:
 # failing test, we want to see both. Configure golangci-lint with a
 # .golangci.yml file at the top level of your repo.
 script:
+  - GO111MODULE=on go mod download
   - golangci-lint run
   - go build -o proxy .     # run go build to compile binary file
   - go test -v -race ./...  # run all the tests with the race detector enabled
