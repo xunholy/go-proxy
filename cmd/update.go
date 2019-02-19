@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func UpdateFile(match, value string) {
-	input, err := ioutil.ReadFile(cntlmFile)
+func UpdateFile(file, match, value string) {
+	input, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -23,14 +23,14 @@ func UpdateFile(match, value string) {
 		}
 	}
 	output := strings.Join(lines, "\n")
-	err = ioutil.WriteFile(cntlmFile, []byte(output), 0644)
+	err = ioutil.WriteFile(file, []byte(output), 0644)
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
 
-func UpdatePassword(hashes string) {
-	input, err := ioutil.ReadFile(cntlmFile)
+func UpdatePassword(file, hashes string) {
+	input, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -51,7 +51,7 @@ func UpdatePassword(hashes string) {
 	}
 
 	output := strings.Join(lines, "\n")
-	err = ioutil.WriteFile(cntlmFile, []byte(output), 0644)
+	err = ioutil.WriteFile(file, []byte(output), 0644)
 	if err != nil {
 		log.Fatalln(err)
 	}

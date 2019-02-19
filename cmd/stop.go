@@ -23,8 +23,8 @@ func StopCommand() cli.Command {
 			},
 		},
 		Action: func(_ *cli.Context) {
-			cmds := execute.NewCommand{Cmd: "pkill", Args: []string{"cntlm"}}
-			_, err := execute.Command(cmds)
+			cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
+			_, err := execute.RunCommand(cmds)
 			if err != nil {
 				fmt.Println("Couldn't kill CNTLM process")
 				log.Fatal(err)

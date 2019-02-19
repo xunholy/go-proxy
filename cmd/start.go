@@ -29,9 +29,9 @@ func StartCommand() cli.Command {
 		},
 		Action: func(_ *cli.Context) {
 			p := fmt.Sprintf("%v", port)
-			UpdateFile("Listen", p)
-			cmds := execute.NewCommand{Cmd: "cntlm", Args: []string{"-g"}}
-			_, err := execute.Command(cmds)
+			UpdateFile(cntlmFile, "Listen", p)
+			cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
+			_, err := execute.RunCommand(cmds)
 			if err != nil {
 				fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
 				log.Fatal(err)
