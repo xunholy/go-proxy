@@ -7,6 +7,8 @@ import (
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
 	"github.com/xUnholy/go-proxy/pkg/prompt"
+
+	"github.com/xUnholy/go-proxy/internal/cntlm"
 )
 
 var (
@@ -82,7 +84,8 @@ func SetCommand() cli.Command {
 					if err != nil {
 						log.Fatal(err)
 					}
-					UpdateFile(cntlmFile, "Username", output)
+					update := fmt.Sprintln("Username\t", output)
+					cntlm.UpdateFile(cntlmFile, update)
 					fmt.Println("Set CNTLM username successfully")
 				},
 			},
@@ -97,7 +100,7 @@ func SetCommand() cli.Command {
 					if err != nil {
 						log.Fatal(err)
 					}
-					UpdatePassword(cntlmFile, output)
+					cntlm.UpdateFile(cntlmFile, output)
 					fmt.Println("Set CNTLM password successfully")
 				},
 			},
@@ -111,7 +114,8 @@ func SetCommand() cli.Command {
 					if err != nil {
 						log.Fatal(err)
 					}
-					UpdateFile(cntlmFile, "Domain", output)
+					update := fmt.Sprintln("Domain\t", output)
+					cntlm.UpdateFile(cntlmFile, update)
 					fmt.Println("Set CNTLM domain successfully")
 				},
 			},

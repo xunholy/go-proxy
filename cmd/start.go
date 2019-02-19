@@ -6,6 +6,8 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
+
+	"github.com/xUnholy/go-proxy/internal/cntlm"
 )
 
 func StartCommand() cli.Command {
@@ -28,8 +30,8 @@ func StartCommand() cli.Command {
 			},
 		},
 		Action: func(_ *cli.Context) {
-			p := fmt.Sprintf("%v", port)
-			UpdateFile(cntlmFile, "Listen", p)
+			p := fmt.Sprintf("Listen\t%v", port)
+			cntlm.UpdateFile(cntlmFile, p)
 			cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
 			_, err := execute.RunCommand(cmds)
 			if err != nil {
