@@ -5,17 +5,16 @@ import (
 	"os/exec"
 )
 
-type NewCommand struct {
+type Command struct {
 	Cmd  string
 	Args []string
 }
 
-type CommandsOutput struct {
-	Cmd    string
+type CommandOutput struct {
 	Output string
 }
 
-func Command(e NewCommand) (string, error) {
+func RunCommand(e Command) (string, error) {
 	cmd := exec.Command(e.Cmd, e.Args...)
 	cmd.Stdin = os.Stdin
 	out, err := cmd.CombinedOutput()
@@ -25,15 +24,15 @@ func Command(e NewCommand) (string, error) {
 	return string(out), nil
 }
 
-func Commands(cmds []NewCommand) ([]CommandsOutput, error) {
-	output := []CommandsOutput{}
+func RunCommands(cmds []Command) ([]CommandOutput, error) {
+	output := []CommandOutput{}
 	for i := 0; i < len(cmds); i++ {
-		cmd := NewCommand{Cmd: cmds[i].Cmd, Args: cmds[i].Args}
-		out, err := Command(cmd)
+		cmd := Command{Cmd: cmds[i].Cmd, Args: cmds[i].Args}
+		out, err := RunCommand(cmd)
 		if err != nil {
 			return output, err
 		}
-		output = append(output, CommandsOutput{Cmd: cmds[i].Cmd, Output: out})
+		output = append(output, CommandOutput{Output: out})
 	}
 	return output, nil
 }
