@@ -1,46 +1,164 @@
-# Proxy Configuration Tool
-
+[![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
 [![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=develop)](https://travis-ci.com/xUnholy/go-proxy)
 [![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=develop)](https://coveralls.io/github/xUnholy/go-proxy?branch=develop)
-[![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
 
-## Introduction
+# CNTLM Proxy Configuration Tool
 
-This application is to help manage proxy configuration for multiple sets of tools, and configure a CNTLM proxy within a corporate network.
+This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. 
 
+This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
+
+The following tools are currently supported:
+* git
+* npm
+
+## Contents
+------
+
+* [Getting Started](#Getting-Started)
+* [Prerequisites](#Prerequisites)
+* [Commands](#Commands)
+* [Running Tests](#Running-Tests)
+* [Package](#Package) 
+* [Built With](#Built-With)
+* [Contributing](#Contributing)
+* [Versioning](#Versioning)
+* [Authors](#Authors)
+* [License](#License)
+* [Acknowledgments](#Acknowledgments)
+   
 ## Getting Started
 
-WIP
+These instructions will get you a copy of the project up and running on your local machine for development and testing.
 
-### Prerequisites
+## Prerequisites
 
 What things you need to install.
 
-* [GIT](https://git-scm.com/downloads)
 * [Golang](https://golang.org/dl/)
 
-## Running the tests
+## Commands
+
+The following is a list of all available commands:
+
+* [Start](#Start)
+* [Stop](#Stop)
+* [Set](#Set)
+* [Unset](#Unset)
+
+### Start
+
+Usage example:
+
+```
+proxy start [command options] [arguments...]
+```
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+   --all, -a             set all CNTLM config
+```
+
+### Stop
+
+Usage example:
+
+```
+proxy stop [command options] [arguments...]
+```
+
+```
+OPTIONS:
+   --all, -a  unset all CNTLM config
+```
+
+### Set
+
+Usage example:
+
+```
+proxy set command [command options] [arguments...]
+```
+
+Subcommand options:
+
+```
+COMMANDS:
+     npm       set npm proxy config
+     git       set git proxy config
+     password  proxy set password
+```
+
+All subcommands have the following options:
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+```
+
+To be able to set the CNTLM authentication password the *password* subcommand can be used. EG:
+
+```
+proxy set password
+```
+
+Once the password is entered and then encrypted, it will be stored in **cntlm.conf**.
+
+
+### Unset
+
+Usage example:
+
+```
+proxy unset command [command options] [arguments...]
+```
+
+Subcommand options:
+
+```
+COMMANDS:
+     npm  unset npm proxy config
+     git  unset git proxy config
+```
+
+All subcommands have the following options:
+
+```
+OPTIONS:
+   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+```
+
+## Running Tests
 
 Use the following steps to execute the test suite:
 
-```bash
-WIP
+```go
+go test -v  ./...
 ```
 
-## Deployment
+*Note: The test suite will require you to have the supported tools installed and available locally.*
 
-To be able to package and deploy this tool, use the below command:
+## Package
+
+To be able to package this tool, use the below command:
+
+```go
+go build -o proxy .
+```
+
+Once you have packaged the application the compiled binary can be executed with the following:
 
 ```bash
-go build main.go
+proxy [command options] [arguments...]
 ```
 
 ## Built With
 
-* [Golang](https://golang.org/dl/) - Programming Language
+* [GOlang](https://golang.org/dl/) - Programming Language
 * [urfave/cli](https://github.com/urfave/cli) - The CLI framework
 * [Travis](https://maven.apache.org/) - Conitnuous Integration Tool
-* [VS Code](https://code.visualstudio.com/) - IDE
+* [VSCode](https://code.visualstudio.com/) - IDE
 
 ## Contributing
 

@@ -1,36 +1,38 @@
 package execute
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 )
 
-type NewCommand struct {
+type Command struct {
 	Cmd  string
 	Args []string
 }
 
-func Command(e NewCommand) (output string) {
+type CommandOutput struct {
+	Output string
+}
+
+func RunCommand(e Command) (string, error) {
 	cmd := exec.Command(e.Cmd, e.Args...)
 	cmd.Stdin = os.Stdin
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		return "", err
 	}
-	output = string(out)
-	return
+	return string(out), nil
 }
 
-func Commands(cmds []NewCommand) {
+func RunCommands(cmds []Command) ([]CommandOutput, error) {
+	output := []CommandOutput{}
 	for i := 0; i < len(cmds); i++ {
-		cmd := exec.Command(cmds[i].Cmd, cmds[i].Args...)
-		cmd.Stdin = os.Stdin
-		err := cmd.Run()
+		cmd := Command{Cmd: cmds[i].Cmd, Args: cmds[i].Args}
+		out, err := RunCommand(cmd)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			os.Exit(1)
+			return output, err
 		}
+		output = append(output, CommandOutput{Output: out})
 	}
+	return output, nil
 }

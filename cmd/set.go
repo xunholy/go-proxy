@@ -2,9 +2,19 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
+	"github.com/xUnholy/go-proxy/pkg/prompt"
+
+	"github.com/xUnholy/go-proxy/internal/cntlm"
+)
+
+var (
+	cntlmFile = "/usr/local/etc/cntlm.conf"
+	port      int
+	setAll    bool
 )
 
 func SetCommand() cli.Command {
@@ -26,11 +36,15 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func() {
-					p := SetProxyPort(port)
-					cmds := []execute.NewCommand{}
-					cmds = append(cmds, execute.NewCommand{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
-					execute.Commands(cmds)
+				Action: func(_ *cli.Context) {
+					p := setProxyPort(port)
+					cmds := []execute.Command{}
+					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
+					output, err := execute.RunCommands(cmds)
+					if err != nil {
+						log.Fatal(err)
+					}
+					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -46,36 +60,73 @@ func SetCommand() cli.Command {
 						Destination: &port,
 					},
 				},
-				Action: func() {
-					p := SetProxyPort(port)
-					cmds := []execute.NewCommand{}
-					http := execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
-					https := execute.NewCommand{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
+				Action: func(_ *cli.Context) {
+					p := setProxyPort(port)
+					cmds := []execute.Command{}
+					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
+					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
 					cmds = append(cmds, http, https)
-					execute.Commands(cmds)
+					output, err := execute.RunCommands(cmds)
+					if err != nil {
+						log.Fatal(err)
+					}
+					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
+				},
+			},
+			{
+				Name:        "username",
+				Usage:       "proxy set username",
+				Description: "additional description?",
+				Action: func(_ *cli.Context) {
+					fmt.Printf("Enter Username: ")
+					output, err := prompt.GetInput()
+					if err != nil {
+						log.Fatal(err)
+					}
+					update := fmt.Sprintln("Username\t", output)
+					cntlm.UpdateFile(cntlmFile, update)
+					fmt.Println("Set CNTLM username successfully")
 				},
 			},
 			{
 				Name:        "password",
 				Usage:       "proxy set password",
 				Description: "additional description?",
-				Action: func() {
+				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Password: ")
-					e := execute.NewCommand{Cmd: "cntlm", Args: []string{"-H"}}
-					o := execute.Command(e)
-					UpdatePassword(o)
-					fmt.Println("Set cntlm config successfully")
+					e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}}
+					output, err := execute.RunCommand(e)
+					if err != nil {
+						log.Fatal(err)
+					}
+					cntlm.UpdateFile(cntlmFile, output)
+					fmt.Println("Set CNTLM password successfully")
+				},
+			},
+			{
+				Name:        "domain",
+				Usage:       "proxy set domain",
+				Description: "additional description?",
+				Action: func(_ *cli.Context) {
+					fmt.Printf("Enter Proxy Domain: ")
+					output, err := prompt.GetInput()
+					if err != nil {
+						log.Fatal(err)
+					}
+					update := fmt.Sprintln("Domain\t", output)
+					cntlm.UpdateFile(cntlmFile, update)
+					fmt.Println("Set CNTLM domain successfully")
 				},
 			},
 		},
-		Action: func() {
+		Action: func(_ *cli.Context) {
 			fmt.Println("Set command invoked")
 		},
 	}
 }
 
-func SetProxyPort(port int) (p string) {
-	p = fmt.Sprintf("http://localhost:%v", port)
-	return
+func setProxyPort(port int) string {
+	p := fmt.Sprintf("http://localhost:%v", port)
+	return p
 }
