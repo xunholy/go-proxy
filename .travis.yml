@@ -13,7 +13,6 @@ before_script:
 - git tag $TRAVIS_TAG
 - echo $TRAVIS_TAG
 script:
-- env
 - golangci-lint run
 - go build -o proxy .
 - go test -v -race ./...
@@ -23,6 +22,7 @@ deploy:
   api_key:
     secure: a5fb+mApnwM2/qG3QGON8BDCWgCGBDY8HH01Zrqe0X95BNBP1GFRiku9NCGfbuRwim1yNa0LNBph+IVL3J/FcJAE8Y6QxZsa9B+FBaqMaPnMMk/6LPP56g0ltdSyNTOOHGRun8ER9/mkvxZtaOt06j6TcKyc4tUM0LfBVTvEgJahMMj2p2dLUkFZ255oDP8R2XGawJH4BVnBpw+dLwykYXu84MhL02F4lW07B+am6PZOcHq1Cevg9B7JBHQ4gZ7hExFhRQhDUVjm6cae8sJwKy8ejextm2u0UnToV9EG5WZ/ycPjKZRFAVJuMdXZLT2uY2qmj09dm5dcfstH3NcESixhxwxMQWmGZ7XciLa7rjqjF9pIJ/V/4DL5JShzFfC66mAWxUlvm1mIb/rxD7R9ZodibIwiabAs2ielnXq6rBPJ55rpZEu9b5G+yp5KpPNkUEXBFYC+yYod8tTb8cBNVwhNdbZ8860uXzReT9k58gS+rILtJOI3RS2eYKp2xQ0yoT6VmwzKmNUBU0y2/ordD+vh9IPIm0dexVInre54elA4ffCmbZa5z/OzPJHH8NLRfVRnrm98NOtpdsfe40x4uO344szSLjLsFsjI16D4Y45YfDT0q+XXDYLbSSzCtwR3MMsy6k/gibh0Tk/gTE4S2+2xybZvoJAPa4NWH6v5KrI=
   file: proxy
+  skip_cleanup: true
   on:
     repo: xUnholy/go-proxy
-    branch: master
+    tags: true
