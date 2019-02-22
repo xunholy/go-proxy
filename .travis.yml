@@ -1,33 +1,28 @@
 language: go
-
-# Force-enable Go modules. This will be unnecessary when Go 1.12 lands.
 env:
-  - GO111MODULE=on
-
-# You don't need to test on very old version of the Go compiler. It's the user's
-# responsibility to keep their compilers up to date.
+- GO111MODULE=on
 go:
-  - 1.11.x
-
-# Skip the install step. Don't `go get` dependencies. Only build with the code
-# in vendor/
+- 1.11.x
 install: true
-
-# Anything in before_script that returns a nonzero exit code will flunk the
-# build and immediately stop. It's sorta like having set -e enabled in bash.
-# Make sure golangci-lint is vendored.
 before_script:
- - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.15.0
- - go get github.com/mattn/goveralls
- - go mod download
- 
-# script always runs to completion (set +e). If we have linter issues AND a
-# failing test, we want to see both. Configure golangci-lint with a
-# .golangci.yml file at the top level of your repo.
+- curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
+  sh -s -- -b $(go env GOPATH)/bin v1.15.0
+- go get github.com/mattn/goveralls
+- go mod download
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+- git tag $TRAVIS_TAG
+- echo $TRAVIS_TAG
 script:
-  - env
-  - golangci-lint run       # run a bunch of code checkers/linters in parallel
-  - go build -o proxy .     # run go build to compile binary file
-  - go test -v -race ./...  # run all the tests with the race detector enabled
-  - $GOPATH/bin/goveralls -service=travis-ci
-
+- env
+- golangci-lint run
+- go build -o proxy .
+- go test -v -race ./...
+- "$GOPATH/bin/goveralls -service=travis-ci"
+deploy:
+  provider: releases
+  api_key:
+    secure: a5fb+mApnwM2/qG3QGON8BDCWgCGBDY8HH01Zrqe0X95BNBP1GFRiku9NCGfbuRwim1yNa0LNBph+IVL3J/FcJAE8Y6QxZsa9B+FBaqMaPnMMk/6LPP56g0ltdSyNTOOHGRun8ER9/mkvxZtaOt06j6TcKyc4tUM0LfBVTvEgJahMMj2p2dLUkFZ255oDP8R2XGawJH4BVnBpw+dLwykYXu84MhL02F4lW07B+am6PZOcHq1Cevg9B7JBHQ4gZ7hExFhRQhDUVjm6cae8sJwKy8ejextm2u0UnToV9EG5WZ/ycPjKZRFAVJuMdXZLT2uY2qmj09dm5dcfstH3NcESixhxwxMQWmGZ7XciLa7rjqjF9pIJ/V/4DL5JShzFfC66mAWxUlvm1mIb/rxD7R9ZodibIwiabAs2ielnXq6rBPJ55rpZEu9b5G+yp5KpPNkUEXBFYC+yYod8tTb8cBNVwhNdbZ8860uXzReT9k58gS+rILtJOI3RS2eYKp2xQ0yoT6VmwzKmNUBU0y2/ordD+vh9IPIm0dexVInre54elA4ffCmbZa5z/OzPJHH8NLRfVRnrm98NOtpdsfe40x4uO344szSLjLsFsjI16D4Y45YfDT0q+XXDYLbSSzCtwR3MMsy6k/gibh0Tk/gTE4S2+2xybZvoJAPa4NWH6v5KrI=
+  file: proxy
+  on:
+    repo: xUnholy/go-proxy
+    branch: master
