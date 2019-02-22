@@ -180,7 +180,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-Wish to aknowledge the following groups of people for their inspiration, and guidance with this project:
+Wish to acknowledge the following people for their inspiration, and guidance with this project and/or in general:
 
 * **Prateek Nayak** - [Innablr](https://innablr.com.au/)
 * **Jasper Brekelmans** - [Cognizant](https://www.cognizant.com/)

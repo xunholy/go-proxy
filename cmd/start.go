@@ -5,9 +5,13 @@ import (
 	"log"
 
 	"github.com/urfave/cli"
+<<<<<<< HEAD
 	"github.com/xUnholy/go-proxy/pkg/execute"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
+=======
+	"github.com/xUnholy/go-proxy/pkg/file"
+>>>>>>> master
 )
 
 func StartCommand() cli.Command {
@@ -29,6 +33,7 @@ func StartCommand() cli.Command {
 				Destination: &setAll,
 			},
 		},
+<<<<<<< HEAD
 		Action: func(_ *cli.Context) {
 			p := fmt.Sprintf("Listen\t%v", port)
 			cntlm.UpdateFile(cntlmFile, p)
@@ -38,6 +43,14 @@ func StartCommand() cli.Command {
 				fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
 				log.Fatal(err)
 			}
+=======
+		Action: func(c *cli.Context) {
+			if file.Contains(c.FlagNames(), "all") {
+				println("true")
+			}
+
+			UpdatePort(port)
+>>>>>>> master
 			fmt.Printf("CNTLM Proxy Started On http://localhost:%v\n", port)
 		},
 	}
