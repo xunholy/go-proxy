@@ -54,8 +54,6 @@ brew tap xUnholy/homebrew-proxy
 brew install proxy
 ```
 
-
-
 ## Commands
 
 The following is a list of all available commands:
