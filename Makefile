@@ -6,6 +6,7 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 BINARY_NAME=proxy
+SYSTEMS=darwin linux windows
 
 all: build test
 
@@ -17,7 +18,7 @@ test:
 
 clean: 
 	$(GOCLEAN)
-	rm -f *$(BINARY_NAME)
+	rm -rf release
 
 run:
 	$(GOBUILD) -o $(BINARY_NAME) -v ./...
@@ -34,7 +35,10 @@ modules:
 
 # Cross compilation
 releases:
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) -o release/darwin-$(BINARY_NAME)
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o release/linux-$(BINARY_NAME)
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GOBUILD) -o release/windows-$(BINARY_NAME)
+	$(foreach SYSTEM, $(SYSTEMS),\
+	CGO_ENABLED=0 GOOS=$(SYSTEM) GOARCH=amd64 $(GOBUILD) -o release/$(SYSTEM)/$(BINARY_NAME); \
+	tar -zcvf release/$(SYSTEM)/$(SYSTEM)-proxy.tar.gz release/$(SYSTEM)/proxy;\
+	)
+
+
 
