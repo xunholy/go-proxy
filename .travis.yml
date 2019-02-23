@@ -20,15 +20,14 @@ before_script:
 - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
   sh -s -- -b $(go env GOPATH)/bin v1.15.0
 - go get github.com/mattn/goveralls
-- go mod download
+- make modules
 
 # Script always runs to completion (set +e). If we have linter issues AND a	
 # failing test, we want to see both. Configure golangci-lint with a	
 # .golangci.yml file at the top level of your repo.
 script:
 - golangci-lint run           # Run a bunch of code checkers/linters in parallel
-- go build -o proxy .         # Run go build to compile binary file
-- go test -v -race ./...      # Run all the tests with the race detector enabled
+- make all         # Run go build to compile binary file & execute all the tests with the race detector enabled
 - "$GOPATH/bin/goveralls -service=travis-ci"
 
 before_deploy:
