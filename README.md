@@ -17,6 +17,7 @@ The following tools are currently supported:
 
 * [Getting Started](#Getting-Started)
 * [Prerequisites](#Prerequisites)
+* [Installing](#Installing)
 * [Commands](#Commands)
 * [Running Tests](#Running-Tests)
 * [Package](#Package) 
@@ -36,6 +37,22 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install.
 
 * [Golang](https://golang.org/dl/)
+
+## Installing
+
+Use the following to be able to install on MacOS via Homebrew:
+
+1. Running the below command will add the homebrew tap to our repository
+
+```bash
+brew tap xUnholy/homebrew-proxy
+```
+
+2. Now you've added our custom tap, you can download with the following command:
+
+```bash
+brew install proxy
+```
 
 ## Commands
 
