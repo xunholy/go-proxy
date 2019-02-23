@@ -44,9 +44,9 @@ deploy:
   api_key:
     secure: EGsQeDz6vC/tB2ioyWAURsrbFtd2K0utbhWH2pl8gr6Rwy7D2qBz38QUq57iYP+1WI7QEeAn4L6HFug29fGNI4Q7sw2760qG69mqfNONJJRnvPYMKMx9hWHxGqo79bc5vaNieHFOlz3yN8rj3x3x45tRaGMHpC9HIFPxNIljl4CqAqX7DoEGW64xICwn846XgF1DFXcna9fnoAzr+yJMtujWxtCMmN/Oqs5J4p/g7N6Ld/sEOuR3gnXWOsbrAfUlYCyjzUq/yWCyIiSUNSrnCjVYUGa7G9i/U5rudVQm5uXYvVL00+GXZPJGpk4ZVCJFbebY6wz+YfJOB9iNYzK8nTzwUsHj/dlU4LNZoSyL3wm/HyCB8Ta3m9dgT7egqTpBolt4hPu0Wyzzota6c+g9JXcaDMPIldqEVMVxWpxjpf0jVwqLZcOlVqSta6Rspa8Cna/6XmMxe9yKgqoYpUb2AXDmHWbF6yUEZC1yt7biKg6qnaqgJSiMwpG9gXVEFRQeFVF563RBFcFKFNd446hAS/Uq8x4KAgimUAU2Ho6IyI6fZEEVXj6H2BlcFgpxH/tHMXVh66eL9uyIO/ws5RXNxvFT2v8H2Hof8Qo0qxM/ukJ+GOncRp0fnU9UMpKLhYbKGcHliVNBk6nanQq0OGczGwgAdqsp7isxhmZ/ugWhMKM=
   file: 
-    - release/darwin-proxy
-    - release/linux-proxy
-    - release/windows-proxy
+    - release/darwin/*proxy*
+    - release/linux/*proxy*
+    - release/windows/*proxy*
   # Make sure you have skip_cleanup set to true, otherwise Travis CI will delete all the files created during the build, which will probably delete what you are trying to upload.
   skip_cleanup: true
   # Overwrite existing files

@@ -13,3 +13,6 @@
 
 # Compiled output from local `go build -o proxy .`
 *proxy
+
+# Release output from `make releases`
+release/
