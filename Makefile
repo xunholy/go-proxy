@@ -17,8 +17,7 @@ test:
 
 clean: 
 	$(GOCLEAN)
-	rm -f $(BINARY_NAME)
-	rm -f $(BINARY_UNIX)
+	rm -f *$(BINARY_NAME)
 
 run:
 	$(GOBUILD) -o $(BINARY_NAME) -v ./...
@@ -34,5 +33,7 @@ modules:
 
 
 # Cross compilation
-build-linux:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BINARY_UNIX) -v
+releases:
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) -o release/darwin-$(BINARY_NAME)
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o release/linux-$(BINARY_NAME)
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GOBUILD) -o release/windows-$(BINARY_NAME)
