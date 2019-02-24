@@ -40,7 +40,7 @@ func SetCommand() cli.Command {
 					},
 				},
 				Action: func(_ *cli.Context) {
-					p := setProxyPort(port)
+					p := makeProxyURL(port)
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
 					output, err := execute.RunCommands(cmds)
@@ -64,7 +64,7 @@ func SetCommand() cli.Command {
 					},
 				},
 				Action: func(_ *cli.Context) {
-					p := setProxyPort(port)
+					p := makeProxyURL(port)
 					cmds := []execute.Command{}
 					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
 					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
@@ -126,7 +126,7 @@ func SetCommand() cli.Command {
 	}
 }
 
-func setProxyPort(port int) string {
+func makeProxyURL(port int) string {
 	p := fmt.Sprintf("http://localhost:%v", port)
 	return p
 }
