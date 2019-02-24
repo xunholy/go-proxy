@@ -1,6 +1,6 @@
 [![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
-[![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=develop)](https://travis-ci.com/xUnholy/go-proxy)
-[![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=develop)](https://coveralls.io/github/xUnholy/go-proxy?branch=develop)
+[![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=master)](https://travis-ci.com/xUnholy/go-proxy)
+[![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=master)](https://coveralls.io/github/xUnholy/go-proxy?branch=master)
 
 # CNTLM Proxy Configuration Tool
 
@@ -8,35 +8,20 @@ This project is a CLI for managing proxy configuring on a local dev machine. To 
 
 This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
 
-The following tools are currently supported:
-* git
-* npm
-
 ## Contents
-------
 
-* [Getting Started](#Getting-Started)
-* [Prerequisites](#Prerequisites)
 * [Installing](#Installing)
 * [Commands](#Commands)
-* [Running Tests](#Running-Tests)
-* [Package](#Package) 
+* [Getting Started](#Getting-Started)
+   * [Prerequisites](#Prerequisites)
+   * [Running Tests](#Running-Tests)
+   * [Build And Package](#Build-And-Package) 
 * [Built With](#Built-With)
 * [Contributing](#Contributing)
 * [Versioning](#Versioning)
 * [Authors](#Authors)
 * [License](#License)
 * [Acknowledgments](#Acknowledgments)
-   
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing.
-
-## Prerequisites
-
-What things you need to install.
-
-* [Golang](https://golang.org/dl/)
 
 ## Installing
 
@@ -104,7 +89,9 @@ Subcommand options:
 COMMANDS:
      npm       set npm proxy config
      git       set git proxy config
+     username  proxy set username
      password  proxy set password
+     domain    proxy set domain
 ```
 
 All subcommands have the following options:
@@ -146,6 +133,16 @@ OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
 ```
 
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing.
+
+## Prerequisites
+
+What things you need to install:
+
+* [Golang](https://golang.org/dl/)
+
 ## Running Tests
 
 Use the following steps to execute the test suite:
@@ -154,14 +151,26 @@ Use the following steps to execute the test suite:
 go test -v  ./...
 ```
 
+OR 
+
+```bash
+make test
+```
+
 *Note: The test suite will require you to have the supported tools installed and available locally.*
 
-## Package
+## Build And Package
 
-To be able to package this tool, use the below command:
+To be able to package this tool, use one of the following below command:
 
 ```go
 go build -o proxy .
+```
+
+OR
+
+```bash
+make build
 ```
 
 Once you have packaged the application the compiled binary can be executed with the following:
@@ -193,7 +202,7 @@ See also the list of [contributors](https://github.com/xUnholy/go-proxy/contribu
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPL License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
