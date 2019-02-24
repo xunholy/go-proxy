@@ -2,14 +2,17 @@ package prompt
 
 import (
 	"bufio"
+	"io"
 	"os"
 )
 
+var input io.Reader = os.Stdin
+
 func GetInput() (string, error) {
-	reader := bufio.NewReader(os.Stdin)
-	text, err := reader.ReadString('\n')
+	reader := bufio.NewReader(input)
+	output, err := reader.ReadString('\n')
 	if err != nil {
 		return "", err
 	}
-	return text, nil
+	return output, nil
 }
