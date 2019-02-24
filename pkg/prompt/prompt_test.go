@@ -1,6 +1,7 @@
 package prompt
 
 import (
+	"io"
 	"strings"
 	"testing"
 
@@ -12,14 +13,14 @@ func TestGetInput(t *testing.T) {
 		v string
 		e bool
 	}{
-		{v: "hello\n", e: false},
-		{v: "hello", e: true},
+		{"hello\n", false},
+		{"hello", true},
 	}
 	for _, test := range tests {
 		input = strings.NewReader(test.v)
 		output, err := GetInput()
 		if err != nil {
-			assert.Equal(t, test.e, true)
+			assert.Equal(t, test.e, err == io.EOF)
 			continue
 		}
 		assert.Equal(t, test.v, output)
