@@ -22,11 +22,10 @@ func UnsetCommand() cli.Command {
 				Action: func(_ *cli.Context) {
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "delete", "proxy"}})
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Unset npm config successfully")
 				},
 			},
@@ -39,11 +38,10 @@ func UnsetCommand() cli.Command {
 					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}}
 					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}}
 					cmds = append(cmds, http, https)
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Unset git config successfully")
 				},
 			},

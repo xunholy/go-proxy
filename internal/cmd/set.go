@@ -23,6 +23,9 @@ func SetCommand() cli.Command {
 		Aliases:     []string{""},
 		Usage:       "proxy set",
 		Description: "Set CNTLM Proxy Config",
+		Action: func(_ *cli.Context) {
+			fmt.Println("Set command invoked")
+		},
 		Subcommands: []cli.Command{
 			{
 				Name:        "npm",
@@ -37,14 +40,13 @@ func SetCommand() cli.Command {
 					},
 				},
 				Action: func(_ *cli.Context) {
-					p := setProxyPort(port)
+					p := makeProxyURL(port)
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -61,16 +63,15 @@ func SetCommand() cli.Command {
 					},
 				},
 				Action: func(_ *cli.Context) {
-					p := setProxyPort(port)
+					p := makeProxyURL(port)
 					cmds := []execute.Command{}
 					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
 					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
 					cmds = append(cmds, http, https)
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -120,13 +121,9 @@ func SetCommand() cli.Command {
 				},
 			},
 		},
-		Action: func(_ *cli.Context) {
-			fmt.Println("Set command invoked")
-		},
 	}
 }
 
-func setProxyPort(port int) string {
-	p := fmt.Sprintf("http://localhost:%v", port)
-	return p
+func makeProxyURL(port int) string {
+	return fmt.Sprintf("http://localhost:%d", port)
 }

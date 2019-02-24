@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	"github.com/xUnholy/go-proxy/cmd"
+	"github.com/xUnholy/go-proxy/internal/cmd"
 )
 
 func main() {

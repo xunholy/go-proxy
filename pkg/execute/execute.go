@@ -26,8 +26,8 @@ func RunCommand(e Command) (string, error) {
 
 func RunCommands(cmds []Command) ([]CommandOutput, error) {
 	output := []CommandOutput{}
-	for i := 0; i < len(cmds); i++ {
-		cmd := Command{Cmd: cmds[i].Cmd, Args: cmds[i].Args}
+	for _, c := range cmds {
+		cmd := Command{Cmd: c.Cmd, Args: c.Args}
 		out, err := RunCommand(cmd)
 		if err != nil {
 			return output, err
