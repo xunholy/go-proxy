@@ -35,9 +35,11 @@ modules:
 
 # Cross compilation
 releases:
-	$(foreach SYSTEM, $(SYSTEMS),\
+	$(foreach SYSTEM, $(SYSTEMS), \
 	CGO_ENABLED=0 GOOS=$(SYSTEM) GOARCH=amd64 $(GOBUILD) -o release/$(SYSTEM)/$(BINARY_NAME); \
-	tar -zcvf release/$(SYSTEM)/$(SYSTEM)-proxy.tar.gz release/$(SYSTEM)/proxy;\
+	cd release/$(SYSTEM)/; \
+	tar -zcvf $(SYSTEM)-proxy.tar.gz proxy; \
+	cd ../../; \
 	)
 
 
