@@ -23,6 +23,9 @@ func SetCommand() cli.Command {
 		Aliases:     []string{""},
 		Usage:       "proxy set",
 		Description: "Set CNTLM Proxy Config",
+		Action: func(_ *cli.Context) {
+			fmt.Println("Set command invoked")
+		},
 		Subcommands: []cli.Command{
 			{
 				Name:        "npm",
@@ -119,9 +122,6 @@ func SetCommand() cli.Command {
 					fmt.Println("Set CNTLM domain successfully")
 				},
 			},
-		},
-		Action: func(_ *cli.Context) {
-			fmt.Println("Set command invoked")
 		},
 	}
 }
