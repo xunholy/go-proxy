@@ -14,5 +14,5 @@ func GetInput() (string, error) {
 	if err != nil {
 		return output, err
 	}
-	return output, nil
+	return output, err
 }
