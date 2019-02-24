@@ -19,10 +19,7 @@ func TestGetInput(t *testing.T) {
 	for _, test := range tests {
 		input = strings.NewReader(test.v)
 		output, err := GetInput()
-		if err != nil {
-			assert.Equal(t, test.e, err == io.EOF)
-			continue
-		}
+		assert.Equal(t, test.e, err == io.EOF)
 		assert.Equal(t, test.v, output)
 	}
 }

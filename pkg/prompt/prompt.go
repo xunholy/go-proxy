@@ -12,7 +12,7 @@ func GetInput() (string, error) {
 	reader := bufio.NewReader(input)
 	output, err := reader.ReadString('\n')
 	if err != nil {
-		return "", err
+		return output, err
 	}
 	return output, nil
 }
