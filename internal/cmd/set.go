@@ -43,11 +43,10 @@ func SetCommand() cli.Command {
 					p := setProxyURL(port)
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},
@@ -69,11 +68,10 @@ func SetCommand() cli.Command {
 					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
 					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
 					cmds = append(cmds, http, https)
-					output, err := execute.RunCommands(cmds)
+					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println(output)
 					fmt.Println("Set npm config successfully")
 				},
 			},

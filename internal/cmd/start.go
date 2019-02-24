@@ -38,7 +38,7 @@ func StartCommand() cli.Command {
 				fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
 				log.Fatal(err)
 			}
-			fmt.Printf("CNTLM Proxy Started On http://localhost:%v\n", port)
+			fmt.Println(setProxyURL(port))
 		},
 	}
 }
