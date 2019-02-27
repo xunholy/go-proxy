@@ -18,7 +18,7 @@ func UnsetCommand() cli.Command {
 			{
 				Name:        "npm",
 				Usage:       "unset npm proxy config",
-				Description: "additional description?",
+				Description: "This command will unset the NPM proxy values. Both https-proxy and proxy will be unset",
 				Action: func(_ *cli.Context) {
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "delete", "proxy"}})
@@ -32,7 +32,7 @@ func UnsetCommand() cli.Command {
 			{
 				Name:        "git",
 				Usage:       "unset git proxy config",
-				Description: "additional description?",
+				Description: "This command will unset the GIT global proxy values. Both http.proxy and https.proxy will be unset",
 				Action: func(_ *cli.Context) {
 					cmds := []execute.Command{}
 					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}}

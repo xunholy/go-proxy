@@ -6,6 +6,8 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
+
+	"github.com/xUnholy/go-proxy/internal/profile"
 )
 
 func StopCommand() cli.Command {
@@ -23,6 +25,7 @@ func StopCommand() cli.Command {
 			},
 		},
 		Action: func(_ *cli.Context) {
+			profile.UpdateGlobalEnvironmentVariables("")
 			cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
 			_, err := execute.RunCommand(cmds)
 			if err != nil {

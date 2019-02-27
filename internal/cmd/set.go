@@ -23,14 +23,11 @@ func SetCommand() cli.Command {
 		Aliases:     []string{""},
 		Usage:       "proxy set",
 		Description: "Set CNTLM Proxy Config",
-		Action: func(_ *cli.Context) {
-			fmt.Println("Set command invoked")
-		},
 		Subcommands: []cli.Command{
 			{
 				Name:        "npm",
 				Usage:       "set npm proxy config",
-				Description: "additional description?",
+				Description: "This command will set the NPM proxy values. Both https-proxy and proxy will be set",
 				Flags: []cli.Flag{
 					cli.IntFlag{
 						Name:        "port, p",
@@ -53,7 +50,7 @@ func SetCommand() cli.Command {
 			{
 				Name:        "git",
 				Usage:       "set git proxy config",
-				Description: "additional description?",
+				Description: "This command will set the GIT global proxy values. Both http.proxy and https.proxy will be set",
 				Flags: []cli.Flag{
 					cli.IntFlag{
 						Name:        "port, p",
@@ -72,13 +69,13 @@ func SetCommand() cli.Command {
 					if err != nil {
 						log.Fatal(err)
 					}
-					fmt.Println("Set npm config successfully")
+					fmt.Println("Set git config successfully")
 				},
 			},
 			{
 				Name:        "username",
 				Usage:       "proxy set username",
-				Description: "additional description?",
+				Description: "This command will update the Username value in your CNTLM.conf file",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Username: ")
 					output, err := prompt.GetInput()
@@ -93,7 +90,7 @@ func SetCommand() cli.Command {
 			{
 				Name:        "password",
 				Usage:       "proxy set password",
-				Description: "additional description?",
+				Description: "This command will update the Password value in your CNTLM.conf file",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Password: ")
 					e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}}
@@ -108,7 +105,7 @@ func SetCommand() cli.Command {
 			{
 				Name:        "domain",
 				Usage:       "proxy set domain",
-				Description: "additional description?",
+				Description: "This command will update the doain value in your CNTLM.conf file",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Proxy Domain: ")
 					output, err := prompt.GetInput()

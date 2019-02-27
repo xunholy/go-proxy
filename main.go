@@ -12,7 +12,7 @@ func main() {
 
 	app := cli.NewApp()
 	app.Name = "proxy"
-	app.Version = "0.0.1"
+	app.Version = "0.1.0"
 	app.Usage = "executing and configuring cntlm"
 	app.Authors = []cli.Author{
 		{

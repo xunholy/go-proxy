@@ -8,6 +8,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/execute"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
+	"github.com/xUnholy/go-proxy/internal/profile"
 )
 
 func StartCommand() cli.Command {
@@ -30,6 +31,8 @@ func StartCommand() cli.Command {
 			},
 		},
 		Action: func(_ *cli.Context) {
+			proxyURL := makeProxyURL(port)
+			profile.UpdateGlobalEnvironmentVariables(proxyURL)
 			p := fmt.Sprintf("Listen\t%v", port)
 			cntlm.UpdateFile(cntlmFile, p)
 			cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
@@ -38,7 +41,7 @@ func StartCommand() cli.Command {
 				fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
 				log.Fatal(err)
 			}
-			fmt.Println(makeProxyURL(port))
+			fmt.Println("CNTLM Proxy Started On", proxyURL)
 		},
 	}
 }
