@@ -42,5 +42,5 @@ func UpdateGlobalEnvironmentVariables(proxyURL string) {
 		Open new terminal
 
 `
-  fmt.Printf(output, filename)
+	fmt.Printf(output, filename)
 }
