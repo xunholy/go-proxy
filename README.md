@@ -1,6 +1,8 @@
 [![GolangCI](https://golangci.com/badges/github.com/xUnholy/go-proxy.svg)](https://golangci.com)
 [![Build Status](https://travis-ci.com/xUnholy/go-proxy.svg?branch=master)](https://travis-ci.com/xUnholy/go-proxy)
 [![Coverage Status](https://coveralls.io/repos/github/xUnholy/go-proxy/badge.svg?branch=master)](https://coveralls.io/github/xUnholy/go-proxy?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ff937aa58ba1d149d29a/maintainability)](https://codeclimate.com/github/xUnholy/go-proxy/maintainability)
+[![License](https://img.shields.io/badge/license-GPL_v3.0-blue.svg)](https://github.com/xUnholy/go-proxy/blob/master/LICENSE.md)
 
 # CNTLM Proxy Configuration Tool
 
