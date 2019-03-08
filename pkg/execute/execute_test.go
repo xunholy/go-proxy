@@ -17,6 +17,29 @@ func fakeExecCommand(command string, args ...string) *exec.Cmd {
 	return cmd
 }
 
+// func TestHelperProcess(t *testing.T) {
+// 	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
+// 		return
+// 	}
+// 	defer os.Exit(0)
+// 	args := os.Args
+// 	for len(args) > 0 {
+// 		if args[0] == "--" {
+// 			args = args[1:]
+// 			break
+// 		}
+// 		args = args[1:]
+// 	}
+// 	if len(args) == 0 {
+// 		fmt.Fprintf(os.Stderr, "No command\n")
+// 		os.Exit(2)
+// 	}
+// 	switch os.Getenv("TEST_CASE") {
+// 	case "case1":
+// 		t.Fatal()
+// 	}
+// }
+
 func TestRunCommands(t *testing.T) {
 	testCase = "case1"
 	tests := []Command{}
