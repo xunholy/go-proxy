@@ -105,7 +105,7 @@ func SetCommand() cli.Command {
 			{
 				Name:        "domain",
 				Usage:       "proxy set domain",
-				Description: "This command will update the doain value in your CNTLM.conf file",
+				Description: "This command will update the domain value in your CNTLM.conf file",
 				Action: func(_ *cli.Context) {
 					fmt.Printf("Enter Proxy Domain: ")
 					output, err := prompt.GetInput()

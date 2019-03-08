@@ -14,8 +14,10 @@ type CommandOutput struct {
 	Output string
 }
 
+var execCommand = exec.Command
+
 func RunCommand(e Command) (string, error) {
-	cmd := exec.Command(e.Cmd, e.Args...)
+	cmd := execCommand(e.Cmd, e.Args...)
 	cmd.Stdin = os.Stdin
 	out, err := cmd.CombinedOutput()
 	if err != nil {

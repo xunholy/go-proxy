@@ -29,17 +29,31 @@ This tool will be able to dynamically set proxy configuration within CNTLM and o
 
 Use the following to be able to install on MacOS via Homebrew:
 
-1. Running the below command will add the homebrew tap to our repository
+Running the below command will add the homebrew tap to our repository
 
 ```bash
 brew tap xUnholy/homebrew-proxy
 ```
 
-2. Now you've added our custom tap, you can download with the following command:
+Now you've added our custom tap, you can download with the following command:
 
 ```bash
 brew install proxy
 ```
+
+When a new release is available you can update your proxy using by running:
+
+```bash
+brew upgrade proxy
+```
+
+To upgrade your proxy to the latest stable release use the following command:
+
+```bash
+brew upgrade proxy
+```
+
+*Note: Should the upgrade fail you may be required to remove the previous binary, the output will print what file to remove*
 
 ## Commands
 
@@ -68,11 +82,11 @@ OPTIONS:
 
 Usage example:
 
-```
+```bash
 proxy stop [command options] [arguments...]
 ```
 
-```
+```bash
 OPTIONS:
    --all, -a  unset all CNTLM config
 ```
@@ -81,13 +95,13 @@ OPTIONS:
 
 Usage example:
 
-```
+```bash
 proxy set command [command options] [arguments...]
 ```
 
 Subcommand options:
 
-```
+```bash
 COMMANDS:
      npm       set npm proxy config
      git       set git proxy config
@@ -98,14 +112,14 @@ COMMANDS:
 
 All subcommands have the following options:
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
 ```
 
 To be able to set the CNTLM authentication password the *password* subcommand can be used. EG:
 
-```
+```bash
 proxy set password
 ```
 
@@ -116,13 +130,13 @@ Once the password is entered and then encrypted, it will be stored in **cntlm.co
 
 Usage example:
 
-```
+```bash
 proxy unset command [command options] [arguments...]
 ```
 
 Subcommand options:
 
-```
+```bash
 COMMANDS:
      npm  unset npm proxy config
      git  unset git proxy config
@@ -130,7 +144,7 @@ COMMANDS:
 
 All subcommands have the following options:
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
 ```
@@ -185,7 +199,7 @@ proxy [command options] [arguments...]
 
 * [GOlang](https://golang.org/dl/) - Programming Language
 * [urfave/cli](https://github.com/urfave/cli) - The CLI framework
-* [Travis](https://maven.apache.org/) - Conitnuous Integration Tool
+* [Travis](https://maven.apache.org/) - Continuous Integration Tool
 * [VSCode](https://code.visualstudio.com/) - IDE
 
 ## Contributing
@@ -198,7 +212,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Michael Fornaro** - *Initial work* - [Linkedin](https://www.linkedin.com/in/michael-fornaro-5b756179/)
+* **Michael Fornaro** - *Initial work* - [LinkedIn](https://www.linkedin.com/in/michael-fornaro-5b756179/)
 
 See also the list of [contributors](https://github.com/xUnholy/go-proxy/contributors) who participated in this project.
 
@@ -210,5 +224,5 @@ This project is licensed under the GPL License - see the [LICENSE.md](LICENSE.md
 
 Wish to acknowledge the following people for their inspiration, and guidance with this project and/or in general:
 
-* **Prateek Nayak** - [Innablr](https://innablr.com.au/)
-* **Jasper Brekelmans** - [Cognizant](https://www.cognizant.com/)
+* **Prateek Nayak** - [Github](https://github.com/prateeknayak)
+* **Jasper Brekelmans** - [Github](https://github.com/jbrekelmans)
