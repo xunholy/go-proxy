@@ -1,53 +1,64 @@
 package execute
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"testing"
 )
 
-var testCase string
-
-func fakeExecCommand(command string, args ...string) *exec.Cmd {
+func mockExecCommand(command string, args ...string) *exec.Cmd {
 	cs := []string{"-test.run=TestHelperProcess", "--", command}
 	cs = append(cs, args...)
 	cmd := exec.Command(os.Args[0], cs...)
-	tc := "TEST_CASE=" + testCase
-	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", tc}
+	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1"}
 	return cmd
 }
 
-// func TestHelperProcess(t *testing.T) {
-// 	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
-// 		return
-// 	}
-// 	defer os.Exit(0)
-// 	args := os.Args
-// 	for len(args) > 0 {
-// 		if args[0] == "--" {
-// 			args = args[1:]
-// 			break
-// 		}
-// 		args = args[1:]
-// 	}
-// 	if len(args) == 0 {
-// 		fmt.Fprintf(os.Stderr, "No command\n")
-// 		os.Exit(2)
-// 	}
-// 	switch os.Getenv("TEST_CASE") {
-// 	case "case1":
-// 		t.Fatal()
-// 	}
-// }
+func TestHelperProcess(t *testing.T) {
+	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
+		return
+	}
+	_, err := fmt.Fprintf(os.Stdout, testResult)
+	if err != nil {
+		os.Exit(1)
+	}
+	os.Exit(0)
+}
+
+const testResult = "foo!"
 
 func TestRunCommands(t *testing.T) {
-	testCase = "case1"
 	tests := []Command{}
 	tests = append(tests, Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
-	execCommand = fakeExecCommand
+
+	execCommand = mockExecCommand
 	defer func() { execCommand = exec.Command }()
-	out, err := RunCommands(tests)
+
+	_, err := RunCommands(tests)
 	if err != nil {
-		t.Fatal(out)
+		t.Errorf("Expected nil error, got %#v", err)
+	}
+
+}
+
+func TestRunCommand(t *testing.T) {
+	tests := []struct {
+		command Command
+	}{
+		{command: Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}},
+	}
+
+	execCommand = mockExecCommand
+	defer func() { execCommand = exec.Command }()
+
+	for _, i := range tests {
+		out, err := RunCommand(i.command)
+		if err != nil {
+			t.Errorf("Expected nil error, got %#v", err)
+		}
+		if out != testResult {
+			t.Errorf("Expected %q, got %q", testResult, out)
+		}
 	}
 }
