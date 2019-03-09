@@ -4,14 +4,22 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+var mockedExitStatus = 0
+
+const testResult = "foo!"
 
 func mockExecCommand(command string, args ...string) *exec.Cmd {
 	cs := []string{"-test.run=TestHelperProcess", "--", command}
 	cs = append(cs, args...)
 	cmd := exec.Command(os.Args[0], cs...)
-	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1"}
+	es := strconv.Itoa(mockedExitStatus)
+	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
 	return cmd
 }
 
@@ -19,46 +27,56 @@ func TestHelperProcess(t *testing.T) {
 	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
 		return
 	}
-	_, err := fmt.Fprintf(os.Stdout, "%v", testResult)
-	if err != nil {
-		os.Exit(1)
-	}
-	os.Exit(0)
+	fmt.Fprintf(os.Stdout, "%v", testResult)
+	i, _ := strconv.Atoi(os.Getenv("EXIT_STATUS"))
+	os.Exit(i)
 }
-
-const testResult = "foo!"
 
 func TestRunCommands(t *testing.T) {
-	tests := []Command{}
-	tests = append(tests, Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
+	cmds := append([]Command{}, Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
 
-	execCommand = mockExecCommand
-	defer func() { execCommand = exec.Command }()
-
-	_, err := RunCommands(tests)
-	if err != nil {
-		t.Errorf("Expected nil error, got %#v", err)
-	}
-
-}
-
-func TestRunCommand(t *testing.T) {
 	tests := []struct {
-		command Command
+		expected bool
+		exitCode int
+		commands []Command
 	}{
-		{command: Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}},
+		{expected: false, exitCode: 0, commands: cmds},
+		{expected: true, exitCode: 1, commands: cmds},
 	}
 
 	execCommand = mockExecCommand
 	defer func() { execCommand = exec.Command }()
 
 	for _, i := range tests {
+		mockedExitStatus = i.exitCode
+		_, err := RunCommands(i.commands)
+		assert.Equal(t, i.expected, err != nil)
+	}
+
+}
+
+func TestRunCommand(t *testing.T) {
+	cmd := Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}
+
+	tests := []struct {
+		expected bool
+		exitCode int
+		command  Command
+	}{
+		{expected: false, exitCode: 0, command: cmd},
+		{expected: true, exitCode: 1, command: cmd},
+	}
+
+	execCommand = mockExecCommand
+	defer func() { execCommand = exec.Command }()
+
+	for _, i := range tests {
+		mockedExitStatus = i.exitCode
 		out, err := RunCommand(i.command)
-		if err != nil {
-			t.Errorf("Expected nil error, got %#v", err)
+		assert.Equal(t, i.expected, err != nil)
+		if i.exitCode == 0 {
+			assert.Equal(t, testResult, out)
 		}
-		if out != testResult {
-			t.Errorf("Expected %q, got %q", testResult, out)
-		}
+
 	}
 }
