@@ -19,7 +19,7 @@ func TestHelperProcess(t *testing.T) {
 	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
 		return
 	}
-	_, err := fmt.Fprintf(os.Stdout, testResult)
+	_, err := fmt.Fprintf(os.Stdout, "%v", testResult)
 	if err != nil {
 		os.Exit(1)
 	}
