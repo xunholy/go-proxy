@@ -9,6 +9,8 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/prompt"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
+	git "github.com/xUnholy/go-proxy/internal/git"
+	npm "github.com/xUnholy/go-proxy/internal/npm"
 )
 
 var (
@@ -38,9 +40,7 @@ func SetCommand() cli.Command {
 				},
 				Action: func(_ *cli.Context) {
 					p := makeProxyURL(port)
-					cmds := []execute.Command{}
-					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
-					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "https-proxy", p}})
+					cmds := npm.EnableProxyConfiguration(p)
 					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
@@ -62,10 +62,7 @@ func SetCommand() cli.Command {
 				},
 				Action: func(_ *cli.Context) {
 					p := makeProxyURL(port)
-					cmds := []execute.Command{}
-					http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", p}}
-					https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", p}}
-					cmds = append(cmds, http, https)
+					cmds := git.EnableProxyConfiguration(p)
 					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
