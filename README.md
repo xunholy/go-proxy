@@ -6,18 +6,18 @@
 
 # CNTLM Proxy Configuration Tool
 
-This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. 
+This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming.
 
-This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
+This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support.
 
 ## Contents
 
 * [Installing](#Installing)
 * [Commands](#Commands)
 * [Getting Started](#Getting-Started)
-   * [Prerequisites](#Prerequisites)
-   * [Running Tests](#Running-Tests)
-   * [Build And Package](#Build-And-Package) 
+  * [Prerequisites](#Prerequisites)
+  * [Running Tests](#Running-Tests)
+  * [Build And Package](#Build-And-Package)
 * [Built With](#Built-With)
 * [Contributing](#Contributing)
 * [Versioning](#Versioning)
@@ -68,11 +68,11 @@ The following is a list of all available commands:
 
 Usage example:
 
-```
+```bash
 proxy start [command options] [arguments...]
 ```
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
    --all, -a             set all CNTLM config
@@ -125,7 +125,6 @@ proxy set password
 
 Once the password is entered and then encrypted, it will be stored in **cntlm.conf**.
 
-
 ### Unset
 
 Usage example:
@@ -157,7 +156,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install:
 
-* [Golang](https://golang.org/dl/)
+* [golang](https://golang.org/dl/)
 
 ## Running Tests
 
@@ -167,7 +166,7 @@ Use the following steps to execute the test suite:
 go test -v  ./...
 ```
 
-OR 
+OR
 
 ```bash
 make test
@@ -197,10 +196,10 @@ proxy [command options] [arguments...]
 
 ## Built With
 
-* [GOlang](https://golang.org/dl/) - Programming Language
+* [golang](https://golang.org/dl/) - Programming Language
 * [urfave/cli](https://github.com/urfave/cli) - The CLI framework
-* [Travis](https://maven.apache.org/) - Continuous Integration Tool
-* [VSCode](https://code.visualstudio.com/) - IDE
+* [travis](https://travis-ci.org/) - Continuous Integration Tool
+* [vscode](https://code.visualstudio.com/) - IDE
 
 ## Contributing
 
@@ -208,7 +207,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/xUnholy/CONTRIBUTION.md) f
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 

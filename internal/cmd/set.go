@@ -40,6 +40,7 @@ func SetCommand() cli.Command {
 					p := makeProxyURL(port)
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", p}})
+					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "set", "https-proxy", p}})
 					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)

@@ -22,6 +22,7 @@ func UnsetCommand() cli.Command {
 				Action: func(_ *cli.Context) {
 					cmds := []execute.Command{}
 					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "delete", "proxy"}})
+					cmds = append(cmds, execute.Command{Cmd: "npm", Args: []string{"config", "delete", "https-proxy"}})
 					_, err := execute.RunCommands(cmds)
 					if err != nil {
 						log.Fatal(err)
