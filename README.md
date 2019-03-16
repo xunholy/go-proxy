@@ -6,18 +6,18 @@
 
 # CNTLM Proxy Configuration Tool
 
-This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming. 
+This project is a CLI for managing proxy configuring on a local dev machine. To configure CTNLM and other dev tools can be troublesome and time consuming.
 
-This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support. 
+This tool will be able to dynamically set proxy configuration within CNTLM and other supported tools that have tool specific proxy support.
 
 ## Contents
 
 * [Installing](#Installing)
 * [Commands](#Commands)
 * [Getting Started](#Getting-Started)
-   * [Prerequisites](#Prerequisites)
-   * [Running Tests](#Running-Tests)
-   * [Build And Package](#Build-And-Package) 
+  * [Prerequisites](#Prerequisites)
+  * [Running Tests](#Running-Tests)
+  * [Build And Package](#Build-And-Package)
 * [Built With](#Built-With)
 * [Contributing](#Contributing)
 * [Versioning](#Versioning)
@@ -29,17 +29,31 @@ This tool will be able to dynamically set proxy configuration within CNTLM and o
 
 Use the following to be able to install on MacOS via Homebrew:
 
-1. Running the below command will add the homebrew tap to our repository
+Running the below command will add the homebrew tap to our repository
 
 ```bash
 brew tap xUnholy/homebrew-proxy
 ```
 
-2. Now you've added our custom tap, you can download with the following command:
+Now you've added our custom tap, you can download with the following command:
 
 ```bash
 brew install proxy
 ```
+
+When a new release is available you can update your proxy using by running:
+
+```bash
+brew upgrade proxy
+```
+
+To upgrade your proxy to the latest stable release use the following command:
+
+```bash
+brew upgrade proxy
+```
+
+*Note: Should the upgrade fail you may be required to remove the previous binary, the output will print what file to remove*
 
 ## Commands
 
@@ -54,11 +68,11 @@ The following is a list of all available commands:
 
 Usage example:
 
-```
+```bash
 proxy start [command options] [arguments...]
 ```
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
    --all, -a             set all CNTLM config
@@ -68,11 +82,11 @@ OPTIONS:
 
 Usage example:
 
-```
+```bash
 proxy stop [command options] [arguments...]
 ```
 
-```
+```bash
 OPTIONS:
    --all, -a  unset all CNTLM config
 ```
@@ -81,13 +95,13 @@ OPTIONS:
 
 Usage example:
 
-```
+```bash
 proxy set command [command options] [arguments...]
 ```
 
 Subcommand options:
 
-```
+```bash
 COMMANDS:
      npm       set npm proxy config
      git       set git proxy config
@@ -98,31 +112,30 @@ COMMANDS:
 
 All subcommands have the following options:
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
 ```
 
 To be able to set the CNTLM authentication password the *password* subcommand can be used. EG:
 
-```
+```bash
 proxy set password
 ```
 
 Once the password is entered and then encrypted, it will be stored in **cntlm.conf**.
 
-
 ### Unset
 
 Usage example:
 
-```
+```bash
 proxy unset command [command options] [arguments...]
 ```
 
 Subcommand options:
 
-```
+```bash
 COMMANDS:
      npm  unset npm proxy config
      git  unset git proxy config
@@ -130,7 +143,7 @@ COMMANDS:
 
 All subcommands have the following options:
 
-```
+```bash
 OPTIONS:
    --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
 ```
@@ -143,7 +156,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install:
 
-* [Golang](https://golang.org/dl/)
+* [golang](https://golang.org/dl/)
 
 ## Running Tests
 
@@ -153,7 +166,7 @@ Use the following steps to execute the test suite:
 go test -v  ./...
 ```
 
-OR 
+OR
 
 ```bash
 make test
@@ -183,22 +196,22 @@ proxy [command options] [arguments...]
 
 ## Built With
 
-* [GOlang](https://golang.org/dl/) - Programming Language
+* [golang](https://golang.org/dl/) - Programming Language
 * [urfave/cli](https://github.com/urfave/cli) - The CLI framework
-* [Travis](https://maven.apache.org/) - Conitnuous Integration Tool
-* [VSCode](https://code.visualstudio.com/) - IDE
+* [travis](https://travis-ci.org/) - Continuous Integration Tool
+* [vscode](https://code.visualstudio.com/) - IDE
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/xUnholy/CONTRIBUTION.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTION.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/xUnholy/go-proxy/tags).
 
 ## Authors
 
-* **Michael Fornaro** - *Initial work* - [Linkedin](https://www.linkedin.com/in/michael-fornaro-5b756179/)
+* **Michael Fornaro** - *Initial work* - [LinkedIn](https://www.linkedin.com/in/michael-fornaro-5b756179/)
 
 See also the list of [contributors](https://github.com/xUnholy/go-proxy/contributors) who participated in this project.
 
@@ -210,5 +223,5 @@ This project is licensed under the GPL License - see the [LICENSE.md](LICENSE.md
 
 Wish to acknowledge the following people for their inspiration, and guidance with this project and/or in general:
 
-* **Prateek Nayak** - [Innablr](https://innablr.com.au/)
-* **Jasper Brekelmans** - [Cognizant](https://www.cognizant.com/)
+* **Prateek Nayak** - [Github](https://github.com/prateeknayak)
+* **Jasper Brekelmans** - [Github](https://github.com/jbrekelmans)
