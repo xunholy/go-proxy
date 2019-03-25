@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path"
 )
 
 var proxyVariables = []string{
@@ -19,15 +18,12 @@ var proxyVariables = []string{
 }
 
 func UpdateGlobalEnvironmentVariables(proxyURL string) {
-	dirPath := path.Join(os.Getenv("HOME"), ".proxy")
-	filename := fmt.Sprintf("%v/proxy.sh", dirPath)
+	dirPath := os.Getenv("HOME")
+	filename := fmt.Sprintf("%v/.proxyrc", dirPath)
 	data := []byte{}
 	for _, v := range proxyVariables {
 		a := fmt.Sprintf("export %v=%v\n", v, proxyURL)
 		data = append(data, a...)
-	}
-	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
-		log.Fatalf("Dir Not Found: %v", dirPath)
 	}
 	err := ioutil.WriteFile(filename, data, 0644)
 	if err != nil {
