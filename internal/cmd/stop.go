@@ -17,6 +17,13 @@ func StopCommand() cli.Command {
 		Aliases:     []string{""},
 		Usage:       "proxy stop",
 		Description: "Stop CNTLM Proxy",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:        "all, a",
+				Usage:       "unset all CNTLM config",
+				Destination: &setAll,
+			},
+		},
 		Action: func(_ *cli.Context) {
 			profile.UpdateGlobalEnvironmentVariables("")
 			cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}

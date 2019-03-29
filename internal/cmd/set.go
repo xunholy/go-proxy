@@ -16,6 +16,7 @@ import (
 var (
 	cntlmFile = "/usr/local/etc/cntlm.conf"
 	port      int
+	setAll    bool
 )
 
 func SetCommand() cli.Command {
@@ -89,7 +90,6 @@ func SetCommand() cli.Command {
 				Usage:       "proxy set password",
 				Description: "This command will update the Password value in your CNTLM.conf file",
 				Action: func(_ *cli.Context) {
-					// TODO: changing the password should restart cntlm to re-auth [go-proxy/#47]
 					fmt.Printf("Enter Password: ")
 					e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}}
 					output, err := execute.RunCommand(e)

@@ -1,15 +1,13 @@
 package execute
 
 import (
-	"io"
+	"os"
 	"os/exec"
 )
 
 type Command struct {
-	Dir   string
-	Cmd   string
-	Args  []string
-	Stdin io.Reader
+	Cmd  string
+	Args []string
 }
 
 type CommandOutput struct {
@@ -20,8 +18,7 @@ var execCommand = exec.Command
 
 func RunCommand(e Command) (string, error) {
 	cmd := execCommand(e.Cmd, e.Args...)
-	cmd.Dir = e.Dir
-	cmd.Stdin = e.Stdin
+	cmd.Stdin = os.Stdin
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return "", err
@@ -32,7 +29,8 @@ func RunCommand(e Command) (string, error) {
 func RunCommands(cmds []Command) ([]CommandOutput, error) {
 	output := []CommandOutput{}
 	for _, c := range cmds {
-		out, err := RunCommand(c)
+		cmd := Command{Cmd: c.Cmd, Args: c.Args}
+		out, err := RunCommand(cmd)
 		if err != nil {
 			return output, err
 		}

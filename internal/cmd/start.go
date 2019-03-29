@@ -24,6 +24,11 @@ func StartCommand() cli.Command {
 				Usage:       "set custom CNTLM `PORT`",
 				Destination: &port,
 			},
+			cli.BoolFlag{
+				Name:        "all, a",
+				Usage:       "set all CNTLM config",
+				Destination: &setAll,
+			},
 		},
 		Action: func(_ *cli.Context) {
 			proxyURL := makeProxyURL(port)
