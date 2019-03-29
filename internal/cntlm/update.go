@@ -36,6 +36,7 @@ func UpdateFile(file, match string) {
 	}
 }
 
+// TODO: Allow value to be an array of strings [go-proxy/#52]
 func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
 	keyPairValues := []KeyPairValues{}
 	for i, l := range lines {
@@ -46,7 +47,7 @@ func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
 			continue
 		}
 		fields := strings.Fields(l)
-		if len(fields) > 2 {
+		if len(fields) != 2 {
 			continue
 		}
 		keyPairValues = append(keyPairValues, KeyPairValues{Key: fields[0], Value: fields[1], Line: i})
