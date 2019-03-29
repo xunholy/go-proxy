@@ -14,18 +14,14 @@ type KeyPairValues struct {
 }
 
 func UpdateFile(file, match string) {
-
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	match = strings.TrimSpace(match)
-
 	matches := strings.Split(match, "\n")
 	lines := strings.Split(string(content), "\n")
-
 	keyPairValues := parseFileIntoKeyPairValues(lines)
-
 	for i := 0; i <= len(matches)-1; i++ {
 		matchFields := strings.Fields(matches[i])
 		for _, i := range keyPairValues {
@@ -36,6 +32,7 @@ func UpdateFile(file, match string) {
 	}
 }
 
+// TODO: Allow value to be an array of strings [go-proxy/#52]
 func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
 	keyPairValues := []KeyPairValues{}
 	for i, l := range lines {
@@ -46,7 +43,7 @@ func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
 			continue
 		}
 		fields := strings.Fields(l)
-		if len(fields) > 2 {
+		if len(fields) != 2 {
 			continue
 		}
 		keyPairValues = append(keyPairValues, KeyPairValues{Key: fields[0], Value: fields[1], Line: i})
