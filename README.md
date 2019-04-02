@@ -41,12 +41,6 @@ Now you've added our custom tap, you can download with the following command:
 brew install proxy
 ```
 
-When a new release is available you can update your proxy using by running:
-
-```bash
-brew upgrade proxy
-```
-
 To upgrade your proxy to the latest stable release use the following command:
 
 ```bash
