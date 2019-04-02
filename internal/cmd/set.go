@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/urfave/cli"
 	"github.com/xUnholy/go-proxy/pkg/execute"
@@ -91,7 +92,7 @@ func SetCommand() cli.Command {
 				Action: func(_ *cli.Context) {
 					// TODO: changing the password should restart cntlm to re-auth [go-proxy/#47]
 					fmt.Printf("Enter Password: ")
-					e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}}
+					e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}, Stdin: os.Stdin}
 					output, err := execute.RunCommand(e)
 					if err != nil {
 						log.Fatal(err)
