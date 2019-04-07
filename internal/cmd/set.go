@@ -116,7 +116,3 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 	cntlm.UpdateFile(cntlmFile, update)
 	fmt.Println("Set CNTLM domain successfully")
 }
-
-func makeProxyURL(port int) string {
-	return fmt.Sprintf("http://localhost:%d", port)
-}
