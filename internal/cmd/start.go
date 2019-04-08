@@ -28,10 +28,9 @@ func startCmd(cmd *cobra.Command, args []string) {
 	p := fmt.Sprintf("Listen\t%v", port)
 	cntlm.UpdateFile(cntlmFile, p)
 	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
-	_, err := execute.RunCommand(cmds)
-	if err != nil {
-		fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
-		log.Fatal(err)
+	r := execute.RunCommand(cmds)
+	if r.Err != nil {
+		log.Fatalf("CNTLM Proxy couldn't be started. Is it already running? %q", r.Err)
 	}
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
 }

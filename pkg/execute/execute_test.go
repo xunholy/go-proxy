@@ -3,7 +3,6 @@ package execute_test
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 	"testing"
 
@@ -11,18 +10,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
-var mockedExitStatus = 0
-
-const testResult = "foo!"
-
-func mockExecCommand(command string, args ...string) *exec.Cmd {
-	cs := []string{"-test.run=TestHelperProcess", "--", command}
-	cs = append(cs, args...)
-	cmd := exec.Command(os.Args[0], cs...)
-	es := strconv.Itoa(mockedExitStatus)
-	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
-	return cmd
-}
+const testResult = "World!"
 
 func TestHelperProcess(t *testing.T) {
 	if os.Getenv("GO_WANT_HELPER_PROCESS") != "1" {
@@ -33,50 +21,21 @@ func TestHelperProcess(t *testing.T) {
 	os.Exit(i)
 }
 
-func TestRunCommands(t *testing.T) {
-	cmds := append([]execute.Command{}, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
-
-	tests := []struct {
-		expected bool
-		exitCode int
-		commands []execute.Command
-	}{
-		{expected: false, exitCode: 0, commands: cmds},
-		{expected: true, exitCode: 1, commands: cmds},
-	}
-
-	execute.execCommand = mockExecCommand
-	defer func() { execute.execCommand = exec.Command }()
-
-	for _, i := range tests {
-		mockedExitStatus = i.exitCode
-		_, err := execute.RunCommands(i.commands)
-		assert.Equal(t, i.expected, err != nil)
-	}
-
-}
-
 func TestRunCommand(t *testing.T) {
-	cmd := execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}
 
 	tests := []struct {
 		expected bool
-		exitCode int
-		command  execute.Command
+		command  execute.TestCommand
 	}{
-		{expected: false, exitCode: 0, command: cmd},
-		{expected: true, exitCode: 1, command: cmd},
+		{expected: false, command: execute.TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 0}},
+		{expected: true, command: execute.TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 1}},
 	}
 
-	execCommand = mockExecCommand
-	defer func() { execCommand = exec.Command }()
-
 	for _, i := range tests {
-		mockedExitStatus = i.exitCode
-		out, err := execute.RunCommand(i.command)
-		assert.Equal(t, i.expected, err != nil)
-		if i.exitCode == 0 {
-			assert.Equal(t, testResult, out)
+		r := execute.RunCommand(i.command)
+		assert.Equal(t, i.expected, r.Err != nil)
+		if i.command.ExitCode == 0 {
+			assert.Equal(t, testResult, string(r.Output))
 		}
 
 	}

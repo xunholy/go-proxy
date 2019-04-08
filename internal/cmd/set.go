@@ -65,8 +65,7 @@ func SetupSetCli() *cobra.Command {
 
 func setNpmCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	cmds := npm.EnableProxyConfiguration(p)
-	_, err := execute.RunCommands(cmds)
+	err := npm.EnableProxyConfiguration(p)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,8 +74,7 @@ func setNpmCmd(cmd *cobra.Command, args []string) {
 
 func setGitCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	cmds := git.EnableProxyConfiguration(p)
-	_, err := execute.RunCommands(cmds)
+	err := git.EnableProxyConfiguration(p)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -98,11 +96,11 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	// TODO: changing the password should restart cntlm to re-auth [go-proxy/#47]
 	fmt.Printf("Enter Password: ")
 	e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}, Stdin: os.Stdin}
-	output, err := execute.RunCommand(e)
-	if err != nil {
-		log.Fatal(err)
+	r := execute.RunCommand(e)
+	if r.Err != nil {
+		log.Fatal(r.Err)
 	}
-	cntlm.UpdateFile(cntlmFile, output)
+	cntlm.UpdateFile(cntlmFile, string(r.Output))
 	fmt.Println("Set CNTLM password successfully")
 }
 

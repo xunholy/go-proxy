@@ -2,8 +2,20 @@ package execute
 
 import (
 	"io"
+	"os"
 	"os/exec"
+	"strconv"
 )
+
+type Commander interface {
+	ExecuteCommand() CmdOutput
+}
+
+type CmdOutput struct {
+	Err    error
+	Output []byte
+	Cmd    *exec.Cmd
+}
 
 type Command struct {
 	Cmd   string
@@ -12,28 +24,29 @@ type Command struct {
 	Stdin io.Reader
 }
 
-type CommandOutput struct {
-	Output string
+type TestCommand struct {
+	Cmd      string
+	Args     []string
+	ExitCode int
 }
 
-var execCommand = exec.Command
-
-func RunCommand(e Command) (string, error) {
-	cmd := execCommand(e.Cmd, e.Args...)
-	cmd.Dir = e.Dir
-	cmd.Stdin = e.Stdin
+func (c Command) ExecuteCommand() CmdOutput {
+	cmd := exec.Command(c.Cmd, c.Args...)
+	cmd.Dir = c.Dir
+	cmd.Stdin = c.Stdin
 	out, err := cmd.CombinedOutput()
-	return string(out), err
+	return CmdOutput{Output: out, Err: err}
 }
 
-func RunCommands(cmds []Command) ([]CommandOutput, error) {
-	output := []CommandOutput{}
-	for _, c := range cmds {
-		out, err := RunCommand(c)
-		if err != nil {
-			return output, err
-		}
-		output = append(output, CommandOutput{Output: out})
-	}
-	return output, nil
+func (tc TestCommand) ExecuteCommand() CmdOutput {
+	cs := []string{"-test.run=TestHelperProcess", "--", tc.Cmd}
+	cs = append(cs, tc.Args...)
+	cmd := exec.Command(os.Args[0], cs...)
+	es := strconv.Itoa(tc.ExitCode)
+	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
+	return CmdOutput{Cmd: cmd}
+}
+
+func RunCommand(c Commander) CmdOutput {
+	return c.ExecuteCommand()
 }
