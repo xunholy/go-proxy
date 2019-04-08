@@ -23,10 +23,7 @@ func RunCommand(e Command) (string, error) {
 	cmd.Dir = e.Dir
 	cmd.Stdin = e.Stdin
 	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return "", err
-	}
-	return string(out), nil
+	return string(out), err
 }
 
 func RunCommands(cmds []Command) ([]CommandOutput, error) {
