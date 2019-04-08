@@ -4,46 +4,51 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.com/xUnholy/go-proxy/pkg/execute"
 
 	git "github.com/xUnholy/go-proxy/internal/git"
 	npm "github.com/xUnholy/go-proxy/internal/npm"
 )
 
-func UnsetCommand() cli.Command {
-	return cli.Command{
-		Name:        "unset",
-		Aliases:     []string{""},
-		Usage:       "proxy unset",
-		Description: "Unset CNTLM Proxy Config",
-		Subcommands: []cli.Command{
-			{
-				Name:        "npm",
-				Usage:       "unset npm proxy config",
-				Description: "This command will unset the NPM proxy values. Both https-proxy and proxy will be unset",
-				Action: func(_ *cli.Context) {
-					cmds := npm.DisableProxyConfiguration()
-					_, err := execute.RunCommands(cmds)
-					if err != nil {
-						log.Fatal(err)
-					}
-					fmt.Println("Unset npm config successfully")
-				},
-			},
-			{
-				Name:        "git",
-				Usage:       "unset git proxy config",
-				Description: "This command will unset the GIT global proxy values. Both http.proxy and https.proxy will be unset",
-				Action: func(_ *cli.Context) {
-					cmds := git.DisableProxyConfiguration()
-					_, err := execute.RunCommands(cmds)
-					if err != nil {
-						log.Fatal(err)
-					}
-					fmt.Println("Unset git config successfully")
-				},
-			},
-		},
+func SetupUnsetCli() *cobra.Command {
+	// Top-level command
+	var unsetCmd = &cobra.Command{
+		Use:   "proxy unset",
+		Short: "Unset CNTLM Proxy Config",
 	}
+
+	var unsetNpmCmd = &cobra.Command{
+		Use:   "unset npm proxy config",
+		Short: "This command will unset the NPM proxy values. Both https-proxy and proxy will be unset",
+		Run:   unsetNpmCmd,
+	}
+
+	var unsetGitCmd = &cobra.Command{
+		Use:   "unset git proxy config",
+		Short: "This command will unset the GIT global proxy values. Both http.proxy and https.proxy will be unset",
+		Run:   unsetGitCmd,
+	}
+
+	// add subcommands to set
+	unsetCmd.AddCommand(unsetNpmCmd, unsetGitCmd)
+	return unsetCmd
+}
+
+func unsetNpmCmd(cmd *cobra.Command, args []string) {
+	cmds := npm.DisableProxyConfiguration()
+	_, err := execute.RunCommands(cmds)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Unset npm config successfully")
+}
+
+func unsetGitCmd(cmd *cobra.Command, args []string) {
+	cmds := git.DisableProxyConfiguration()
+	_, err := execute.RunCommands(cmds)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Unset git config successfully")
 }
