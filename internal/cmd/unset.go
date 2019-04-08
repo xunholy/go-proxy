@@ -13,18 +13,18 @@ import (
 func SetupUnsetCli() *cobra.Command {
 	// Top-level command
 	var unsetCmd = &cobra.Command{
-		Use:   "proxy unset",
+		Use:   "unset",
 		Short: "Unset CNTLM Proxy Config",
 	}
 
 	var unsetNpmCmd = &cobra.Command{
-		Use:   "unset npm proxy config",
+		Use:   "npm",
 		Short: "This command will unset the NPM proxy values. Both https-proxy and proxy will be unset",
 		Run:   unsetNpmCmd,
 	}
 
 	var unsetGitCmd = &cobra.Command{
-		Use:   "unset git proxy config",
+		Use:   "git",
 		Short: "This command will unset the GIT global proxy values. Both http.proxy and https.proxy will be unset",
 		Run:   unsetGitCmd,
 	}

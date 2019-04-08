@@ -14,7 +14,7 @@ import (
 func SetupStartCli() *cobra.Command {
 	// Top-level command
 	var startCmd = &cobra.Command{
-		Use:   "proxy start",
+		Use:   "start",
 		Short: "Start CNTLM Proxy",
 		Run:   startCmd,
 	}

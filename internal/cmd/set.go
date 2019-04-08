@@ -22,38 +22,38 @@ var (
 func SetupSetCli() *cobra.Command {
 	// Top-level command
 	var setCmd = &cobra.Command{
-		Use:   "proxy set",
+		Use:   "set",
 		Short: "Set CNTLM Proxy Config",
 	}
 
 	var setNpmCmd = &cobra.Command{
-		Use:   "set npm proxy config",
+		Use:   "npm",
 		Short: "This command will set the NPM proxy values. Both https-proxy and proxy will be set",
 		Run:   setNpmCmd,
 	}
 	setNpmCmd.Flags().IntVar(&port, "port", 3128, "set custom CNTLM `PORT`")
 
 	var setGitCmd = &cobra.Command{
-		Use:   "set git proxy config",
+		Use:   "git",
 		Short: "This command will set the GIT global proxy values. Both http.proxy and https.proxy will be set",
 		Run:   setGitCmd,
 	}
 	setGitCmd.Flags().IntVar(&port, "port", 3128, "set custom CNTLM `PORT`")
 
 	var setUsernameCmd = &cobra.Command{
-		Use:   "proxy set username",
+		Use:   "username",
 		Short: "This command will update the Username value in your CNTLM.conf file",
 		Run:   setUsernameCmd,
 	}
 
 	var setPasswordCmd = &cobra.Command{
-		Use:   "proxy set password",
+		Use:   "password",
 		Short: "This command will update the Password value in your CNTLM.conf file",
 		Run:   setPasswordCmd,
 	}
 
 	var setDomainCmd = &cobra.Command{
-		Use:   "proxy set domain",
+		Use:   "domain",
 		Short: "This command will update the domain value in your CNTLM.conf file",
 		Run:   setDomainCmd,
 	}
