@@ -25,7 +25,7 @@ func stopCmd(cmd *cobra.Command, args []string) {
 	cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
 	r := execute.RunCommand(cmds)
 	if r.Err != nil {
-		log.Fatal("Couldn't kill CNTLM process %q", r.Err)
+		log.Fatalf("Couldn't kill CNTLM process %q", r.Err)
 	}
 	fmt.Println("CNTLM proxy stopped")
 }
