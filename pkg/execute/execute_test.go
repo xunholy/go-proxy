@@ -1,4 +1,4 @@
-package execute
+package execute_test
 
 import (
 	"fmt"
@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
 var mockedExitStatus = 0
@@ -33,35 +34,35 @@ func TestHelperProcess(t *testing.T) {
 }
 
 func TestRunCommands(t *testing.T) {
-	cmds := append([]Command{}, Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
+	cmds := append([]execute.Command{}, execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}})
 
 	tests := []struct {
 		expected bool
 		exitCode int
-		commands []Command
+		commands []execute.Command
 	}{
 		{expected: false, exitCode: 0, commands: cmds},
 		{expected: true, exitCode: 1, commands: cmds},
 	}
 
-	execCommand = mockExecCommand
-	defer func() { execCommand = exec.Command }()
+	execute.execCommand = mockExecCommand
+	defer func() { execute.execCommand = exec.Command }()
 
 	for _, i := range tests {
 		mockedExitStatus = i.exitCode
-		_, err := RunCommands(i.commands)
+		_, err := execute.RunCommands(i.commands)
 		assert.Equal(t, i.expected, err != nil)
 	}
 
 }
 
 func TestRunCommand(t *testing.T) {
-	cmd := Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}
+	cmd := execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", "3128"}}
 
 	tests := []struct {
 		expected bool
 		exitCode int
-		command  Command
+		command  execute.Command
 	}{
 		{expected: false, exitCode: 0, command: cmd},
 		{expected: true, exitCode: 1, command: cmd},
@@ -72,7 +73,7 @@ func TestRunCommand(t *testing.T) {
 
 	for _, i := range tests {
 		mockedExitStatus = i.exitCode
-		out, err := RunCommand(i.command)
+		out, err := execute.RunCommand(i.command)
 		assert.Equal(t, i.expected, err != nil)
 		if i.exitCode == 0 {
 			assert.Equal(t, testResult, out)
