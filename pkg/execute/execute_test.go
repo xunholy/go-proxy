@@ -42,7 +42,6 @@ func (tc TestCommand) ExecuteCommand() ([]byte, error) {
 }
 
 func TestRunCommand(t *testing.T) {
-
 	tests := []struct {
 		expected bool
 		command  TestCommand
@@ -50,7 +49,6 @@ func TestRunCommand(t *testing.T) {
 		{expected: false, command: TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 0}},
 		{expected: true, command: TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 1}},
 	}
-
 	for _, i := range tests {
 		output, err := execute.RunCommand(i.command)
 		assert.Equal(t, i.expected, err != nil)
