@@ -13,7 +13,7 @@ import (
 func SetupStopCli() *cobra.Command {
 	// Top-level command
 	var stopCmd = &cobra.Command{
-		Use:   "proxy stop",
+		Use:   "stop",
 		Short: "Stop CNTLM Proxy",
 		Run:   stopCmd,
 	}
