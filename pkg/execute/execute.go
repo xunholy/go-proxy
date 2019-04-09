@@ -2,19 +2,11 @@ package execute
 
 import (
 	"io"
-	"os"
 	"os/exec"
-	"strconv"
 )
 
 type Commander interface {
-	ExecuteCommand() CmdOutput
-}
-
-type CmdOutput struct {
-	Err    error
-	Output []byte
-	Cmd    *exec.Cmd
+	ExecuteCommand() ([]byte, error)
 }
 
 type Command struct {
@@ -24,29 +16,14 @@ type Command struct {
 	Stdin io.Reader
 }
 
-type TestCommand struct {
-	Cmd      string
-	Args     []string
-	ExitCode int
-}
-
-func (c Command) ExecuteCommand() CmdOutput {
+func (c Command) ExecuteCommand() ([]byte, error) {
 	cmd := exec.Command(c.Cmd, c.Args...)
 	cmd.Dir = c.Dir
 	cmd.Stdin = c.Stdin
 	out, err := cmd.CombinedOutput()
-	return CmdOutput{Output: out, Err: err}
+	return out, err
 }
 
-func (tc TestCommand) ExecuteCommand() CmdOutput {
-	cs := []string{"-test.run=TestHelperProcess", "--", tc.Cmd}
-	cs = append(cs, tc.Args...)
-	cmd := exec.Command(os.Args[0], cs...)
-	es := strconv.Itoa(tc.ExitCode)
-	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
-	return CmdOutput{Cmd: cmd}
-}
-
-func RunCommand(c Commander) CmdOutput {
+func RunCommand(c Commander) ([]byte, error) {
 	return c.ExecuteCommand()
 }

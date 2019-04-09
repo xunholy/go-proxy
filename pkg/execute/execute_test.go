@@ -3,6 +3,7 @@ package execute_test
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"strconv"
 	"testing"
 
@@ -17,26 +18,44 @@ func TestHelperProcess(t *testing.T) {
 		return
 	}
 	fmt.Fprintf(os.Stdout, "%v", testResult)
-	i, _ := strconv.Atoi(os.Getenv("EXIT_STATUS"))
+	i, err := strconv.Atoi(os.Getenv("EXIT_STATUS"))
+	if err != nil {
+		os.Exit(1)
+	}
 	os.Exit(i)
+}
+
+type TestCommand struct {
+	Cmd      string
+	Args     []string
+	ExitCode int
+}
+
+func (tc TestCommand) ExecuteCommand() ([]byte, error) {
+	cs := []string{"-test.run=TestHelperProcess", "--", tc.Cmd}
+	cs = append(cs, tc.Args...)
+	cmd := exec.Command(os.Args[0], cs...)
+	es := strconv.Itoa(tc.ExitCode)
+	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
+	out, err := cmd.CombinedOutput()
+	return out, err
 }
 
 func TestRunCommand(t *testing.T) {
 
 	tests := []struct {
 		expected bool
-		command  execute.TestCommand
+		command  TestCommand
 	}{
-		{expected: false, command: execute.TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 0}},
-		{expected: true, command: execute.TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 1}},
+		{expected: false, command: TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 0}},
+		{expected: true, command: TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 1}},
 	}
 
 	for _, i := range tests {
-		r := execute.RunCommand(i.command)
-		assert.Equal(t, i.expected, r.Err != nil)
+		output, err := execute.RunCommand(i.command)
+		assert.Equal(t, i.expected, err != nil)
 		if i.command.ExitCode == 0 {
-			assert.Equal(t, testResult, string(r.Output))
+			assert.Equal(t, testResult, string(output))
 		}
-
 	}
 }

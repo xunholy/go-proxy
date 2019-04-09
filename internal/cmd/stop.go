@@ -23,9 +23,9 @@ func SetupStopCli() *cobra.Command {
 func stopCmd(cmd *cobra.Command, args []string) {
 	profile.UpdateGlobalEnvironmentVariables("")
 	cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
-	r := execute.RunCommand(cmds)
-	if r.Err != nil {
-		log.Fatalf("Couldn't kill CNTLM process %q", r.Err)
+	_, err := execute.RunCommand(cmds)
+	if err != nil {
+		log.Fatalf("Couldn't kill CNTLM process %q", err)
 	}
 	fmt.Println("CNTLM proxy stopped")
 }

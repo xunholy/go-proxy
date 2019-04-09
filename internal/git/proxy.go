@@ -9,13 +9,13 @@ import (
 func EnableProxyConfiguration(port string) error {
 	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", port}}
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", port}}
-	r := execute.RunCommand(http)
-	if r.Err != nil {
-		return fmt.Errorf("failed to enable git http command %q", r.Err)
+	_, err := execute.RunCommand(http)
+	if err != nil {
+		return fmt.Errorf("failed to enable git http command %q", err)
 	}
-	r = execute.RunCommand(https)
-	if r.Err != nil {
-		return fmt.Errorf("failed to enable git https command %q", r.Err)
+	_, err = execute.RunCommand(https)
+	if err != nil {
+		return fmt.Errorf("failed to enable git https command %q", err)
 	}
 	return nil
 }
@@ -23,13 +23,13 @@ func EnableProxyConfiguration(port string) error {
 func DisableProxyConfiguration() error {
 	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}}
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}}
-	r := execute.RunCommand(http)
-	if r.Err != nil {
-		return fmt.Errorf("failed to enable git http command %q", r.Err)
+	_, err := execute.RunCommand(http)
+	if err != nil {
+		return fmt.Errorf("failed to enable git http command %q", err)
 	}
-	r = execute.RunCommand(https)
-	if r.Err != nil {
-		return fmt.Errorf("failed to enable git https command %q", r.Err)
+	_, err = execute.RunCommand(https)
+	if err != nil {
+		return fmt.Errorf("failed to enable git https command %q", err)
 	}
 	return nil
 }
