@@ -25,11 +25,11 @@ func DisableProxyConfiguration() error {
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}}
 	_, err := execute.RunCommand(http)
 	if err != nil {
-		return fmt.Errorf("failed to enable git http command %q", err)
+		return fmt.Errorf("failed to disable git http command %q", err)
 	}
 	_, err = execute.RunCommand(https)
 	if err != nil {
-		return fmt.Errorf("failed to enable git https command %q", err)
+		return fmt.Errorf("failed to disable git https command %q", err)
 	}
 	return nil
 }
