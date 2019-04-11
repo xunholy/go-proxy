@@ -4,7 +4,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"runtime"
 	"strings"
+)
+
+const (
+	defaultLinuxPath   = "/etc/cntlm.conf"
+	defaultWindowsPath = "\\Program Files\\Cntlm\\cntlm.ini"
+	defaultMacOSPath   = "/usr/local/etc/cntlm.conf"
 )
 
 type KeyPairValues struct {
@@ -13,8 +20,24 @@ type KeyPairValues struct {
 	Line  int
 }
 
-func UpdateFile(file, match string) {
+func getCNTLMPath() (string, error) {
+	if runtime.GOOS == "linux" {
+		return defaultWindowsPath, nil
+	}
+	if runtime.GOOS == "windows" {
+		return defaultWindowsPath, nil
+	}
+	if runtime.GOOS == "darwin" {
+		return defaultWindowsPath, nil
+	}
+	return "", fmt.Errorf("Unsupported OS distribution")
+}
 
+func UpdateFile(match string) error {
+	file, err := getCNTLMPath()
+	if err != nil {
+		return err
+	}
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
@@ -34,6 +57,7 @@ func UpdateFile(file, match string) {
 			}
 		}
 	}
+	return nil
 }
 
 // TODO: Allow value to be an array of strings [go-proxy/#52]

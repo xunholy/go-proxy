@@ -15,8 +15,7 @@ import (
 )
 
 var (
-	cntlmFile = "/usr/local/etc/cntlm.conf"
-	port      int
+	port int
 )
 
 func SetupSetCli() *cobra.Command {
@@ -90,7 +89,7 @@ func setUsernameCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	update := fmt.Sprintln("Username\t", output)
-	cntlm.UpdateFile(cntlmFile, update)
+	cntlm.UpdateFile(update)
 	fmt.Println("Set CNTLM username successfully")
 }
 
@@ -102,7 +101,7 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cntlm.UpdateFile(cntlmFile, output)
+	cntlm.UpdateFile(output)
 	fmt.Println("Set CNTLM password successfully")
 }
 
@@ -113,6 +112,6 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	update := fmt.Sprintln("Domain\t", output)
-	cntlm.UpdateFile(cntlmFile, update)
+	cntlm.UpdateFile(update)
 	fmt.Println("Set CNTLM domain successfully")
 }

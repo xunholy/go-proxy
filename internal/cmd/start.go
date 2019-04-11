@@ -25,8 +25,8 @@ func SetupStartCli() *cobra.Command {
 func startCmd(cmd *cobra.Command, args []string) {
 	proxyURL := makeProxyURL(port)
 	profile.UpdateGlobalEnvironmentVariables(proxyURL)
-	p := fmt.Sprintf("Listen\t%v", port)
-	cntlm.UpdateFile(cntlmFile, p)
+	update := fmt.Sprintf("Listen\t%v", port)
+	cntlm.UpdateFile(update)
 	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
 	_, err := execute.RunCommand(cmds)
 	if err != nil {
