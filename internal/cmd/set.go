@@ -88,7 +88,10 @@ func setUsernameCmd(cmd *cobra.Command, args []string) {
 		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Username\t", output)
-	cntlm.UpdateFile(cntlmFile, update)
+	err = cntlm.UpdateFile(cntlmFile, update)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	fmt.Println("Set CNTLM username successfully")
 }
 
@@ -114,6 +117,9 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Domain\t", output)
-	cntlm.UpdateFile(cntlmFile, update)
+	err = cntlm.UpdateFile(cntlmFile, update)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	fmt.Println("Set CNTLM domain successfully")
 }
