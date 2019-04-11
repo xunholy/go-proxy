@@ -83,7 +83,7 @@ func setGitCmd(cmd *cobra.Command, args []string) {
 
 func setUsernameCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Username: ")
-	output, err := prompt.GetInput()
+	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -106,7 +106,7 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 
 func setDomainCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Proxy Domain: ")
-	output, err := prompt.GetInput()
+	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
 		log.Fatal(err)
 	}

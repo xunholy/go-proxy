@@ -31,14 +31,13 @@ type TestCommand struct {
 	ExitCode int
 }
 
-func (tc TestCommand) ExecuteCommand() ([]byte, error) {
+func (tc TestCommand) ExecuteCommand() *exec.Cmd {
 	cs := []string{"-test.run=TestHelperProcess", "--", tc.Cmd}
 	cs = append(cs, tc.Args...)
 	cmd := exec.Command(os.Args[0], cs...)
 	es := strconv.Itoa(tc.ExitCode)
 	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1", "EXIT_STATUS=" + es}
-	out, err := cmd.CombinedOutput()
-	return out, err
+	return cmd
 }
 
 func TestRunCommand(t *testing.T) {

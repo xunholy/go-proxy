@@ -5,8 +5,10 @@ import (
 	"os/exec"
 )
 
+var execCommand = exec.Command
+
 type Commander interface {
-	ExecuteCommand() ([]byte, error)
+	ExecuteCommand() *exec.Cmd
 }
 
 type Command struct {
@@ -16,14 +18,15 @@ type Command struct {
 	Stdin io.Reader
 }
 
-func (c Command) ExecuteCommand() ([]byte, error) {
-	cmd := exec.Command(c.Cmd, c.Args...)
+func (c Command) ExecuteCommand() *exec.Cmd {
+	cmd := execCommand(c.Cmd, c.Args...)
 	cmd.Dir = c.Dir
 	cmd.Stdin = c.Stdin
-	out, err := cmd.CombinedOutput()
-	return out, err
+	return cmd
 }
 
 func RunCommand(c Commander) ([]byte, error) {
-	return c.ExecuteCommand()
+	cmd := c.ExecuteCommand()
+	out, err := cmd.CombinedOutput()
+	return out, err
 }
