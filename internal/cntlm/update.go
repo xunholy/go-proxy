@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// TODO: Locate windows drive prefix to defaultWindowsPath [go-proxy/#69]
 const (
 	defaultLinuxPath   = "/etc/cntlm.conf"
 	defaultWindowsPath = "\\Program Files\\Cntlm\\cntlm.ini"
