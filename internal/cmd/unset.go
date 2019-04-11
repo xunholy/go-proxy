@@ -37,7 +37,7 @@ func SetupUnsetCli() *cobra.Command {
 func unsetNpmCmd(cmd *cobra.Command, args []string) {
 	err := npm.DisableProxyConfiguration()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Unset npm config successfully")
 }
@@ -45,7 +45,7 @@ func unsetNpmCmd(cmd *cobra.Command, args []string) {
 func unsetGitCmd(cmd *cobra.Command, args []string) {
 	err := git.DisableProxyConfiguration()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Unset git config successfully")
 }

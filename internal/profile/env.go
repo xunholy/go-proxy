@@ -27,7 +27,7 @@ func UpdateGlobalEnvironmentVariables(proxyURL string) {
 	}
 	err := ioutil.WriteFile(filename, data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	output := `To set global proxy Environment variables you must do one of the following:
 

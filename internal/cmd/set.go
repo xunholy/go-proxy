@@ -67,7 +67,7 @@ func setNpmCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
 	err := npm.EnableProxyConfiguration(p)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Set npm config successfully")
 }
@@ -76,7 +76,7 @@ func setGitCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
 	err := git.EnableProxyConfiguration(p)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Set git config successfully")
 }
@@ -85,7 +85,7 @@ func setUsernameCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Username: ")
 	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Username\t", output)
 	cntlm.UpdateFile(cntlmFile, update)
@@ -98,9 +98,12 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}, Stdin: os.Stdin}
 	out, err := execute.RunCommand(e)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
-	cntlm.UpdateFile(cntlmFile, string(out))
+	err = cntlm.UpdateFile(cntlmFile, string(out))
+	if err != nil {
+		log.Fatalln(err)
+	}
 	fmt.Println("Set CNTLM password successfully")
 }
 
@@ -108,7 +111,7 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Proxy Domain: ")
 	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Domain\t", output)
 	cntlm.UpdateFile(cntlmFile, update)
