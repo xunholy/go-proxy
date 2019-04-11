@@ -17,8 +17,8 @@ func TestGetInput(t *testing.T) {
 		{"hello", true},
 	}
 	for _, test := range tests {
-		input = strings.NewReader(test.v)
-		output, err := GetInput()
+		input := strings.NewReader(test.v)
+		output, err := GetInput(input)
 		assert.Equal(t, test.e, err == io.EOF)
 		assert.Equal(t, test.v, output)
 	}

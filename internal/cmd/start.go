@@ -26,12 +26,14 @@ func startCmd(cmd *cobra.Command, args []string) {
 	proxyURL := makeProxyURL(port)
 	profile.UpdateGlobalEnvironmentVariables(proxyURL)
 	p := fmt.Sprintf("Listen\t%v", port)
-	cntlm.UpdateFile(cntlmFile, p)
-	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
-	_, err := execute.RunCommand(cmds)
+	err := cntlm.UpdateFile(cntlmFile, p)
 	if err != nil {
-		fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
-		log.Fatal(err)
+		log.Fatalln(err)
+	}
+	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
+	_, err = execute.RunCommand(cmds)
+	if err != nil {
+		log.Fatalf("CNTLM Proxy couldn't be started. Is it already running? %q", err)
 	}
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
 }
