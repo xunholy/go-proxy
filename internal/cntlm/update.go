@@ -23,13 +23,13 @@ type KeyPairValues struct {
 
 func getCNTLMPath() (string, error) {
 	if runtime.GOOS == "linux" {
-		return defaultWindowsPath, nil
+		return defaultLinuxPath, nil
 	}
 	if runtime.GOOS == "windows" {
 		return defaultWindowsPath, nil
 	}
 	if runtime.GOOS == "darwin" {
-		return defaultWindowsPath, nil
+		return defaultMacOSPath, nil
 	}
 	return "", fmt.Errorf("Unsupported OS distribution")
 }
