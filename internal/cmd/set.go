@@ -10,8 +10,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/prompt"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
-	git "github.com/xUnholy/go-proxy/internal/git"
-	npm "github.com/xUnholy/go-proxy/internal/npm"
+	config "github.com/xUnholy/go-proxy/internal/tools"
 )
 
 var (
@@ -65,7 +64,7 @@ func SetupSetCli() *cobra.Command {
 
 func setNpmCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	err := npm.EnableProxyConfiguration(p)
+	err := config.EnableNPMProxyConfiguration(p)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -74,7 +73,7 @@ func setNpmCmd(cmd *cobra.Command, args []string) {
 
 func setGitCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	err := git.EnableProxyConfiguration(p)
+	err := config.EnableGITProxyConfiguration(p)
 	if err != nil {
 		log.Fatalln(err)
 	}

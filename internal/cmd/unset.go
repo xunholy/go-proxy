@@ -6,8 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	git "github.com/xUnholy/go-proxy/internal/git"
-	npm "github.com/xUnholy/go-proxy/internal/npm"
+	config "github.com/xUnholy/go-proxy/internal/tools"
 )
 
 func SetupUnsetCli() *cobra.Command {
@@ -35,7 +34,7 @@ func SetupUnsetCli() *cobra.Command {
 }
 
 func unsetNpmCmd(cmd *cobra.Command, args []string) {
-	err := npm.DisableProxyConfiguration()
+	err := config.DisableNPMProxyConfiguration()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -43,7 +42,7 @@ func unsetNpmCmd(cmd *cobra.Command, args []string) {
 }
 
 func unsetGitCmd(cmd *cobra.Command, args []string) {
-	err := git.DisableProxyConfiguration()
+	err := config.DisableGITProxyConfiguration()
 	if err != nil {
 		log.Fatalln(err)
 	}
