@@ -31,7 +31,7 @@ func getCNTLMPath() (string, error) {
 	if runtime.GOOS == "darwin" {
 		return defaultMacOSPath, nil
 	}
-	return "", fmt.Errorf("Unsupported OS distribution")
+	return "", fmt.Errorf("unsupported OS distribution")
 }
 
 func UpdateFile(match string) error {
