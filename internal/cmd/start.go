@@ -30,10 +30,9 @@ func startCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
-	_, err := execute.RunCommand(cmds)
+	_, err = execute.RunCommand(cmds)
 	if err != nil {
-		fmt.Println("CNTLM Proxy couldn't be started. Is it already running?")
-		log.Fatal(err)
+		log.Fatalf("CNTLM Proxy couldn't be started. Is it already running? %q", err)
 	}
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
 }

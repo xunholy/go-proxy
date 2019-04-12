@@ -35,7 +35,10 @@ func UpdateFile(match string) error {
 		matchFields := strings.Fields(matches[i])
 		for _, i := range keyPairValues {
 			if strings.Contains(i.Key, matchFields[0]) {
-				updateValue(lines, i, file, matchFields)
+				err := updateValue(lines, i, file, matchFields)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
@@ -61,12 +64,13 @@ func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
 	return keyPairValues
 }
 
-func updateValue(lines []string, keyPairValue KeyPairValues, file string, matchFields []string) {
+func updateValue(lines []string, keyPairValue KeyPairValues, file string, matchFields []string) error {
 	line := fmt.Sprintf("%v\t%v", matchFields[0], matchFields[1])
 	lines[keyPairValue.Line] = line
 	output := strings.Join(lines, "\n")
 	err := ioutil.WriteFile(file, []byte(output), 0644)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
+	return nil
 }

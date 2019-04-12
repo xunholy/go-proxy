@@ -10,8 +10,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/prompt"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
-	git "github.com/xUnholy/go-proxy/internal/git"
-	npm "github.com/xUnholy/go-proxy/internal/npm"
+	config "github.com/xUnholy/go-proxy/internal/tools"
 )
 
 var (
@@ -64,29 +63,27 @@ func SetupSetCli() *cobra.Command {
 
 func setNpmCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	cmds := npm.EnableProxyConfiguration(p)
-	_, err := execute.RunCommands(cmds)
+	err := config.EnableNPMProxyConfiguration(p)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Set npm config successfully")
 }
 
 func setGitCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	cmds := git.EnableProxyConfiguration(p)
-	_, err := execute.RunCommands(cmds)
+	err := config.EnableGITProxyConfiguration(p)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	fmt.Println("Set git config successfully")
 }
 
 func setUsernameCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Username: ")
-	output, err := prompt.GetInput()
+	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Username\t", output)
 	if err := cntlm.UpdateFile(update); err != nil {
@@ -99,9 +96,13 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	// TODO: changing the password should restart cntlm to re-auth [go-proxy/#47]
 	fmt.Printf("Enter Password: ")
 	e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}, Stdin: os.Stdin}
-	output, err := execute.RunCommand(e)
+	out, err := execute.RunCommand(e)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
+	}
+	err = cntlm.UpdateFile(cntlmFile, string(out))
+	if err != nil {
+		log.Fatalln(err)
 	}
 	if err := cntlm.UpdateFile(output); err != nil {
 		log.Fatal(err)
@@ -111,9 +112,9 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 
 func setDomainCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Proxy Domain: ")
-	output, err := prompt.GetInput()
+	output, err := prompt.GetInput(os.Stdin)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Domain\t", output)
 	if err := cntlm.UpdateFile(update); err != nil {

@@ -5,6 +5,12 @@ import (
 	"os/exec"
 )
 
+var execCommand = exec.Command
+
+type Commander interface {
+	ExecuteCommand() *exec.Cmd
+}
+
 type Command struct {
 	Cmd   string
 	Args  []string
@@ -12,31 +18,15 @@ type Command struct {
 	Stdin io.Reader
 }
 
-type CommandOutput struct {
-	Output string
+func (c Command) ExecuteCommand() *exec.Cmd {
+	cmd := execCommand(c.Cmd, c.Args...)
+	cmd.Dir = c.Dir
+	cmd.Stdin = c.Stdin
+	return cmd
 }
 
-var execCommand = exec.Command
-
-func RunCommand(e Command) (string, error) {
-	cmd := execCommand(e.Cmd, e.Args...)
-	cmd.Dir = e.Dir
-	cmd.Stdin = e.Stdin
+func RunCommand(c Commander) ([]byte, error) {
+	cmd := c.ExecuteCommand()
 	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return "", err
-	}
-	return string(out), nil
-}
-
-func RunCommands(cmds []Command) ([]CommandOutput, error) {
-	output := []CommandOutput{}
-	for _, c := range cmds {
-		out, err := RunCommand(c)
-		if err != nil {
-			return output, err
-		}
-		output = append(output, CommandOutput{Output: out})
-	}
-	return output, nil
+	return out, err
 }

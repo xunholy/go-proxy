@@ -3,12 +3,9 @@ package prompt
 import (
 	"bufio"
 	"io"
-	"os"
 )
 
-var input io.Reader = os.Stdin
-
-func GetInput() (string, error) {
+func GetInput(input io.Reader) (string, error) {
 	reader := bufio.NewReader(input)
 	output, err := reader.ReadString('\n')
 	if err != nil {
