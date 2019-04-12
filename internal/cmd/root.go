@@ -10,12 +10,11 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "proxy",
 	Short:   "Executing and configuring cntlm",
-	Version: "0.1.4",
+	Version: "0.2.0",
 }
 
 func Execute() {
 	rootCmd.AddCommand(SetupSetCli(), SetupUnsetCli(), SetupStartCli(), SetupStopCli())
-
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

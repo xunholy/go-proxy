@@ -34,16 +34,14 @@ func SetupUnsetCli() *cobra.Command {
 }
 
 func unsetNpmCmd(cmd *cobra.Command, args []string) {
-	err := config.DisableNPMProxyConfiguration()
-	if err != nil {
+	if err := config.DisableNPMProxyConfiguration(); err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println("Unset npm config successfully")
 }
 
 func unsetGitCmd(cmd *cobra.Command, args []string) {
-	err := config.DisableGITProxyConfiguration()
-	if err != nil {
+	if err := config.DisableGITProxyConfiguration(); err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println("Unset git config successfully")

@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+
+	"github.com/xUnholy/go-proxy/internal/profile"
 )
 
 type KeyPairValues struct {
@@ -13,8 +15,11 @@ type KeyPairValues struct {
 	Line  int
 }
 
-func UpdateFile(file, match string) error {
-
+func UpdateFile(match string) error {
+	file, err := profile.GetConfigurationPath()
+	if err != nil {
+		return err
+	}
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
