@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"runtime"
 	"strings"
 
 	"github.com/xUnholy/go-proxy/internal/profile"
@@ -16,7 +17,7 @@ type KeyPairValues struct {
 }
 
 func UpdateFile(match string) error {
-	file, err := profile.GetConfigurationPath()
+	file, err := profile.GetConfigurationPath(runtime.GOOS)
 	if err != nil {
 		return err
 	}
