@@ -63,8 +63,7 @@ func SetupSetCli() *cobra.Command {
 
 func setNpmCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	err := config.EnableNPMProxyConfiguration(p)
-	if err != nil {
+	if err := config.EnableNPMProxyConfiguration(p); err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println("Set npm config successfully")
@@ -72,8 +71,7 @@ func setNpmCmd(cmd *cobra.Command, args []string) {
 
 func setGitCmd(cmd *cobra.Command, args []string) {
 	p := makeProxyURL(port)
-	err := config.EnableGITProxyConfiguration(p)
-	if err != nil {
+	if err := config.EnableGITProxyConfiguration(p); err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println("Set git config successfully")
@@ -100,11 +98,7 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	err = cntlm.UpdateFile(cntlmFile, string(out))
-	if err != nil {
-		log.Fatalln(err)
-	}
-	if err := cntlm.UpdateFile(output); err != nil {
+	if err := cntlm.UpdateFile(string(out)); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Set CNTLM password successfully")
