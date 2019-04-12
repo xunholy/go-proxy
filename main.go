@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/xUnholy/go-proxy/internal/cmd"
-	"github.com/xUnholy/go-proxy/internal/profile"
+	"github.com/xUnholy/go-proxy/internal/config"
 )
 
 func main() {
-	profile.SetupConfigurationFile()
+	config.SetupConfigurationFile()
 	cmd.Execute()
 }

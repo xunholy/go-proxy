@@ -1,0 +1,3 @@
+proxy:
+  address: localhost
+  port: 3128

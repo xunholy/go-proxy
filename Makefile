@@ -3,7 +3,6 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
-GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 BINARY_NAME=proxy
 SYSTEMS=darwin linux windows
@@ -14,7 +13,7 @@ build:
 	$(GOBUILD) -o $(BINARY_NAME) -v
 
 test: 
-	$(GOTEST) -v ./...
+	$(GOTEST) -v ./... -cover
 
 clean: 
 	$(GOCLEAN)
@@ -23,10 +22,6 @@ clean:
 run:
 	$(GOBUILD) -o $(BINARY_NAME) -v ./...
 	./$(BINARY_NAME)
-
-deps:
-	$(GOGET) github.com/stretchr/testify
-	$(GOGET) github.com/urfave/cli
 
 modules:
 	$(GOMOD) tidy
