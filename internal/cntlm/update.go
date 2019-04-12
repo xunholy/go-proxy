@@ -4,15 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"runtime"
 	"strings"
-)
 
-// TODO: Locate windows drive prefix to defaultWindowsPath [go-proxy/#69]
-const (
-	defaultLinuxPath   = "/etc/cntlm.conf"
-	defaultWindowsPath = "\\Program Files\\Cntlm\\cntlm.ini"
-	defaultMacOSPath   = "/usr/local/etc/cntlm.conf"
+	"github.com/xUnholy/go-proxy/internal/profile"
 )
 
 type KeyPairValues struct {
@@ -21,21 +15,8 @@ type KeyPairValues struct {
 	Line  int
 }
 
-func getCNTLMPath() (string, error) {
-	if runtime.GOOS == "linux" {
-		return defaultLinuxPath, nil
-	}
-	if runtime.GOOS == "windows" {
-		return defaultWindowsPath, nil
-	}
-	if runtime.GOOS == "darwin" {
-		return defaultMacOSPath, nil
-	}
-	return "", fmt.Errorf("unsupported OS distribution")
-}
-
 func UpdateFile(match string) error {
-	file, err := getCNTLMPath()
+	file, err := profile.GetConfigurationPath()
 	if err != nil {
 		return err
 	}
