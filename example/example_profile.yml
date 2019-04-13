@@ -1,3 +1,12 @@
-proxy:
-  address: localhost
-  port: 3128
+ProxyConfig:
+  Domain:
+  ProxyAddress: []
+  NoProxy: []
+  Address: localhost
+  Port: 3128
+  Credentials:
+    Username: 
+    Password:
+    PassLM:
+    PassNT:
+    PassNTLMv2:
