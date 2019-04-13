@@ -2,43 +2,40 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/spf13/viper"
 )
-
-func SetupConfigurationFile() {
-	var configuration Configuration
-	LoadConfigurtation()
-	ValidateRequiredFields(&configuration)
-}
 
 func SetDefaults() {
 	viper.SetDefault("Proxy.Address", "localhost")
 	viper.SetDefault("Proxy.Port", 3128)
 }
 
-func LoadConfigurtation() {
-	// TODO: File name & path should be parameterized
-	viper.SetConfigName("example_profile")
-	viper.AddConfigPath("./example") // Remove line, only for testing purposes
+func LoadConfiguration(proxyProfilePath string) (Configuration, error) {
+	viper.SetConfigName(proxyProfilePath)
 	viper.AddConfigPath(os.Getenv("HOME"))
 	var configuration Configuration
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatalf("Error reading config file, %q", err)
+		return configuration, fmt.Errorf("Error reading config file, %q", err)
 	}
 	if err := viper.Unmarshal(&configuration); err != nil {
-		log.Fatalf("unable to decode into struct, %q", err)
+		return configuration, fmt.Errorf("unable to decode into struct, %q", err)
 	}
-	log.Printf("All configuration %v", configuration)
+	return configuration, nil
 }
 
-func SaveConfiguration() {
+func SaveConfiguration(proxyProfilePath string) error {
 	// TODO: Can write to TOML / YAML / JSON
-	if err := viper.WriteConfig(); err != nil {
-		log.Fatalf("unable to write config, %q", err)
+	SetDefaults()
+	if err := viper.WriteConfigAs(proxyProfilePath); err != nil {
+		return fmt.Errorf("unable to write config, %q", err)
 	}
+	return nil
+}
+
+func PrintConfiguration(proxyProfilePath string) error {
+	return nil
 }
 
 func ValidateRequiredFields(c *Configuration) error {

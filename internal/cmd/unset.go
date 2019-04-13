@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-
 	config "github.com/xUnholy/go-proxy/internal/tools"
 )
 
