@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/xUnholy/go-proxy/internal/profile"
+	"github.com/xUnholy/go-proxy/internal/os"
 )
 
 type KeyPairValues struct {
@@ -17,7 +17,7 @@ type KeyPairValues struct {
 }
 
 func UpdateFile(match string) error {
-	file, err := profile.GetConfigurationPath(runtime.GOOS)
+	file, err := os.GetConfigurationPath(runtime.GOOS)
 	if err != nil {
 		return err
 	}

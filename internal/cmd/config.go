@@ -9,8 +9,7 @@ import (
 )
 
 var (
-	proxyProfile = "bla"
-	fileType     string
+	proxyProfile = "profile"
 )
 
 func SetupConfigCli() *cobra.Command {
@@ -41,11 +40,11 @@ func SetupConfigCli() *cobra.Command {
 }
 
 func configLoadCmd(cmd *cobra.Command, args []string) {
-	config, err := config.LoadConfiguration(proxyProfile)
+	cfg, err := config.LoadConfiguration(proxyProfile)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println(config)
+	fmt.Println(cfg)
 }
 
 func configSaveCmd(cmd *cobra.Command, args []string) {

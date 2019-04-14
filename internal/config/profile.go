@@ -17,7 +17,7 @@ func LoadConfiguration(proxyProfilePath string) (Configuration, error) {
 	viper.AddConfigPath(os.Getenv("HOME"))
 	var configuration Configuration
 	if err := viper.ReadInConfig(); err != nil {
-		return configuration, fmt.Errorf("Error reading config file, %q", err)
+		return configuration, fmt.Errorf("failed reading config file, %q", err)
 	}
 	if err := viper.Unmarshal(&configuration); err != nil {
 		return configuration, fmt.Errorf("unable to decode into struct, %q", err)
