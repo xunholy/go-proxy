@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 
 	"github.com/spf13/viper"
 )
@@ -15,6 +16,10 @@ func SetDefaults() {
 }
 
 func LoadConfiguration(proxyProfilePath string) (Configuration, error) {
+	ext := filepath.Ext(proxyProfilePath)
+	if ext != "" {
+		proxyProfilePath = proxyProfilePath[0 : len(proxyProfilePath)-len(ext)]
+	}
 	viper.SetConfigName(proxyProfilePath)
 	viper.AddConfigPath(os.Getenv("HOME"))
 	var configuration Configuration
@@ -28,8 +33,11 @@ func LoadConfiguration(proxyProfilePath string) (Configuration, error) {
 }
 
 func SaveConfiguration(proxyProfilePath string) error {
-	// TODO: Can write to TOML / YAML / JSON
 	SetDefaults()
+	ext := filepath.Ext(proxyProfilePath)
+	if ext == "" {
+		proxyProfilePath += ".yaml"
+	}
 	if err := viper.WriteConfigAs(path.Join(os.Getenv("HOME"), proxyProfilePath)); err != nil {
 		return fmt.Errorf("unable to write config, %s", err)
 	}
