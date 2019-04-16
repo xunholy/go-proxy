@@ -1,7 +1,7 @@
 package config
 
 type Configuration struct {
-	ProxyConfig ProxyConfiguration
+	Proxy ProxyConfiguration
 }
 
 type ProxyConfiguration struct {
@@ -10,7 +10,7 @@ type ProxyConfiguration struct {
 	ProxyAddress []string
 	NoProxy      []string
 	Address      string
-	Port         []int
+	Port         int
 	Credentials  CredentialConfiguration
 }
 

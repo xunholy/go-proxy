@@ -29,7 +29,7 @@ func SetupConfigCli() *cobra.Command {
 		Short: "This command will save proxy configuration to a profile",
 		Run:   configSaveCmd,
 	}
-	saveConfigCmd.Flags().StringVarP(&proxyProfile, "file", "f", proxyProfile, "save custom proxy profile")
+	saveConfigCmd.Flags().StringVarP(&proxyProfile, "file", "f", proxyProfile, "save custom proxy profile (Default Values)")
 	var printConfigCmd = &cobra.Command{
 		Use:   "print",
 		Short: "This command will print the proxy configuration profile",
