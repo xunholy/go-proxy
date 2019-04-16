@@ -8,7 +8,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/execute"
 
 	"github.com/xUnholy/go-proxy/internal/cntlm"
-	"github.com/xUnholy/go-proxy/internal/profile"
+	env "github.com/xUnholy/go-proxy/internal/environment"
 )
 
 func SetupStartCli() *cobra.Command {
@@ -24,7 +24,7 @@ func SetupStartCli() *cobra.Command {
 
 func startCmd(cmd *cobra.Command, args []string) {
 	proxyURL := makeProxyURL(port)
-	profile.UpdateGlobalEnvironmentVariables(proxyURL)
+	env.UpdateGlobalEnvironmentVariables(proxyURL)
 	update := fmt.Sprintf("Listen\t%v", port)
 	if err := cntlm.UpdateFile(update); err != nil {
 		log.Fatal(err)

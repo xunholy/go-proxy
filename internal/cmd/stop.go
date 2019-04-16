@@ -7,7 +7,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xUnholy/go-proxy/pkg/execute"
 
-	"github.com/xUnholy/go-proxy/internal/profile"
+	"github.com/xUnholy/go-proxy/internal/config"
+	env "github.com/xUnholy/go-proxy/internal/environment"
 )
 
 func SetupStopCli() *cobra.Command {
@@ -17,11 +18,17 @@ func SetupStopCli() *cobra.Command {
 		Short: "Stop CNTLM Proxy",
 		Run:   stopCmd,
 	}
+	stopCmd.Flags().Bool("all", true, "unset all proxy configuration")
 	return stopCmd
 }
 
 func stopCmd(cmd *cobra.Command, args []string) {
-	profile.UpdateGlobalEnvironmentVariables("")
+	if cmd.Flags().Changed("all") {
+		if err := config.UnsetAllConfiguration(proxyProfile); err != nil {
+			log.Fatal(err)
+		}
+	}
+	env.UpdateGlobalEnvironmentVariables("")
 	cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
 	_, err := execute.RunCommand(cmds)
 	if err != nil {

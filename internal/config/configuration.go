@@ -12,6 +12,7 @@ type ProxyConfiguration struct {
 	Address      string
 	Port         int
 	Credentials  CredentialConfiguration
+	Tools        []string
 }
 
 type CredentialConfiguration struct {
