@@ -1,4 +1,5 @@
 ProxyConfig:
+  Running: false
   Domain:
   ProxyAddress: []
   NoProxy: []

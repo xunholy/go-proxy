@@ -5,6 +5,7 @@ type Configuration struct {
 }
 
 type ProxyConfiguration struct {
+	Running      bool
 	Domain       string
 	ProxyAddress []string
 	NoProxy      []string
