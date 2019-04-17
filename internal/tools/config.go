@@ -22,7 +22,6 @@ func EnableGITProxyConfiguration(proxyURL *url.URL) error {
 	return nil
 }
 
-// nolint
 func DisableGITProxyConfiguration() error {
 	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}}
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}}
@@ -37,6 +36,7 @@ func DisableGITProxyConfiguration() error {
 	return nil
 }
 
+// nolint
 func EnableNPMProxyConfiguration(proxyURL *url.URL) error {
 	http := execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", proxyURL.String()}}
 	https := execute.Command{Cmd: "npm", Args: []string{"config", "set", "https-proxy", proxyURL.String()}}
