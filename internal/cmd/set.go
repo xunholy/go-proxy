@@ -67,11 +67,14 @@ func setNpmCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := tools.EnableNPMProxyConfiguration(cfg.Proxy.ProxyURL); err != nil {
+	if err = tools.EnableNPMProxyConfiguration(cfg.Proxy.ProxyURL); err != nil {
 		log.Fatalln(err)
 	}
 	viper.Set("Proxy.Tools.Npm", true)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Set npm config successfully")
 }
 
@@ -80,14 +83,18 @@ func setGitCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := tools.EnableGITProxyConfiguration(cfg.Proxy.ProxyURL); err != nil {
+	if err = tools.EnableGITProxyConfiguration(cfg.Proxy.ProxyURL); err != nil {
 		log.Fatalln(err)
 	}
 	viper.Set("Proxy.Tools.Git", true)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Set git config successfully")
 }
 
+// nolint
 func setUsernameCmd(cmd *cobra.Command, args []string) {
 	_, err := config.LoadConfiguration(proxyProfile)
 	if err != nil {
@@ -99,11 +106,14 @@ func setUsernameCmd(cmd *cobra.Command, args []string) {
 		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Username\t", output)
-	if err := cntlm.UpdateFile(update); err != nil {
+	if err = cntlm.UpdateFile(update); err != nil {
 		log.Fatal(err)
 	}
 	viper.Set("Proxy.Credentials.Username", output)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Set CNTLM username successfully")
 }
 
@@ -120,7 +130,7 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	if err := cntlm.UpdateFile(string(out)); err != nil {
+	if err = cntlm.UpdateFile(string(out)); err != nil {
 		log.Fatal(err)
 	}
 	x := strings.Split(strings.TrimSpace(string(out)), "\n")
@@ -130,10 +140,14 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 			viper.Set(fmt.Sprintf("Proxy.Credentials.%v", fields[0]), fields[1])
 		}
 	}
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Set CNTLM password successfully")
 }
 
+// nolint
 func setDomainCmd(cmd *cobra.Command, args []string) {
 	_, err := config.LoadConfiguration(proxyProfile)
 	if err != nil {
@@ -145,10 +159,13 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 		log.Fatalln(err)
 	}
 	update := fmt.Sprintln("Domain\t", output)
-	if err := cntlm.UpdateFile(update); err != nil {
+	if err = cntlm.UpdateFile(update); err != nil {
 		log.Fatal(err)
 	}
 	viper.Set("Proxy.Domain", output)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Set CNTLM domain successfully")
 }

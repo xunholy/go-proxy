@@ -41,7 +41,10 @@ func unsetNpmCmd(cmd *cobra.Command, args []string) {
 	}
 	_ = tools.DisableNPMProxyConfiguration()
 	viper.Set("Proxy.Tools.Npm", false)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Unset npm config successfully")
 }
 
@@ -52,6 +55,9 @@ func unsetGitCmd(cmd *cobra.Command, args []string) {
 	}
 	_ = tools.DisableGITProxyConfiguration()
 	viper.Set("Proxy.Tools.Git", false)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Unset git config successfully")
 }

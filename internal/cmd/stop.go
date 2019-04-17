@@ -31,7 +31,7 @@ func stopCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	if cmd.Flags().Changed("all") {
-		if err := unsetAllConfiguration(&cfg); err != nil {
+		if err = unsetAllConfiguration(&cfg); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -39,14 +39,20 @@ func stopCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	env.UpdateGlobalEnvironmentVariables(emptyURL)
+	err = env.UpdateGlobalEnvironmentVariables(emptyURL)
+	if err != nil {
+		log.Fatal(err)
+	}
 	cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
 	_, err = execute.RunCommand(cmds)
 	if err != nil {
 		log.Fatalf("Couldn't kill CNTLM process %q", err)
 	}
 	viper.Set("Proxy.Running", false)
-	config.SaveConfiguration(proxyProfile)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("CNTLM proxy stopped")
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
+// nolint
 func EnableGITProxyConfiguration(proxyURL *url.URL) error {
 	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", proxyURL.String()}}
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", proxyURL.String()}}
@@ -21,6 +22,7 @@ func EnableGITProxyConfiguration(proxyURL *url.URL) error {
 	return nil
 }
 
+// nolint
 func DisableGITProxyConfiguration() error {
 	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "http.proxy"}}
 	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "--unset", "https.proxy"}}
