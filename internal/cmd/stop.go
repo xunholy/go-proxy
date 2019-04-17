@@ -11,6 +11,7 @@ import (
 
 	"github.com/xUnholy/go-proxy/internal/config"
 	env "github.com/xUnholy/go-proxy/internal/environment"
+	tools "github.com/xUnholy/go-proxy/internal/tools"
 )
 
 func SetupStopCli() *cobra.Command {
@@ -30,7 +31,7 @@ func stopCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	if cmd.Flags().Changed("all") {
-		if err := config.UnsetAllConfiguration(&cfg); err != nil {
+		if err := unsetAllConfiguration(&cfg); err != nil {
 			log.Fatal(err)
 		}
 	}
@@ -47,4 +48,20 @@ func stopCmd(cmd *cobra.Command, args []string) {
 	viper.Set("Proxy.Running", false)
 	config.SaveConfiguration(proxyProfile)
 	fmt.Println("CNTLM proxy stopped")
+}
+
+func unsetAllConfiguration(cfg *config.Configuration) error {
+	// TODO: Consider a better way to loop through Tools as the list of supported CLI's may grow
+	if !cfg.Proxy.Tools.Git {
+
+		if err := tools.DisableGITProxyConfiguration(); err != nil {
+			return err
+		}
+	}
+	if !cfg.Proxy.Tools.Npm {
+		if err := tools.DisableNPMProxyConfiguration(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
