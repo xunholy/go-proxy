@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path"
@@ -55,7 +56,12 @@ func SaveConfiguration(proxyProfilePath string) error {
 	return nil
 }
 
-func PrintConfiguration(proxyProfilePath string) error {
+func PrintConfiguration() error {
+	cfg, err := json.MarshalIndent(viper.AllSettings(), "", "  ")
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(cfg))
 	return nil
 }
 

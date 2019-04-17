@@ -59,7 +59,11 @@ func configSaveCmd(cmd *cobra.Command, args []string) {
 }
 
 func configPrintCmd(cmd *cobra.Command, args []string) {
-	if err := config.PrintConfiguration(proxyProfile); err != nil {
+	_, err := config.LoadConfiguration(defaultProfile)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	if err := config.PrintConfiguration(); err != nil {
 		log.Fatalln(err)
 	}
 }
