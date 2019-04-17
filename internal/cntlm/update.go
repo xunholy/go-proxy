@@ -25,9 +25,7 @@ func UpdateFile(match string) error {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	match = strings.TrimSpace(match)
-
-	matches := strings.Split(match, "\n")
+	matches := strings.Split(strings.TrimSpace(match), "\n")
 	lines := strings.Split(string(content), "\n")
 
 	keyPairValues := parseFileIntoKeyPairValues(lines)

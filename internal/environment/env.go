@@ -3,7 +3,7 @@ package environment
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
+	"net/url"
 	"os"
 )
 
@@ -17,7 +17,7 @@ var proxyVariables = []string{
 	"ftp_proxy",
 }
 
-func UpdateGlobalEnvironmentVariables(proxyURL string) {
+func UpdateGlobalEnvironmentVariables(proxyURL *url.URL) error {
 	dirPath := os.Getenv("HOME")
 	filename := fmt.Sprintf("%v/.proxyrc", dirPath)
 	data := []byte{}
@@ -27,7 +27,7 @@ func UpdateGlobalEnvironmentVariables(proxyURL string) {
 	}
 	err := ioutil.WriteFile(filename, data, 0644)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	output := `To set global proxy Environment variables you must do one of the following:
 
@@ -39,4 +39,5 @@ func UpdateGlobalEnvironmentVariables(proxyURL string) {
 
 `
 	fmt.Printf(output, filename)
+	return nil
 }

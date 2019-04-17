@@ -5,6 +5,7 @@ ProxyConfig:
   NoProxy: []
   Address: localhost
   Port: 3128
+  Tools: []
   Credentials:
     Username: 
     Password:

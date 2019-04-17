@@ -2,13 +2,14 @@ package config
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/xUnholy/go-proxy/pkg/execute"
 )
 
-func EnableGITProxyConfiguration(port string) error {
-	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", port}}
-	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", port}}
+func EnableGITProxyConfiguration(proxyURL *url.URL) error {
+	http := execute.Command{Cmd: "git", Args: []string{"config", "--global", "http.proxy", proxyURL.String()}}
+	https := execute.Command{Cmd: "git", Args: []string{"config", "--global", "https.proxy", proxyURL.String()}}
 	_, err := execute.RunCommand(http)
 	if err != nil {
 		return fmt.Errorf("failed to enable git http command %q", err)
@@ -34,9 +35,9 @@ func DisableGITProxyConfiguration() error {
 	return nil
 }
 
-func EnableNPMProxyConfiguration(port string) error {
-	http := execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", port}}
-	https := execute.Command{Cmd: "npm", Args: []string{"config", "set", "https-proxy", port}}
+func EnableNPMProxyConfiguration(proxyURL *url.URL) error {
+	http := execute.Command{Cmd: "npm", Args: []string{"config", "set", "proxy", proxyURL.String()}}
+	https := execute.Command{Cmd: "npm", Args: []string{"config", "set", "https-proxy", proxyURL.String()}}
 	_, err := execute.RunCommand(http)
 	if err != nil {
 		return fmt.Errorf("failed to enable npm http command %q", err)
