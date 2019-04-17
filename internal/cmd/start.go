@@ -31,6 +31,7 @@ func startCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	if cfg.Proxy.Running {
+		// TODO: A user may want to start another CNTLM instance, logic should handle if its intended or not
 		log.Fatalf("CNTLM Proxy is already running")
 	}
 	proxyURL, err := url.Parse(fmt.Sprintf("http://%s:%v", cfg.Proxy.Address, port))
