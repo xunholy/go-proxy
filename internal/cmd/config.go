@@ -27,8 +27,11 @@ func SetupConfigCli() *cobra.Command {
 	loadConfigCmd.Flags().StringVarP(&proxyProfile, "file", "f", proxyProfile, "load custom proxy profile")
 	var saveConfigCmd = &cobra.Command{
 		Use:   "save",
-		Short: "This command will save proxy configuration to a profile",
-		Run:   configSaveCmd,
+		Short: "This command will save the proxy configuration to a profile",
+		Long: "The save command allows the user to save the current state of the proxy and its configuration, the state will be saved " +
+			"by default in the profile.yaml file. Saving to a custom file can be done using the --file flag and providing a custom file name. " +
+			"Supported file types are [ YAML | TOML | JSON ], if none is provided it will default to YAML.",
+		Run: configSaveCmd,
 	}
 	saveConfigCmd.Flags().StringVarP(&proxyProfile, "file", "f", proxyProfile, "save custom proxy profile (Default Values)")
 	var printConfigCmd = &cobra.Command{
