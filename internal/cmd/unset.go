@@ -48,7 +48,7 @@ func unsetNpmCmd(cmd *cobra.Command, args []string) {
 func unsetGitCmd(cmd *cobra.Command, args []string) {
 	_, err := config.LoadConfiguration(proxyProfile)
 	if err != nil {
-		log.Fatal("HERE2:", err)
+		log.Fatal(err)
 	}
 	_ = tools.DisableGITProxyConfiguration()
 	viper.Set("Proxy.Tools.Git", false)
