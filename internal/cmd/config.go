@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	proxyProfile = "profile"
+	defaultProfile = "profile"
+	proxyProfile   = "profile"
 )
 
 func SetupConfigCli() *cobra.Command {
@@ -48,6 +49,10 @@ func configLoadCmd(cmd *cobra.Command, args []string) {
 }
 
 func configSaveCmd(cmd *cobra.Command, args []string) {
+	_, err := config.LoadConfiguration(defaultProfile)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	if err := config.SaveConfiguration(proxyProfile); err != nil {
 		log.Fatalln(err)
 	}

@@ -158,6 +158,7 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	output = strings.TrimSpace(output)
 	update := fmt.Sprintln("Domain\t", output)
 	if err = cntlm.UpdateFile(update); err != nil {
 		log.Fatal(err)

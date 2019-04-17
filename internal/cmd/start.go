@@ -30,6 +30,9 @@ func startCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if cfg.Proxy.Running {
+		log.Fatalf("CNTLM Proxy is already running")
+	}
 	proxyURL, err := url.Parse(fmt.Sprintf("http://%s:%v", cfg.Proxy.Address, port))
 	if err != nil {
 		log.Fatal(err)
