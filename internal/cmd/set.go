@@ -11,7 +11,6 @@ import (
 	"github.com/xUnholy/go-proxy/pkg/execute"
 	"github.com/xUnholy/go-proxy/pkg/prompt"
 
-	"github.com/xUnholy/go-proxy/internal/cntlm"
 	"github.com/xUnholy/go-proxy/internal/config"
 	tools "github.com/xUnholy/go-proxy/internal/tools"
 )
@@ -105,10 +104,6 @@ func setUsernameCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	update := fmt.Sprintln("Username\t", output)
-	if err = cntlm.UpdateFile(update); err != nil {
-		log.Fatal(err)
-	}
 	viper.Set("Proxy.Credentials.Username", output)
 	err = config.SaveConfiguration(proxyProfile)
 	if err != nil {
@@ -129,9 +124,6 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	out, err := execute.RunCommand(e)
 	if err != nil {
 		log.Fatalln(err)
-	}
-	if err = cntlm.UpdateFile(string(out)); err != nil {
-		log.Fatal(err)
 	}
 	x := strings.Split(strings.TrimSpace(string(out)), "\n")
 	for _, t := range x {
@@ -159,10 +151,6 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 		log.Fatalln(err)
 	}
 	output = strings.TrimSpace(output)
-	update := fmt.Sprintln("Domain\t", output)
-	if err = cntlm.UpdateFile(update); err != nil {
-		log.Fatal(err)
-	}
 	viper.Set("Proxy.Domain", output)
 	err = config.SaveConfiguration(proxyProfile)
 	if err != nil {
