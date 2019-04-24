@@ -50,7 +50,7 @@ func startCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = UpdateCNTLMConfig(cfg)
+	err = UpdateCNTLMConfig(&cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,7 +62,7 @@ func startCmd(cmd *cobra.Command, args []string) {
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
 }
 
-func UpdateCNTLMConfig(cfg config.Configuration) error {
+func UpdateCNTLMConfig(cfg *config.Configuration) error {
 	update := fmt.Sprintf("Listen\t%v\n", cfg.Proxy.Port)
 	update += fmt.Sprintf("Username\t%v\n", cfg.Proxy.Credentials.Username)
 	update += fmt.Sprintf("Domain\t%v\n", cfg.Proxy.Domain)
