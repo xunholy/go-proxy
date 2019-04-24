@@ -35,7 +35,7 @@ func SetupConfigCli() *cobra.Command {
 	}
 	saveConfigCmd.Flags().StringVarP(&proxyProfile, "file", "f", proxyProfile, "save custom proxy profile (Default Values)")
 	var printConfigCmd = &cobra.Command{
-		Use:   "print",
+		Use:   "list",
 		Short: "This command will print the proxy configuration profile",
 		Run:   configPrintCmd,
 	}

@@ -5,10 +5,12 @@ ProxyConfig:
   NoProxy: []
   Address: localhost
   Port: 3128
-  Tools: []
   Credentials:
     Username: 
     Password:
     PassLM:
     PassNT:
     PassNTLMv2:
+  Tools:
+    Git: false
+    Npm: false
