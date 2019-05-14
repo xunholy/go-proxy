@@ -65,6 +65,7 @@ func PrintConfiguration() error {
 	return nil
 }
 
+// TODO: Should not fail when running proxy set
 func ValidateRequiredFields(c *Configuration) error {
 	if c.Proxy.Credentials.Username == "" {
 		return fmt.Errorf("username is a required field")

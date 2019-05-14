@@ -1,4 +1,4 @@
-ProxyConfig:
+Proxy:
   Running: false
   Domain:
   ProxyAddress: []
