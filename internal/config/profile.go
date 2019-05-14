@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"path"
 	"path/filepath"
 
@@ -25,12 +24,13 @@ func SetDefaults() {
 }
 
 func LoadConfiguration(proxyProfilePath string) (Configuration, error) {
+	viper.AutomaticEnv()
 	ext := filepath.Ext(proxyProfilePath)
 	if ext != "" {
 		proxyProfilePath = proxyProfilePath[0 : len(proxyProfilePath)-len(ext)]
 	}
 	viper.SetConfigName(proxyProfilePath)
-	viper.AddConfigPath(os.Getenv("HOME"))
+	viper.AddConfigPath(viper.GetString("HOME"))
 	var configuration Configuration
 	if err := viper.ReadInConfig(); err != nil {
 		return configuration, fmt.Errorf("failed reading config file, %s", err)
@@ -50,7 +50,7 @@ func SaveConfiguration(proxyProfilePath string) error {
 	if ext == "" {
 		proxyProfilePath += ".yaml"
 	}
-	if err := viper.WriteConfigAs(path.Join(os.Getenv("HOME"), proxyProfilePath)); err != nil {
+	if err := viper.WriteConfigAs(path.Join(viper.GetString("HOME"), proxyProfilePath)); err != nil {
 		return fmt.Errorf("unable to write config, %s", err)
 	}
 	return nil
