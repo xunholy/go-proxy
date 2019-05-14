@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -56,8 +57,20 @@ func SetupSetCli() *cobra.Command {
 		Run:   setDomainCmd,
 	}
 
+	var setProxyAddressCmd = &cobra.Command{
+		Use:   "proxyaddress",
+		Short: "This command will update the Proxy Address value in your CNTLM.conf file",
+		Run:   setProxyAddressCmd,
+	}
+
+	var setNoProxyCmd = &cobra.Command{
+		Use:   "noproxy",
+		Short: "This command will update the NoProxy value in your CNTLM.conf file",
+		Run:   setNoProxyCmd,
+	}
+
 	// add subcommands to set
-	setCmd.AddCommand(setNpmCmd, setGitCmd, setUsernameCmd, setPasswordCmd, setDomainCmd)
+	setCmd.AddCommand(setNpmCmd, setGitCmd, setUsernameCmd, setPasswordCmd, setDomainCmd, setProxyAddressCmd, setNoProxyCmd)
 	return setCmd
 }
 
@@ -157,4 +170,56 @@ func setDomainCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	fmt.Println("Set CNTLM domain successfully")
+}
+
+// nolint
+func setProxyAddressCmd(cmd *cobra.Command, args []string) {
+	_, err := config.LoadConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	arrProxyAddress := make([]string, 0)
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Printf("Enter Proxy Address (Hit Enter twice to exit):\n")
+	for {
+		scanner.Scan()
+		text := scanner.Text()
+		if len(text) != 0 {
+			arrProxyAddress = append(arrProxyAddress, text)
+		} else {
+			break
+		}
+	}
+	viper.Set("Proxy.Proxyaddress", arrProxyAddress)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Set CNTLM Proxyaddress successfully")
+}
+
+// nolint
+func setNoProxyCmd(cmd *cobra.Command, args []string) {
+	_, err := config.LoadConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	arrNoProxy := make([]string, 0)
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Printf("Enter NoProxy Address (Hit Enter twice to exit):\n")
+	for {
+		scanner.Scan()
+		text := scanner.Text()
+		if len(text) != 0 {
+			arrNoProxy = append(arrNoProxy, text)
+		} else {
+			break
+		}
+	}
+	viper.Set("Proxy.Noproxy", arrNoProxy)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Set CNTLM No proxy successfully")
 }
