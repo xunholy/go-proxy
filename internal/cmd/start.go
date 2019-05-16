@@ -63,13 +63,15 @@ func startCmd(cmd *cobra.Command, args []string) {
 }
 
 func UpdateCNTLMConfig(cfg *config.Configuration) error {
-	update := fmt.Sprintf("Listen\t%v\n", cfg.Proxy.Port)
-	update += fmt.Sprintf("Username\t%v\n", cfg.Proxy.Credentials.Username)
-	update += fmt.Sprintf("Domain\t%v\n", cfg.Proxy.Domain)
-	update += fmt.Sprintf("PassLM\t%v\n", cfg.Proxy.Credentials.PassLM)
-	update += fmt.Sprintf("PassNT\t%v\n", cfg.Proxy.Credentials.PassNT)
-	update += fmt.Sprintf("PassNTLMv2\t%v\n", cfg.Proxy.Credentials.PassNTLMv2)
-	if err := cntlm.UpdateFile(update); err != nil {
+	var cntlmProps = map[string]string{
+		"Listen":     fmt.Sprint(cfg.Proxy.Port),
+		"Username":   cfg.Proxy.Credentials.Username,
+		"Domain":     cfg.Proxy.Domain,
+		"PassLM":     cfg.Proxy.Credentials.PassLM,
+		"PassNT":     cfg.Proxy.Credentials.PassNT,
+		"PassNTLMv2": cfg.Proxy.Credentials.PassNTLMv2,
+	}
+	if err := cntlm.UpdateFile(cntlmProps); err != nil {
 		return err
 	}
 	return nil
