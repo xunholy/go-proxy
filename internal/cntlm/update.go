@@ -15,7 +15,17 @@ type KeyPairValues struct {
 	Line  int
 }
 
+func contains(replaceCommented []string, check string) bool {
+	for _, val := range replaceCommented {
+		if val == check {
+			return true
+		}
+	}
+	return false
+}
+
 func UpdateFile(cntlmValues map[string]string) error {
+	replaceCommented := []string{"PassLM", "PassNT", "PassNTLMv2"}
 	file, err := os.GetConfigurationPath(runtime.GOOS)
 	if err != nil {
 		return err
@@ -28,9 +38,21 @@ func UpdateFile(cntlmValues map[string]string) error {
 	for field, val := range cntlmValues {
 		for i, line := range lines {
 			if strings.Contains(line, field) {
-				lines[i] = field + "  " + val
+				if strings.HasPrefix(line, "#") {
+					if contains(replaceCommented, field) {
+						lines[i] = field + "  " + val
+						goto getOut
+					} else {
+						continue
+					}
+				} else {
+					lines[i] = field + "  " + val
+					goto getOut
+				}
 			}
 		}
+	getOut:
+		continue
 	}
 	output := strings.Join(lines, "\n")
 	err = ioutil.WriteFile(file, []byte(output), 0644)
