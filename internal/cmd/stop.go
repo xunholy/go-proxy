@@ -40,8 +40,8 @@ func stopCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cmds := execute.Command{Cmd: "pkill", Args: []string{"cntlm"}}
-	_, err = execute.RunCommand(cmds)
+	cmds := execute.Command{Cmd: "kill", Args: []string{"-9", fmt.Sprint(cfg.Proxy.Pid)}}
+	_, _, err = execute.RunCommand(cmds)
 	if err != nil {
 		log.Fatal("Couldn't kill CNTLM process as its not currently running")
 	}

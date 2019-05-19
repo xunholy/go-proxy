@@ -1,5 +1,5 @@
 Proxy:
-  Running: false
+  Pid: 
   Domain:
   ProxyAddress: []
   NoProxy: []

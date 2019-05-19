@@ -7,7 +7,7 @@ type Configuration struct {
 }
 
 type ProxyConfiguration struct {
-	Running      bool
+	Pid          int
 	Domain       string
 	ProxyAddress []string
 	ProxyURL     *url.URL

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/url"
+	"os"
+	"syscall"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -30,10 +32,17 @@ func startCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if cfg.Proxy.Running {
-		// TODO: A user may want to start another CNTLM instance, logic should handle if its intended or not
-		log.Fatalf("CNTLM Proxy is already running")
+
+	process, err := os.FindProcess(cfg.Proxy.Pid)
+	if err != nil {
+		fmt.Printf("Failed to find process: %s\n", err)
+	} else {
+		err := process.Signal(syscall.Signal(0))
+		if err == nil {
+			log.Fatal("Cntlm is already running, please try `proxy stop` and retry")
+		}
 	}
+
 	proxyURL, err := url.Parse(fmt.Sprintf("http://%s:%v", cfg.Proxy.Address, port))
 	if err != nil {
 		log.Fatal(err)
@@ -44,9 +53,7 @@ func startCmd(cmd *cobra.Command, args []string) {
 	}
 	cfg.Proxy.Port = port
 	viper.Set("Proxy.Port", port)
-	viper.Set("Proxy.Running", true)
 	viper.Set("Proxy.ProxyURL", proxyURL)
-	err = config.SaveConfiguration(proxyProfile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -55,11 +62,15 @@ func startCmd(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 	cmds := execute.Command{Cmd: "cntlm", Args: []string{"-g"}}
-	_, err = execute.RunCommand(cmds)
+	_, pid, err := execute.RunCommand(cmds)
+
 	if err != nil {
 		log.Fatalf("CNTLM Proxy couldn't be started. Is it already running? %q", err)
+	} else {
+		viper.Set("Proxy.Pid", pid)
 	}
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
+	err = config.SaveConfiguration(proxyProfile)
 }
 
 func UpdateCNTLMConfig(cfg *config.Configuration) error {

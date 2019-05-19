@@ -45,7 +45,7 @@ func TestRunCommand(t *testing.T) {
 	defer func() { execCommand = exec.Command }()
 	for _, i := range tests {
 		mockedExitStatus = i.exitCode
-		output, err := RunCommand(i.command)
+		output, _, err := RunCommand(i.command)
 		assert.Equal(t, i.expected, err != nil)
 		if mockedExitStatus == 0 {
 			assert.Equal(t, testResult, string(output))

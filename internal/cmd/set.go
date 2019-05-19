@@ -134,7 +134,7 @@ func setPasswordCmd(cmd *cobra.Command, args []string) {
 	fmt.Printf("Enter Password: ")
 	// TODO: rewrite cntlm hash function as reusable pkg
 	e := execute.Command{Cmd: "cntlm", Args: []string{"-H"}, Stdin: os.Stdin}
-	out, err := execute.RunCommand(e)
+	out, _, err := execute.RunCommand(e)
 	if err != nil {
 		log.Fatalln(err)
 	}
