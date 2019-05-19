@@ -37,7 +37,7 @@ func startCmd(cmd *cobra.Command, args []string) {
 	if err != nil {
 		fmt.Printf("Failed to find process: %s\n", err)
 	} else {
-		err := process.Signal(syscall.Signal(0))
+		err = process.Signal(syscall.Signal(0))
 		if err == nil {
 			log.Fatal("Cntlm is already running, please try `proxy stop` and retry")
 		}
@@ -71,6 +71,9 @@ func startCmd(cmd *cobra.Command, args []string) {
 	}
 	fmt.Println("CNTLM Proxy Started On", proxyURL)
 	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatalf("Could not save the configuration file")
+	}
 }
 
 func UpdateCNTLMConfig(cfg *config.Configuration) error {
