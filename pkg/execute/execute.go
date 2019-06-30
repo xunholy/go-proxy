@@ -25,8 +25,9 @@ func (c Command) ExecuteCommand() *exec.Cmd {
 	return cmd
 }
 
-func RunCommand(c Commander) ([]byte, error) {
+func RunCommand(c Commander) (output []byte, proid int, err error) {
 	cmd := c.ExecuteCommand()
 	out, err := cmd.CombinedOutput()
-	return out, err
+	pid := cmd.Process.Pid + 1
+	return out, pid, err
 }

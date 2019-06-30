@@ -5,8 +5,9 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-
-	config "github.com/xUnholy/go-proxy/internal/tools"
+	"github.com/spf13/viper"
+	"github.com/xUnholy/go-proxy/internal/config"
+	tools "github.com/xUnholy/go-proxy/internal/tools"
 )
 
 func SetupUnsetCli() *cobra.Command {
@@ -34,15 +35,29 @@ func SetupUnsetCli() *cobra.Command {
 }
 
 func unsetNpmCmd(cmd *cobra.Command, args []string) {
-	if err := config.DisableNPMProxyConfiguration(); err != nil {
-		log.Fatalln(err)
+	_, err := config.LoadConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_ = tools.DisableNPMProxyConfiguration()
+	viper.Set("Proxy.Tools.Npm", false)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
 	}
 	fmt.Println("Unset npm config successfully")
 }
 
 func unsetGitCmd(cmd *cobra.Command, args []string) {
-	if err := config.DisableGITProxyConfiguration(); err != nil {
-		log.Fatalln(err)
+	_, err := config.LoadConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_ = tools.DisableGITProxyConfiguration()
+	viper.Set("Proxy.Tools.Git", false)
+	err = config.SaveConfiguration(proxyProfile)
+	if err != nil {
+		log.Fatal(err)
 	}
 	fmt.Println("Unset git config successfully")
 }

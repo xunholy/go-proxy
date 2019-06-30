@@ -49,7 +49,7 @@ func TestRunCommand(t *testing.T) {
 		{expected: true, command: TestCommand{Cmd: "echo", Args: []string{"Hello"}, ExitCode: 1}},
 	}
 	for _, i := range tests {
-		output, err := execute.RunCommand(i.command)
+		output, _, err := execute.RunCommand(i.command)
 		assert.Equal(t, i.expected, err != nil)
 		if i.command.ExitCode == 0 {
 			assert.Equal(t, testResult, string(output))

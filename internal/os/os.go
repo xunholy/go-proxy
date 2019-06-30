@@ -1,9 +1,6 @@
-package profile
+package os
 
-import (
-	"fmt"
-	"runtime"
-)
+import "fmt"
 
 // TODO: Locate windows drive prefix to defaultWindowsPath [go-proxy/#69]
 const (
@@ -12,14 +9,14 @@ const (
 	defaultMacOSPath   = "/usr/local/etc/cntlm.conf"
 )
 
-func GetConfigurationPath() (string, error) {
-	if runtime.GOOS == "linux" {
+func GetConfigurationPath(runtimeOS string) (string, error) {
+	if runtimeOS == "linux" {
 		return defaultLinuxPath, nil
 	}
-	if runtime.GOOS == "windows" {
+	if runtimeOS == "windows" {
 		return defaultWindowsPath, nil
 	}
-	if runtime.GOOS == "darwin" {
+	if runtimeOS == "darwin" {
 		return defaultMacOSPath, nil
 	}
 	return "", fmt.Errorf("unsupported OS distribution")

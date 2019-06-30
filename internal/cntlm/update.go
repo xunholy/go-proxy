@@ -1,12 +1,12 @@
 package cntlm
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
+	"runtime"
 	"strings"
 
-	"github.com/xUnholy/go-proxy/internal/profile"
+	"github.com/xUnholy/go-proxy/internal/os"
 )
 
 type KeyPairValues struct {
@@ -15,62 +15,49 @@ type KeyPairValues struct {
 	Line  int
 }
 
-func UpdateFile(match string) error {
-	file, err := profile.GetConfigurationPath()
+func contains(replaceCommented []string, check string) bool {
+	for _, val := range replaceCommented {
+		if val == check {
+			return true
+		}
+	}
+	return false
+}
+
+func UpdateFile(cntlmValues map[string]string) error {
+	replaceCommented := []string{"PassLM", "PassNT", "PassNTLMv2"}
+	file, err := os.GetConfigurationPath(runtime.GOOS)
 	if err != nil {
 		return err
 	}
-	content, err := ioutil.ReadFile(file)
+	input, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	match = strings.TrimSpace(match)
-
-	matches := strings.Split(match, "\n")
-	lines := strings.Split(string(content), "\n")
-
-	keyPairValues := parseFileIntoKeyPairValues(lines)
-
-	for i := 0; i <= len(matches)-1; i++ {
-		matchFields := strings.Fields(matches[i])
-		for _, i := range keyPairValues {
-			if strings.Contains(i.Key, matchFields[0]) {
-				err := updateValue(lines, i, file, matchFields)
-				if err != nil {
-					return err
+	lines := strings.Split(string(input), "\n")
+	for field, val := range cntlmValues {
+		for i, line := range lines {
+			if strings.Contains(line, field) {
+				if strings.HasPrefix(line, "#") {
+					if contains(replaceCommented, field) {
+						lines[i] = field + "  " + val
+						goto getOut
+					} else {
+						continue
+					}
+				} else {
+					lines[i] = field + "  " + val
+					goto getOut
 				}
 			}
 		}
+	getOut:
+		continue
 	}
-	return nil
-}
-
-// TODO: Allow value to be an array of strings [go-proxy/#52]
-func parseFileIntoKeyPairValues(lines []string) []KeyPairValues {
-	keyPairValues := []KeyPairValues{}
-	for i, l := range lines {
-		if strings.HasPrefix(l, "#") {
-			continue
-		}
-		if l == "" {
-			continue
-		}
-		fields := strings.Fields(l)
-		if len(fields) != 2 {
-			continue
-		}
-		keyPairValues = append(keyPairValues, KeyPairValues{Key: fields[0], Value: fields[1], Line: i})
-	}
-	return keyPairValues
-}
-
-func updateValue(lines []string, keyPairValue KeyPairValues, file string, matchFields []string) error {
-	line := fmt.Sprintf("%v\t%v", matchFields[0], matchFields[1])
-	lines[keyPairValue.Line] = line
 	output := strings.Join(lines, "\n")
-	err := ioutil.WriteFile(file, []byte(output), 0644)
+	err = ioutil.WriteFile(file, []byte(output), 0644)
 	if err != nil {
-		return err
+		log.Fatalln(err)
 	}
 	return nil
 }

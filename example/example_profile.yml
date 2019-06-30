@@ -1,0 +1,16 @@
+Proxy:
+  Pid: 
+  Domain:
+  ProxyAddress: []
+  NoProxy: []
+  Address: localhost
+  Port: 3128
+  Credentials:
+    Username: 
+    Password:
+    PassLM:
+    PassNT:
+    PassNTLMv2:
+  Tools:
+    Git: false
+    Npm: false

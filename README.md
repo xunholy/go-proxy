@@ -57,19 +57,20 @@ The following is a list of all available commands:
 * [Stop](#Stop)
 * [Set](#Set)
 * [Unset](#Unset)
+* [Config](#Config)
 
 ### Start
 
 Usage example:
 
 ```bash
-proxy start [command options] [arguments...]
+proxy start [flags]
 ```
 
 ```bash
-OPTIONS:
-   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
-   --all, -a             set all CNTLM config
+Flags:
+  -h, --help        help for start
+      --port PORT   set custom CNTLM PORT (default 3128)
 ```
 
 ### Stop
@@ -77,12 +78,13 @@ OPTIONS:
 Usage example:
 
 ```bash
-proxy stop [command options] [arguments...]
+proxy stop [flags]
 ```
 
 ```bash
-OPTIONS:
-   --all, -a  unset all CNTLM config
+Flags:
+      --all    unset all proxy configuration (default true)
+  -h, --help   help for stop
 ```
 
 ### Set
@@ -90,25 +92,25 @@ OPTIONS:
 Usage example:
 
 ```bash
-proxy set command [command options] [arguments...]
+proxy set [command]
 ```
 
 Subcommand options:
 
 ```bash
-COMMANDS:
-     npm       set npm proxy config
-     git       set git proxy config
-     username  proxy set username
-     password  proxy set password
-     domain    proxy set domain
+Available Commands:
+  domain      This command will update the domain value in your CNTLM.conf file
+  git         This command will set the GIT global proxy values. Both http.proxy and https.proxy will be set
+  npm         This command will set the NPM proxy values. Both https-proxy and proxy will be set
+  password    This command will update the Password value in your CNTLM.conf file
+  username    This command will update the Username value in your CNTLM.conf file
 ```
 
 All subcommands have the following options:
 
 ```bash
-OPTIONS:
-   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+Flags:
+  -h, --help   help for set
 ```
 
 To be able to set the CNTLM authentication password the *password* subcommand can be used. EG:
@@ -124,22 +126,46 @@ Once the password is entered and then encrypted, it will be stored in **cntlm.co
 Usage example:
 
 ```bash
-proxy unset command [command options] [arguments...]
+  proxy unset [command]
 ```
 
 Subcommand options:
 
 ```bash
-COMMANDS:
-     npm  unset npm proxy config
-     git  unset git proxy config
+Available Commands:
+  git         This command will unset the GIT global proxy values. Both http.proxy and https.proxy will be unset
+  npm         This command will unset the NPM proxy values. Both https-proxy and proxy will be unset
 ```
 
 All subcommands have the following options:
 
 ```bash
-OPTIONS:
-   --port PORT, -p PORT  set custom CNTLM PORT (default: 3128)
+Flags:
+  -h, --help   help for unset
+```
+
+#### Config
+
+Usage example:
+
+```bash
+  proxy config [command]
+```
+
+Subcommand options:
+
+```bash
+Available Commands:
+  list        This command will print the proxy configuration profile
+  load        This command will load a custom proxy profile
+  save        This command will save the proxy configuration to a profile
+```
+
+All subcommands have the following options:
+
+```bash
+Flags:
+  -h, --help   help for unset
 ```
 
 ## Getting Started
@@ -188,13 +214,6 @@ Once you have packaged the application the compiled binary can be executed with 
 proxy [command options] [arguments...]
 ```
 
-## Built With
-
-* [golang](https://golang.org/dl/) - Programming Language
-* [urfave/cli](https://github.com/urfave/cli) - The CLI framework
-* [travis](https://travis-ci.org/) - Continuous Integration Tool
-* [vscode](https://code.visualstudio.com/) - IDE
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTION.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -219,3 +238,4 @@ Wish to acknowledge the following people for their inspiration, and guidance wit
 
 * **Prateek Nayak** - [Github](https://github.com/prateeknayak)
 * **Jasper Brekelmans** - [Github](https://github.com/jbrekelmans)
+* **Mahesh Rayas** - [Github](https://github.com/maheshrayas)
