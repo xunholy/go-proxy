@@ -69,6 +69,7 @@ func UpdateCNTLMConfig(cfg *config.Configuration) error {
 	update += fmt.Sprintf("PassLM\t%v\n", cfg.Proxy.Credentials.PassLM)
 	update += fmt.Sprintf("PassNT\t%v\n", cfg.Proxy.Credentials.PassNT)
 	update += fmt.Sprintf("PassNTLMv2\t%v\n", cfg.Proxy.Credentials.PassNTLMv2)
+	// TODO: Set the proxy address
 	if err := cntlm.UpdateFile(update); err != nil {
 		return err
 	}
